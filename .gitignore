@@ -6,3 +6,4 @@
 /spec/tmp
 /.bundle
 /vendor/bundle
+.idea
