@@ -7,3 +7,4 @@
 /.bundle
 /vendor/bundle
 .idea
+.DS_Store
