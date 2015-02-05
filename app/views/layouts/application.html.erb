@@ -15,8 +15,18 @@
     <div class="navbar-header">
       <%= link_to "Andonation", root_path, class: 'navbar-brand' %>
     </div>
+    <div class="navbar-right">
+      <% if user_signed_in? %>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+      <% else %>
+        <%= link_to "Login", user_omniauth_authorize_path(:google_oauth2) %>
+      <% end %>
+    </div>
   </div>
 </nav>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
 
 <%= yield %>
 
