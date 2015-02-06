@@ -54,3 +54,6 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit'
 end
+
+#Rails 4 Asset Pipeline on Heroku. Serve static assets
+gem 'rails_12factor', group: :production
