@@ -2,8 +2,6 @@
 <html>
 <head>
   <title>Rando</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -19,10 +17,10 @@
     <div>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
-          <li class="andonation-link"><%= link_to "My Andonation", root_path %></li>
-          <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+          <li class="andonation-link"><%= link_to "My Andonation", root_path, class: 'nav-link' %></li>
+          <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'nav-link' %></li>
         <% else %>
-          <li class="no-andonation-link"><%= link_to "Login", user_omniauth_authorize_path(:google_oauth2) %></li>
+          <li class="no-andonation-link"><%= link_to "Login", user_omniauth_authorize_path(:google_oauth2), class: 'nav-link' %></li>
         <% end %>
       </ul>
     </div>
@@ -30,10 +28,10 @@
 </nav>
 
 <% if notice %>
-  <p class="alert alert-success"><%= notice %></p>
+  <p class="alert"><%= notice %></p>
 <% end %>
 <% if alert %>
-  <p class="alert alert-danger"><%= alert %></p>
+  <p class="alert"><%= alert %></p>
 <% end %>
 
 <%= yield %>
