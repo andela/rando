@@ -7,6 +7,7 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
@@ -15,18 +16,25 @@
     <div class="navbar-header">
       <%= link_to "Andonation", root_path, class: 'navbar-brand' %>
     </div>
-    <div class="navbar-right">
-      <% if user_signed_in? %>
-        <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-      <% else %>
-        <%= link_to "Login", user_omniauth_authorize_path(:google_oauth2) %>
-      <% end %>
+    <div>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <li class="andonation-link"><%= link_to "My Andonation", root_path %></li>
+          <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+        <% else %>
+          <li class="no-andonation-link"><%= link_to "Login", user_omniauth_authorize_path(:google_oauth2) %></li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </nav>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
 
 <%= yield %>
 
