@@ -14,4 +14,6 @@ feature 'Signup/Login user' do
     expect(page).to have_content('Signed out successfully.')
     expect(page).not_to have_link('My Andonation', href: '/')
   end
+
+
 end
