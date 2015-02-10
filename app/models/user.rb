@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :campaigns
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:google_oauth2]
 
   def self.find_for_google_oauth2 google_response
