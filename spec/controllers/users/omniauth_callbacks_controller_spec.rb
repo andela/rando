@@ -1,19 +1,22 @@
 require 'rails_helper'
 
 describe Users::OmniauthCallbacksController, type: :controller do
+  before do
+    OmniAuth.config.test_mode = true
+    request.env['devise.mapping'] = Devise.mappings[:user]
+  end
+
   describe '#google_oauth2' do
-    let(:user) { User.create(email: 'christopher@andela.co') }
+    attr_accessor :existing_user
 
     before do
-      OmniAuth.config.test_mode = true
-      request.env['devise.mapping'] = Devise.mappings[:user]
-
-      allow(User).to receive(:find_for_google_oauth2) { user }
+      @existing_user = create(:user)
+      allow(User).to receive(:find_for_google_oauth2) { existing_user }
     end
 
     it 'assigns @user' do
       get :google_oauth2
-      expect(assigns(:user)).to eq(user)
+      expect(assigns(:user)).to eq(existing_user)
     end
 
     context 'valid credentials' do
@@ -33,12 +36,16 @@ describe Users::OmniauthCallbacksController, type: :controller do
       end
     end
 
-    context 'invalid credentials' do
-      let(:user) { User.new }
+    it 'redirects to root path' do
+      get :google_oauth2
+      expect(response).to redirect_to root_path
+    end
 
+    context 'invalid credentials' do
       before do
+        @existing_user = nil
         set_invalid_omniauth
-        request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:google_auth2]
+        request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:google_oauth2]
 
         get :google_oauth2
       end
@@ -47,11 +54,6 @@ describe Users::OmniauthCallbacksController, type: :controller do
         expected_message = "Could not authenticate you from Google because \"account cannot be saved\"."
         expect(flash[:notice]).to eq(expected_message)
       end
-    end
-
-    it 'redirects to root path' do
-      get :google_oauth2
-      expect(response).to redirect_to root_path
     end
   end
 end

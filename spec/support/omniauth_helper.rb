@@ -1,18 +1,18 @@
 def set_valid_omniauth
-  OmniAuth.config.add_mock(:google_oauth2, google_oauth2_response)
+  OmniAuth.config.add_mock(:google_oauth2, build_google_oauth2_response)
 end
 
 def set_invalid_omniauth
   OmniAuth.config.mock_auth[:google_oauth2] = :invalid_credentials
 end
 
-def google_oauth2_response
+def build_google_oauth2_response(email = nil)
   OmniAuth::AuthHash.new({
        provider: 'google_auth2',
        uid: '123456789',
        info: {
            name: 'Christopher Columbus',
-           email: 'christopher@andela.co',
+           email: email || 'christopher@andela.co',
            first_name: 'Christopher',
            last_name: 'Columbus',
            image: 'https://lh3.googleusercontent.com/url/photo.jpg'
