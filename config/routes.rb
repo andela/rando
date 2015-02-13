@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
 
+  resources :campaigns, only: [:new, :create, :show]
+
   # You can have the root of your site routed with "root"
   root 'home#index'
 

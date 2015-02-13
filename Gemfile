@@ -42,6 +42,12 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 
+#For view decoration
+gem 'draper', '~> 1.3'
+
+#Use for picking date
+gem 'pickadate-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -54,6 +60,10 @@ group :development, :test do
 
   #Use Factory Girl for test fixtures
   gem 'factory_girl_rails', '~> 4.0'
+
+  #Use shoulda-matchers for Rspec validations
+  gem 'shoulda-matchers'
+
 end
 
 group :test do
