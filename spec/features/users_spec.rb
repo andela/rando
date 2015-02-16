@@ -15,5 +15,4 @@ feature 'Signup/Login user' do
     expect(page).not_to have_link('My Andonation', href: '/')
   end
 
-
 end
