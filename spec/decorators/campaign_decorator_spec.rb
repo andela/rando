@@ -3,8 +3,8 @@ require 'rails_helper'
 describe CampaignDecorator do
   describe '#formatted_deadline' do
     it 'formats deadline' do
-      campaign = create(:campaign, deadline: '2015-02-12').decorate
-      expect(campaign.formatted_deadline).to eq('2015/02/12')
+      campaign = create(:campaign, deadline: Date.tomorrow).decorate
+      expect(campaign.formatted_deadline).to eq(Date.tomorrow.strftime('%Y/%m/%d'))
     end
   end
 

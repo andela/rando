@@ -7,7 +7,7 @@ FactoryGirl.define do
 
   factory :campaign do
     title 'Food for the Poor'
-    deadline '2015/12/13'
+    deadline Date.tomorrow
     amount '60000'
     description 'Never go hungry again.'
     youtube_url 'https://www.youtube.com/watch?v=7WJk-z5AmXk'

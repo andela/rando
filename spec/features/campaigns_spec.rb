@@ -11,9 +11,17 @@ feature 'campaigns' do
     visit root_path
     click_on 'Login'
     click_on 'Add Campaign'
+
+    click_on 'Create Campaign'
+    expect(page).to have_content("Title can't be blank")
+    expect(page).to have_content("Deadline can't be blank")
+    expect(page).to have_content("Amount can't be blank")
+    expect(page).to have_content("Description can't be blank")
+    expect(page).to have_content("Youtube url can't be blank")
+
     expect(page).to have_content('New Campaign')
     fill_in 'Title', with: 'plantains for the poor'
-    fill_in 'Deadline', with: campaign_attrs[:deadline]
+    fill_in 'Deadline', with: Date.tomorrow.strftime('%Y-%m-%d')
     fill_in 'How much do you need to raise?', with: campaign_attrs[:amount]
     fill_in 'Description', with: campaign_attrs[:description]
     fill_in 'YouTube URL', with: 'https://www.youtube.com/watch?v=abcdefghiklmo'
@@ -22,7 +30,7 @@ feature 'campaigns' do
 
     expect(page).to have_content('PLANTAINS FOR THE POOR')
     expect(page).to have_content("Created by: #{logged_user}")
-    expect(page).to have_content("Deadline: #{campaign_attrs[:deadline]}")
+    expect(page).to have_content("Deadline: #{Date.tomorrow.strftime('%Y/%m/%d')}")
     expect(page).to have_content("Needs: $#{campaign_attrs[:amount]}")
     expect(page).to have_content(campaign_attrs[:description])
     expect(page).to have_css("iframe[src='https://www.youtube.com/embed/abcdefghiklmo']")

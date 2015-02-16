@@ -2,7 +2,15 @@
 
 <div class="container form-horizontal">
   <%= form_for @campaign do |f| %>
-
+    <% if @campaign.errors.any? %>
+      <div class="alert alert-danger">
+        <ul class="list-unstyled">
+          <% @campaign.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     <div class="form-group">
       <div class="col-sm-2 control-label">
         <%= f.label :title %>
