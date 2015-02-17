@@ -48,6 +48,9 @@ gem 'draper', '~> 1.3'
 #Use for picking date
 gem 'pickadate-rails'
 
+#Use jquery-turbolinks for jquery date-picker
+gem 'jquery-turbolinks'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
