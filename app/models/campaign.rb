@@ -5,6 +5,7 @@ class Campaign < ActiveRecord::Base
   validates :description, length: { minimum: 20 }, presence: true
   validates :youtube_url, format: { with: /\A(?:https?:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:watch\?v=)?([\w-]{10,})(.*)\z/ },
             presence: true
+  validates_numericality_of :amount, greater_than: 0
 
   validate :deadline_is_in_range, if: :deadline?
 

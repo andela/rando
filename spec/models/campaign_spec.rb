@@ -5,6 +5,7 @@ describe Campaign, type: :model do
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:deadline) }
   it { is_expected.to validate_presence_of(:amount) }
+  it { is_expected.to validate_numericality_of(:amount).is_greater_than(0) }
   it { is_expected.to validate_presence_of(:description) }
   it { is_expected.to validate_presence_of(:youtube_url) }
   it { is_expected.to validate_length_of(:title).is_at_least(5) }
