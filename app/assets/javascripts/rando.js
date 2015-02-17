@@ -3,6 +3,6 @@ $('document').ready(function() {
         formatSubmit: 'yyyy/mm/dd',
         hiddenName: true,
         min: 1,
-        max: 31
-    })
+        max: 30
+    });
 });
