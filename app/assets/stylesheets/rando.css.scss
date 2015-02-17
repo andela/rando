@@ -88,6 +88,16 @@ body {
   padding-top: 20px;
 }
 
+.field_with_errors input,
+.field_with_errors textarea {
+  outline: 0;
+  border: 1px solid #ff0000;
+}
+
+.list-unstyled {
+  line-height: 1.5;
+  text-align: center;
+}
 .reg-name {
   max-width: 300px;
 }
