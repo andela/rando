@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe User, type: :model do
+  it { is_expected.to validate_presence_of(:name) }
+  it { is_expected.to validate_presence_of(:email) }
+  it { is_expected.to validate_uniqueness_of(:email) }
+
   describe '.find_for_google_oauth2' do
 
     context 'user exist' do

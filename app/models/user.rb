@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   has_many :campaigns
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:google_oauth2]
+  validates_presence_of :name
+  validates :email, presence: true, uniqueness: true
 
   def self.find_for_google_oauth2(google_response)
     return nil unless google_response_valid?(google_response)
