@@ -5,10 +5,6 @@ class CampaignDecorator < Draper::Decorator
     title.upcase
   end
 
-  def formatted_deadline
-    deadline.strftime("%Y/%m/%d")
-  end
-
   def embedded_youtube_url
     "https://www.youtube.com/embed/#{youtube_id}"
   end

@@ -9,10 +9,10 @@ feature 'Signup/Login user' do
     visit root_path
     click_on 'Login'
     expect(page).to have_content('Successfully authenticated from Google account.')
-    expect(page).to have_link('My Andonation', href: '/')
+    expect(page).to have_link('My Andonation', href: '/my_andonation')
     click_on 'Logout'
     expect(page).to have_content('Signed out successfully.')
-    expect(page).not_to have_link('My Andonation', href: '/')
+    expect(page).not_to have_link('My Andonation', href: '/my_andonation')
   end
 
 end

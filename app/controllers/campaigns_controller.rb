@@ -1,4 +1,6 @@
 class CampaignsController < ApplicationController
+  before_action :authenticate_user!, except: :show
+
   def new
     @campaign = Campaign.new
   end

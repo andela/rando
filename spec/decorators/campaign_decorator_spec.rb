@@ -1,13 +1,6 @@
 require 'rails_helper'
 
 describe CampaignDecorator do
-  describe '#formatted_deadline' do
-    it 'formats deadline' do
-      campaign = create(:campaign, deadline: Date.tomorrow).decorate
-      expect(campaign.formatted_deadline).to eq(Date.tomorrow.strftime('%Y/%m/%d'))
-    end
-  end
-
   describe '#embedded_youtube_url' do
     it 'creates an embedded youtube url' do
       campaign = create(:campaign, youtube_url: 'https://www.youtube.com/watch?v=7WJk-z5AmXk').decorate
