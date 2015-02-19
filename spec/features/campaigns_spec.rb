@@ -23,7 +23,7 @@ feature 'campaigns' do
 
     expect(page).to have_content('New Campaign')
     fill_in 'Title', with: 'plantains for the poor'
-    fill_in 'Deadline', with: Date.tomorrow.strftime('%Y/%m/%d')
+    fill_in 'Funding Deadline', with: Date.tomorrow.strftime('%Y/%m/%d')
     fill_in 'How much do you need to raise?', with: campaign_attrs[:amount]
     fill_in 'Description', with: campaign_attrs[:description]
     fill_in 'YouTube URL', with: 'https://www.youtube.com/watch?v=abcdefghiklmo'
