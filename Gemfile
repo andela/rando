@@ -67,12 +67,16 @@ group :development, :test do
   #Use shoulda-matchers for Rspec validations
   gem 'shoulda-matchers'
 
+  #To open a file(snapshot) automaitcally
+  gem 'launchy'
+
 end
 
 group :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'selenium-webdriver'
+
 end
 
 group :production do

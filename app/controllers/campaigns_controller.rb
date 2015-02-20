@@ -18,6 +18,19 @@ class CampaignsController < ApplicationController
     @campaign = Campaign.find(params[:id]).try(:decorate)
   end
 
+  def edit
+    @campaign = current_user.campaigns.find(params[:id])
+  end
+
+  def update
+    @campaign = current_user.campaigns.find(params[:id])
+    if @campaign.update(campaign_params)
+      redirect_to @campaign, notice: 'Campaign was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
   private
     def campaign_params
       params.require(:campaign).permit(:title, :deadline, :amount, :description, :youtube_url)

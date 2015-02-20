@@ -61,6 +61,49 @@ describe CampaignsController,  type: :controller do
         expect(response).to render_template :show
       end
     end
+
+    describe 'GET #edit' do
+      let(:campaign) { create(:campaign, user: user) }
+
+      it 'assigns campaign' do
+        get :edit, id: campaign
+        expect(assigns(:campaign)).to eq(campaign)
+      end
+
+      it 'renders edit template' do
+        get :edit, id: campaign
+        expect(response).to render_template :edit
+      end
+    end
+
+    describe 'PUT #update' do
+      let(:campaign) { create(:campaign, user: user) }
+
+      context 'valid attributes' do
+        it 'locates the requested campaign' do
+          put :update, id: campaign, campaign: attributes_for(:campaign)
+          expect(campaign).to eq(campaign)
+        end
+
+        it 'changes the campaigns attributes' do
+          put :update, id: campaign, campaign: attributes_for(:campaign, title: 'Pizza for everybody')
+          campaign.reload
+          expect(campaign.title).to eq('Pizza for everybody')
+        end
+
+        it 'redirect to the updated campaign page' do
+          put :update, id: campaign, campaign: attributes_for(:campaign)
+          expect(response).to redirect_to campaign
+        end
+      end
+
+      context 'invalid fields' do
+        it 're-renders the edit action' do
+          put :update, id: campaign, campaign: attributes_for(:invalid_campaign)
+          expect(response).to render_template :edit
+        end
+      end
+    end
   end
 
   describe 'methods not allowed for unauthenticated user' do

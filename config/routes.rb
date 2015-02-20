@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
 
-  resources :campaigns, only: [:new, :create, :show]
+  resources :campaigns, only: [:new, :create, :show, :edit, :update]
 
   get 'my_andonation',to: 'my_andonation#index', as: :my_andonation
 
