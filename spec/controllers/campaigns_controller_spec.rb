@@ -104,6 +104,21 @@ describe CampaignsController,  type: :controller do
         end
       end
     end
+
+    describe'DELETE#destroy'do
+      let!(:campaign) { create(:campaign, user: user) }
+
+      it "deletes the contact" do
+        expect{
+          delete :destroy, id: campaign
+        }.to change(Campaign,:count).by(-1)
+      end
+
+      it "redirects to my andonation" do
+        delete :destroy, id: campaign
+        expect(response).to redirect_to my_andonation_url
+      end
+    end
   end
 
   describe 'methods not allowed for unauthenticated user' do

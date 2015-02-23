@@ -31,6 +31,15 @@ class CampaignsController < ApplicationController
     end
   end
 
+  def destroy
+    @campaign = current_user.campaigns.find(params[:id])
+    if @campaign.destroy
+      redirect_to my_andonation_path, notice: 'Campaign was successfully deleted.'
+    else
+      render @campaign
+    end
+  end
+
   private
     def campaign_params
       params.require(:campaign).permit(:title, :deadline, :amount, :description, :youtube_url)

@@ -51,6 +51,10 @@ feature 'campaigns' do
     click_on 'Update Campaign'
     expect(page).to have_content('Campaign was successfully updated.')
 
+    click_on 'Edit Campaign'
+    click_on 'Delete Campaign'
+    expect(page).to have_content('Campaign was successfully deleted.')
+
     click_on 'Logout'
     expect(page).not_to have_link('Add Campaign')
   end
