@@ -11,7 +11,7 @@ describe Campaign, type: :model do
   it { is_expected.to validate_length_of(:title).is_at_least(5) }
   it { is_expected.to validate_length_of(:description).is_at_least(20) }
   it { is_expected.not_to allow_value('www.google.com/video', 'youtube.com/watch').for(:youtube_url) }
-  it { is_expected.to allow_value('https://www.youtube.com/watch?v=jGnoIDJFrZI').for(:youtube_url)}
+  it { is_expected.to allow_value('https://www.youtube.com/watch?v=jGnoIDJFrZI').for(:youtube_url) }
 
   describe 'validations' do
     context 'deadline is defined' do
@@ -74,5 +74,33 @@ describe Campaign, type: :model do
         expect { @campaign.save }.not_to raise_error
       end
     end
+
+    context 'deadline when editing campaign' do
+      before do
+        @campaign = create(:campaign, created_at: Date.today - 20.days)
+        @campaign.update_attributes(deadline: Date.today + 15.days)
+      end
+
+      context 'deadline is more than 30 days form creation' do
+        it 'object is invalid' do
+          expect(@campaign).not_to be_valid
+        end
+
+        it 'returns error message' do
+          expect(@campaign.reload.errors.full_messages).to include("Deadline can't be more than 30 days from created date")
+        end
+      end
+
+      context 'deadline is today' do
+        before do
+          @campaign.update_attributes(deadline: Date.today)
+        end
+
+        it 'object should be valid' do
+          expect(@campaign).to be_valid
+        end
+      end
+    end
   end
+
 end

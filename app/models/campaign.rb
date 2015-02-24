@@ -6,7 +6,6 @@ class Campaign < ActiveRecord::Base
   validates :youtube_url, format: { with: /\A(?:https?:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:watch\?v=)?([\w-]{10,})(.*)\z/ },
             presence: true
   validates_numericality_of :amount, greater_than: 0
-
   validate :deadline_is_in_range, if: :deadline?
 
   delegate :name, to: :user, prefix: true
@@ -14,10 +13,14 @@ class Campaign < ActiveRecord::Base
   private
 
   def deadline_is_in_range
-    if deadline <= Date.today
-      errors.add(:deadline, "can't be today or in the past")
-    elsif deadline > Date.today + 30.days
-      errors.add(:deadline, "can't be more than 30 days from today")
+    if new_record?
+      if deadline <= Date.today
+        errors.add(:deadline, "can't be today or in the past")
+      elsif deadline > Date.today + 30.days
+        errors.add(:deadline, "can't be more than 30 days from today")
+      end
+    elsif deadline > created_at + 30.days
+      errors.add(:deadline, "can't be more than 30 days from created date")
     end
   end
 end
