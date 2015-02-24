@@ -111,12 +111,12 @@ describe CampaignsController,  type: :controller do
       it "deletes the contact" do
         expect{
           delete :destroy, id: campaign
-        }.to change(Campaign,:count).by(-1)
+        }.to change(Campaign, :count).by(-1)
       end
 
       it "redirects to my andonation" do
         delete :destroy, id: campaign
-        expect(response).to redirect_to my_andonation_url
+        expect(response).to redirect_to my_andonation_path
       end
     end
   end

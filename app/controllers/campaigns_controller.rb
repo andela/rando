@@ -24,6 +24,7 @@ class CampaignsController < ApplicationController
 
   def update
     @campaign = current_user.campaigns.find(params[:id])
+
     if @campaign.update(campaign_params)
       redirect_to @campaign, notice: 'Campaign was successfully updated.'
     else
@@ -32,12 +33,10 @@ class CampaignsController < ApplicationController
   end
 
   def destroy
-    @campaign = current_user.campaigns.find(params[:id])
-    if @campaign.destroy
-      redirect_to my_andonation_path, notice: 'Campaign was successfully deleted.'
-    else
-      render @campaign
-    end
+    @campaign = current_user.campaigns.find(params[:id].to_i)
+
+    @campaign.destroy
+    redirect_to my_andonation_path, notice: 'Campaign was successfully deleted.'
   end
 
   private

@@ -26,6 +26,7 @@ feature 'campaigns' do
     fill_in 'How much do you need to raise?', with: 20000.0
     fill_in 'Description', with: 'Feed the hungry children with plenty food. Make them happy!'
     fill_in 'YouTube URL', with: 'https://www.youtube.com/watch?v=abcdefghiklmo'
+    expect(page).to_not have_link('Delete Campaign')
     click_on 'Create Campaign'
     expect(page).to have_content('Campaign was successfully created.')
 
