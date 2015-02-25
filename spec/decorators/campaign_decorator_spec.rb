@@ -21,4 +21,11 @@ describe CampaignDecorator do
       expect(campaign.uppercase_title).to eq('LOWER CASE TITLE')
     end
   end
+
+  describe '#truncate_description' do
+    it 'truncates description in homepage' do
+      campaign = create(:campaign, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eorum enim est haec querela, qui sibi cari sunt seseque diligunt. Ut proverbia non nulla veriora sint quam vestra dogmata.').decorate
+      expect(campaign.truncate_description).to eq('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eorum enim est haec querela, qui sibi cari sunt seseque diligunt. Ut proverbia...')
+    end
+  end
 end

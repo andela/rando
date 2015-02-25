@@ -10,7 +10,7 @@ describe MyAndonationController, type: :controller do
       end
 
       it 'assigns a list of campaigns' do
-        campaign = create(:campaign, user: user)
+        create(:campaign, user: user) # oldest campaign not included in result
         campaigns = create_list(:campaign, 4, user: user).reverse!
 
         get :index

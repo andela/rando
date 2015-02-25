@@ -1,8 +1,8 @@
 # This will guess the User class
 FactoryGirl.define do
   factory :user do
-    name 'Fiyinfoluwa Adebayo'
-    email 'fiyinfoluwa.adebayo@andela.co'
+    sequence(:name) {|n| "User #{n}"}
+    sequence(:email) {|n| "email#{n}@andela.co"}
   end
 
   factory :campaign do

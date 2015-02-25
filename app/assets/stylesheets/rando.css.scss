@@ -1,6 +1,12 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+body {
+  background: #fff;
+  line-height: 1.5;
+  color: #333;
+}
+
 .navbar {
   border-bottom: 6px solid #730E15;
 }
@@ -60,12 +66,6 @@ h1 {
   box-shadow: 0 0 .1em .1em #730E15;
 }
 
-body {
-  background: #fff;
-  line-height: 10px;
-  color: #333;
-}
-
 .video-container {
   position: relative;
   padding-bottom: 56.25%;
@@ -86,6 +86,7 @@ body {
 
 .description {
   padding-top: 20px;
+  text-align: justify;
 }
 
 .field_with_errors input,
@@ -108,4 +109,22 @@ body {
 
 .col-sm-5 {
   width: 42.96666667%;
+}
+
+.current-campaigns {
+  border: 1px solid #000000;
+  margin: 10px 10px;
+  max-width: 350px;
+  -webkit-box-shadow: 0 0 .3em .1em #333333;
+  -moz-box-shadow: 0 0 .3em .1em #333333;
+  box-shadow: 0 0 .3em .1em #333333;
+}
+
+.needs {
+  float: right;
+  margin-top: 5px;
+}
+
+.campaign-title {
+  min-height: 40px;
 }

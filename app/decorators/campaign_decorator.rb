@@ -12,4 +12,8 @@ class CampaignDecorator < Draper::Decorator
   def youtube_id
     youtube_url.match(/^(?:https?:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:watch\?v=)?([\w-]{10,})/)[1]
   end
+
+  def truncate_description
+    description.truncate(140, separator: ' ')
+  end
 end
