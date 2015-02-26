@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'campaigns' do
+feature 'use manages his campaigns' do
   background do
     OmniAuth.config.test_mode = true
     set_valid_omniauth
@@ -60,9 +60,30 @@ feature 'campaigns' do
     expect(page).not_to have_link('Add Campaign')
   end
 
+  scenario 'visitor sees more campaigns' do
+    create_list(:campaign, 21)
+    stub_const('Campaign::DISPLAY_COUNT', 20)
+    visit '/campaigns'
+
+    click_on 'Next'
+    expect(page).to have_content('Needs')
+    expect(page).to have_link('First')
+  end
+
   scenario 'user clicks in datepicker field', driver: :selenium do
     find_field('Deadline').click
     expect(page).to have_content(Date.tomorrow.day)
     click_on 'Close'
+  end
+end
+
+feature 'User views all campaigns' do
+  scenario 'user sees all the campaigns on the system' do
+    create_list(:campaign, 3)
+    visit '/'
+    click_on 'See all 3 open campaigns'
+    expect(page).to have_content('Food for the Poor')
+    expect(page).to have_content("Deadline: #{Date.tomorrow}")
+    expect(page).to have_content('Needs: $60000.0')
   end
 end

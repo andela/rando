@@ -115,6 +115,9 @@ GEM
       turbolinks
     json (1.8.2)
     jwt (1.2.1)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
     loofah (2.0.1)
@@ -272,6 +275,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-turbolinks
+  kaminari
   launchy
   omniauth
   omniauth-google-oauth2

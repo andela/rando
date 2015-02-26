@@ -1,18 +1,9 @@
-<div class="container">
-  <h2>Current Campaigns</h2>
+<h2>Current Campaigns</h2>
 
-  <div class="row">
-    <% @campaigns.each do |campaign| %>
-      <div class="col-md-4 current-campaigns">
-        <div class="needs">
-          <strong>Needs:</strong> $<%= campaign.amount %><br>
-        </div>
-        <div class="campaign-title">
-          <h5><%= link_to campaign.title, campaign %></h5>
-        </div>
-        Deadline: <%= campaign.deadline %><br><br>
-        <div><%= campaign.truncate_description %></div><br>
-      </div>
-    <% end %>
+<div class="row">
+  <%= render @campaigns %>
+
+  <div class="col-md-11 text-right" >
+    <%= link_to "See all #{@campaigns_count} open campaigns", campaigns_path %>
   </div>
 </div>

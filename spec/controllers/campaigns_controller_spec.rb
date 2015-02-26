@@ -121,6 +121,20 @@ describe CampaignsController,  type: :controller do
     end
   end
 
+  describe 'Get #index' do
+    let!(:campaigns) { create_list(:campaign, 3) }
+
+    it 'assigns @campaigns' do
+      get :index
+      expect(assigns(:campaigns)).to eq(campaigns)
+    end
+
+    it 'renders the :index view' do
+      get :index
+      expect(response).to render_template :index
+    end
+  end
+
   describe 'methods not allowed for unauthenticated user' do
     it_should_behave_like "an unauthenticated user", [[:get, :new], [:post, :create]]
   end

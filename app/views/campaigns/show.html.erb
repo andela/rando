@@ -1,7 +1,9 @@
 <div class="row">
   <div class="col-lg-12">
     <h1><%= @campaign.uppercase_title %></h1>
-    <p><%= link_to 'Edit Campaign', edit_campaign_path %></p>
+    <% if user_signed_in? %>
+      <p><%= link_to 'Edit Campaign', edit_campaign_path %></p>
+    <% end %>
     <p><i><%= "Created by: #{@campaign.user_name}" %></i></p>
     <p><i><%= "Funding Deadline: #{formatted_date(@campaign.deadline, '/')}" %></i></p>
   </div>

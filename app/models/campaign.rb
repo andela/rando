@@ -1,4 +1,5 @@
 class Campaign < ActiveRecord::Base
+  DISPLAY_COUNT = 20
   belongs_to :user
   validates_presence_of :deadline, :amount, :user
   validates :title, length: { minimum: 5 }, presence: true
