@@ -6,7 +6,7 @@ FactoryGirl.define do
   end
 
   factory :campaign do
-    title 'Food for the Poor'
+    sequence(:title) { |n| "Food for the Poor #{n}"}
     deadline Date.tomorrow
     amount '60000'
     description 'Never go hungry again.'

@@ -122,7 +122,7 @@ describe CampaignsController,  type: :controller do
   end
 
   describe 'Get #index' do
-    let!(:campaigns) { create_list(:campaign, 3) }
+    let!(:campaigns) { create_list(:campaign, 3).reverse! }
 
     it 'assigns @campaigns' do
       get :index

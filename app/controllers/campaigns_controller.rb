@@ -2,7 +2,7 @@ class CampaignsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
 
   def index
-    @campaigns = Campaign.page(params[:page]).per(Campaign::DISPLAY_COUNT).decorate
+    @campaigns = Campaign.page(params[:page]).per(Campaign::DISPLAY_COUNT).order(created_at: :desc).decorate
   end
 
   def new

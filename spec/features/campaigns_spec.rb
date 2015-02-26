@@ -90,3 +90,23 @@ feature 'User views all campaigns' do
     expect(page).to have_content('Needs: $60000.0')
   end
 end
+
+feature 'User can only edit his own campaigns' do
+  background do
+    OmniAuth.config.test_mode = true
+    set_valid_omniauth
+
+    visit root_path
+    click_on 'Login'
+  end
+
+  given(:user_one) { create(:user) }
+  given(:user_two) { create(:user) }
+  given!(:campaign_one) { create(:campaign, user: user_one) }
+
+  scenario 'user cannot edit others campaigns' do
+    visit '/campaigns'
+    click_on campaign_one.title
+    expect(page).not_to have_link('Edit Campaign')
+  end
+end
