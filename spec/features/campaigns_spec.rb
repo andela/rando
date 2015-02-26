@@ -66,7 +66,10 @@ feature 'use manages his campaigns' do
     visit '/campaigns'
 
     click_on 'Next'
-    expect(page).to have_content('Needs')
+    expect(page).to have_content('Food for the Poor')
+    expect(page).to have_content(Date.tomorrow.strftime('%Y-%m-%d'))
+    expect(page).to have_content('6000')
+    expect(page).to have_content('Never go hungry again.')
     expect(page).to have_link('First')
   end
 
