@@ -3,5 +3,6 @@ class MyAndonationController < ApplicationController
 
   def index
     @campaigns = current_user.campaigns.order(created_at: :desc).limit(4)
+    @campaigns_count = current_user.campaigns.count
   end
 end

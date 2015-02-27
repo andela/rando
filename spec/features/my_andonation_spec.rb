@@ -5,7 +5,7 @@ feature 'campaigns' do
     OmniAuth.config.test_mode = true
     set_valid_omniauth
 
-    campaign = create(:campaign, user: User.first)
+    create(:campaign, user: User.first)
     visit root_path
     click_on 'Login'
     click_on 'My Andonation'
@@ -15,5 +15,13 @@ feature 'campaigns' do
     expect(page).to have_content('6000')
     click_on 'Food for the Poor'
     expect(page).to have_content('Never go hungry again.')
+  end
+
+  scenario 'authenticated user sees message if no current campaigns' do
+    visit root_path
+
+    click_on 'Login'
+    click_on 'My Andonation'
+    expect(page).to have_content('You have no active campaigns currently running')
   end
 end

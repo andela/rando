@@ -1,9 +1,15 @@
 <h2>Current Campaigns</h2>
 
 <div class="row">
-  <%= render @campaigns %>
+  <% if @campaigns_count == 0 %>
+    <div class="no-campaigns text-center">
+      <p><strong>There are no active campaigns currently running</strong></p>
+    </div>
+  <% else %>
+    <%= render @campaigns %>
 
-  <div class="col-md-11 text-right" >
-    <%= link_to "See all #{@campaigns_count} open campaigns", campaigns_path %>
-  </div>
+    <div class="col-md-11 text-right" >
+      <%= link_to "See all #{@campaigns_count} open campaigns", campaigns_path %>
+    </div>
+  <% end %>
 </div>

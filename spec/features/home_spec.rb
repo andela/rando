@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'Homepage' do
+feature 'Campaigns exists' do
   let!(:campaign) { create(:campaign, title: 'Science and Tech', deadline: Date.tomorrow + 1, amount: '320000', description: 'New innovation comes out daily') }
 
-  scenario 'User visits homepage' do
+  scenario 'User visits homepage and sees current campaigns' do
     visit '/'
 
     expect(page).to have_content('Andonation')
@@ -16,5 +16,15 @@ feature 'Homepage' do
     expect(page).to have_content((Date.tomorrow + 1).strftime('%Y-%m-%d'))
     expect(page).to have_content('$320000')
     expect(page).to have_content('New innovation comes out daily')
+  end
+end
+
+feature 'No Campaigns' do
+  scenario 'User visits homepage and sees no current campaigns' do
+    visit '/'
+
+    within '.no-campaigns' do
+      expect(page).to have_content('There are no active campaigns currently running')
+    end
   end
 end

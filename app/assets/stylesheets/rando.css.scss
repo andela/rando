@@ -129,9 +129,15 @@ h1 {
   min-height: 40px;
 }
 
+.campaign-description {
+  min-height: 65px;
+}
+
 .pad-right {
-//  padding-right: 71px;
   margin: 10px 10px;
   max-width: 350px;
   text-align: right;
+}
+.no-campaigns {
+  font-size: 1.3em;
 }

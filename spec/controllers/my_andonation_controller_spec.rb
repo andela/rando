@@ -21,6 +21,11 @@ describe MyAndonationController, type: :controller do
         get :index
         expect(response).to render_template :index
       end
+
+      it 'checks for no current campaigns' do
+        get :index
+        expect(assigns(:campaigns_count)).to eq(0)
+      end
   end
 
   describe 'methods not allowed for unauthenticated user' do

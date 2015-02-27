@@ -6,5 +6,8 @@
     <h5><%= link_to campaign.title, campaign %></h5>
   </div>
   Deadline: <%= campaign.deadline %><br><br>
-  <div><%= campaign.truncate_description %></div><br>
+  <div class="campaign-description">
+    <%= campaign.truncate_description %>
+  </div>
+  <br>
 </div>
