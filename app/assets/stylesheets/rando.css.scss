@@ -1,5 +1,8 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "bootstrap-social";
 
 body {
   background: #fff;
@@ -7,8 +10,36 @@ body {
   color: #333;
 }
 
+.alert {
+  font-size: 1.12em;
+  text-align: center;
+  background: #FCF2F3;
+  width: 50%;
+  margin: 0 auto;
+  border-radius: .5em;
+  border: 1px solid #730E15;
+}
+
+.ra-success {
+  color: #00B825;
+}
+
+.ra-error {
+  color: #ff0000;
+}
+
+.g-btn {
+  max-width: 80%;
+  margin: 20px auto;
+  text-decoration: none;
+}
+
 .navbar {
   border-bottom: 6px solid #730E15;
+}
+
+.nav-head {
+  font-size: 1.5em;
 }
 
 .nav-link {
@@ -54,13 +85,23 @@ h1 {
 
 .submit-button {
   font-size: 1.5em;
-  display: block;
+  padding: .6em;
+  margin-top: 30px;
+  color: #FFF;
+  background-color: #730E15;
+  -webkit-box-shadow: 0 0 .1em .1em #730E15;
+  -moz-box-shadow: 0 0 .1em .1em #730E15;
+  box-shadow: 0 0 .1em .1em #730E15;
+}
+
+.delete-button {
+  font-size: 1.5em;
   padding: .6em;
   margin-top: 30px;
 }
 
-.submit-button:hover {
-  color: #730E15;
+.delete-button:hover {
+  color: #ff0000;
   -webkit-box-shadow: 0 0 .1em .1em #730E15;
   -moz-box-shadow: 0 0 .1em .1em #730E15;
   box-shadow: 0 0 .1em .1em #730E15;

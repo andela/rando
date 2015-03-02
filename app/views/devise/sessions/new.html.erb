@@ -1,3 +1,3 @@
-<h2>Log in</h2>
-
-<%= link_to "Login", user_omniauth_authorize_path(:google_oauth2), class: 'nav-link' %>
+<%= link_to(user_omniauth_authorize_path(:google_oauth2)) do %>
+  <span class="btn btn-block btn-social btn-lg btn-google-plus g-btn"><i class="fa fa-google-plus"></i>Login in with Google</span>
+<% end %>
