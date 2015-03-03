@@ -49,4 +49,12 @@ describe User, type: :model do
       end
     end
   end
+
+  describe '#add_member_role' do
+    let(:user) { create(:user) }
+
+    it 'user has member role' do
+      expect(user).to have_role :member
+    end
+  end
 end

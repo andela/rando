@@ -68,6 +68,12 @@ gem 'pickadate-rails'
 # Use jquery-turbolinks for jquery date-picker
 gem 'jquery-turbolinks'
 
+# For authorization
+gem 'cancancan', '~> 1.10'
+
+# For role assigning
+gem 'rolify'
+
 # Use Puma web server for Heroku deployment
 gem 'puma'
 
@@ -97,6 +103,9 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'selenium-webdriver'
+
+  # Database cleaner
+  gem 'database_cleaner'
 end
 
 group :production do
