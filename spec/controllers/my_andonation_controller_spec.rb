@@ -11,7 +11,7 @@ describe MyAndonationController, type: :controller do
 
       it 'assigns a list of campaigns' do
         create(:campaign, user: user) # oldest campaign not included in result
-        campaigns = create_list(:campaign, 4, user: user).reverse!
+        campaigns = create_list(:campaign, 3, user: user).reverse!
 
         get :index
         expect(assigns(:campaigns)).to eq(campaigns)

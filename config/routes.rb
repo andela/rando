@@ -15,7 +15,9 @@ Rails.application.routes.draw do
 
   resources :campaigns
 
-  get 'my_andonation',to: 'my_andonation#index', as: :my_andonation
+  get 'my_campaigns', to: 'my_campaigns#index', as: :my_campaigns
+
+  get 'my_andonation', to: 'my_andonation#index', as: :my_andonation
 
   # You can have the root of your site routed with "root"
   root 'home#index'
