@@ -9,22 +9,7 @@
     <p><strong>You have no active campaigns currently running</strong></p>
   </div>
 <% else %>
-  <table class="table table-bordered">
-    <tr>
-      <th>Title</th>
-      <th>Amount Needed</th>
-      <th>Created</th>
-      <th>Funding Deadline</th>
-    </tr>
-    <% @campaigns.each do |campaign| %>
-      <tr>
-        <td><%= link_to campaign.title, campaign %></td>
-        <td><%= campaign.amount %></td>
-        <td><%= formatted_date(campaign.created_at) %></td>
-        <td><%= campaign.deadline %></td>
-      </tr>
-    <% end %>
-  </table>
+  <%= render 'campaigns' %>
 
   <div class="col-md-12 text-right" >
     <%= link_to "View all #{@campaigns_count} Campaigns", my_campaigns_path  %>

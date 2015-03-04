@@ -7,11 +7,11 @@ feature 'Campaigns' do
   end
 
   scenario 'authenticated user sees his campaigns' do
-    create(:campaign, title: 'Black Long Coffee is Bitter', user: User.first)
-    create_list(:campaign, 4, user: User.first)
-    visit root_path
+    visit '/'
 
     click_on 'Login'
+    create(:campaign, title: 'Black Long Coffee is Bitter', user: User.first)
+    create_list(:campaign, 4, user: User.first)
     click_on 'My Andonation'
     expect(page).to have_content('My Campaigns')
     expect(page).to have_content('Food for the Poor')
@@ -29,6 +29,9 @@ feature 'Campaigns' do
     click_on 'Login'
     click_on 'My Andonation'
     expect(page).to_not have_link('View all 0 campaigns')
+    expect(page).to have_content('You have no active campaigns currently running')
+
+    visit '/my_andonation/campaigns'
     expect(page).to have_content('You have no active campaigns currently running')
     click_on 'Logout'
   end

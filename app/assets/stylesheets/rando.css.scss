@@ -87,11 +87,12 @@ h1 {
   font-size: 1.5em;
   padding: .6em;
   margin-top: 30px;
-  color: #FFF;
-  background-color: #730E15;
-  -webkit-box-shadow: 0 0 .1em .1em #730E15;
-  -moz-box-shadow: 0 0 .1em .1em #730E15;
-  box-shadow: 0 0 .1em .1em #730E15;
+}
+
+.submit-button:hover {
+  -webkit-box-shadow: 0 0 0 .05em #730E15;
+  -moz-box-shadow: 0 0 0 .05em #730E15;
+  box-shadow: 0 0 0 .05em #730E15;
 }
 
 .delete-button {
@@ -102,9 +103,9 @@ h1 {
 
 .delete-button:hover {
   color: #ff0000;
-  -webkit-box-shadow: 0 0 .1em .1em #730E15;
-  -moz-box-shadow: 0 0 .1em .1em #730E15;
-  box-shadow: 0 0 .1em .1em #730E15;
+  -webkit-box-shadow: 0 0 0 .05em #730E15;
+  -moz-box-shadow: 0 0 0 .05em #730E15;
+  box-shadow: 0 0 0 .05em #730E15;
 }
 
 .video-container {
@@ -171,7 +172,8 @@ h1 {
 }
 
 .campaign-description {
-  min-height: 65px;
+  height: 67px;
+  overflow-y: hidden;
 }
 
 .pad-right {
