@@ -1,5 +1,6 @@
 # This will guess the User class
 FactoryGirl.define do
+
   factory :user do
     sequence(:first_name) { |n| "FirstName#{n}" }
     sequence(:last_name) { |n| "LastName#{n}" }
@@ -15,6 +16,10 @@ FactoryGirl.define do
     youtube_url 'https://www.youtube.com/watch?v=7WJk-z5AmXk'
 
     user
+  end
+
+  factory :role do
+    name 'admin'
   end
 
   factory :invalid_campaign, class: Campaign do

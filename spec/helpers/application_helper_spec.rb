@@ -23,4 +23,11 @@ describe ApplicationHelper do
       it { is_expected.to eq('2015-02-19') }
     end
   end
+
+  describe '#capitalize_name' do
+    let(:name) { 'example' }
+    subject { helper.capitalize_name(name).to_s }
+
+    it { is_expected.to eq('Example') }
+  end
 end
