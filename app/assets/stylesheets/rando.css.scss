@@ -10,12 +10,16 @@ body {
   color: #333;
 }
 
-.alert {
+.alert,
+.alert-js {
   font-size: 1.12em;
   text-align: center;
-  background: #FCF2F3;
   width: 50%;
   margin: 0 auto;
+}
+
+.alert {
+  background: #FCF2F3;
   border-radius: .5em;
   border: 1px solid #730E15;
 }

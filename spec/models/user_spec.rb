@@ -57,4 +57,38 @@ describe User, type: :model do
       expect(user).to have_role :member
     end
   end
+
+  describe '#update_roles' do
+    let(:users) { create_list(:user, 3) }
+    let(:admin) {users.first}
+
+    before do
+      admin.add_role :admin
+      admin.add_role :banker
+      users.second.add_role :banker
+      users.third.add_role :admin
+      users_ids = users.map(&:id).split(' ')
+      selected_roles = ['banker', 'distributor']
+      User.update_roles(users_ids, selected_roles, admin)
+    end
+
+    it 'removes a role' do
+      user = create(:user)
+      user.remove_role :banker
+      expect(user).to_not have_role :banker
+      expect(admin).to have_role :admin
+    end
+
+    it 'updates roles of users' do
+      users.each do |user|
+        expect(user).to have_role(:banker)
+        expect(user).to have_role(:distributor)
+      end
+    end
+
+    it 'should not be able to remove admin role from the current user' do
+      expect { raise StandardError }.to raise_error
+      expect(admin).to have_role(:admin)
+    end
+  end
 end

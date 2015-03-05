@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: :index
+  put 'users/roles/update', to: 'roles#update_multiple', as: :update_user_roles
+  get 'users/roles/edit', to: 'roles#edit_multiple', as: :edit_user_roles
 
   resources :campaigns
 
