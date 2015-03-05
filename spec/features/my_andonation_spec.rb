@@ -42,7 +42,7 @@ feature 'Campaigns' do
 end
 
 feature 'Roles' do
-  scenario 'a user with admin role should see Users link' do
+  background do
     OmniAuth.config.test_mode = true
     set_valid_omniauth
     create(:user, first_name: 'Chiemeka', last_name: 'Alim')
@@ -52,6 +52,9 @@ feature 'Roles' do
     visit '/'
     click_on 'Login'
     click_on 'My Andonation'
+  end
+
+  scenario 'a user with admin role should see Users link' do
     expect(page).not_to have_link('Users')
 
     user = User.where(email: 'christopher@andela.co').first

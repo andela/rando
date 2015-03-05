@@ -1,0 +1,15 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body text-center">
+      <h5>How much do you want to withdraw?</h5>
+      <%= form_tag withdraw_path do %>
+        <div>
+          <%= label_tag '$' %>
+          <%= number_field_tag :amount, params[:amount] %>
+        </div>
+        <%= submit_tag "Withdraw", class: "btn btn-default btn-primary" %>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -74,6 +74,12 @@ gem 'cancancan', '~> 1.10'
 # For role assigning
 gem 'rolify'
 
+# Adding material design
+gem 'bootstrap-material-design'
+
+#used to make api calls
+gem 'httparty'
+
 # Use Puma web server for Heroku deployment
 gem 'puma'
 
@@ -96,6 +102,10 @@ group :development, :test do
 
   # To open a file(snapshot) automaitcally
   gem 'launchy'
+
+  # for testing with chrome
+  gem "chromedriver-helper"
+
 end
 
 group :test do
@@ -106,6 +116,8 @@ group :test do
 
   # Database cleaner
   gem 'database_cleaner'
+  # For Stubbing Api calls
+  gem 'webmock'
 end
 
 group :production do

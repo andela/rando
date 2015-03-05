@@ -15,6 +15,15 @@ Rails.application.routes.draw do
 
   resources :campaigns
 
+  post 'transaction/deposit/', to: 'transactions#deposit', as: :deposit
+  post 'transaction/withdraw/', to: 'transactions#withdraw', as: :withdraw
+
+  get 'transaction/deposit/new', to: 'transactions#new_deposit', as: :new_deposit
+  get 'transaction/withdraw/new', to: 'transactions#new_withdrawal', as: :new_withdrawal
+
+  resources :transactions, only: [:index]
+
+
   get 'my_andonation', to: 'my_andonation#index', as: :my_andonation
 
   get 'my_andonation/campaigns', to: 'my_andonation#campaigns', as: :my_campaigns
