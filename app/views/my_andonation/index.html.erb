@@ -1,28 +1,21 @@
 <h2>My Campaigns</h2>
+<div class="pull-right">
+  <% if current_user.has_role? :admin %>
+    <span><%= link_to 'Users', users_path, class: "btn btn-default" %></span>
+  <% end %>
 
-<% if current_user.has_role? :admin %>
-  <span><%= link_to 'Users', users_path %></span>
-<% end %>
-
+  <% if current_user.has_role? :banker %>
+    <span><%= link_to 'Bankers Page', transactions_path, class: "btn btn-default" %></span>
+  <% end %>
+</div>
 <% if @campaigns_count == 0 %>
   <div class="no-campaigns text-center">
     <p><strong>You have no active campaigns currently running</strong></p>
   </div>
 <% else %>
-  <table class="table table-bordered">
-    <tr>
-      <th>Title</th>
-      <th>Amount Needed</th>
-      <th>Created</th>
-      <th>Funding Deadline</th>
-    </tr>
-    <% @campaigns.each do |campaign| %>
-      <tr>
-        <td><%= link_to campaign.title, campaign %></td>
-        <td><%= campaign.amount %></td>
-        <td><%= formatted_date(campaign.created_at) %></td>
-        <td><%= campaign.deadline %></td>
-      </tr>
-    <% end %>
-  </table>
+  <%= render 'campaigns' %>
+
+  <div class="col-md-12 text-right" >
+    <%= link_to "View all #{@campaigns_count} Campaigns", my_campaigns_path  %>
+  </div>
 <% end %>

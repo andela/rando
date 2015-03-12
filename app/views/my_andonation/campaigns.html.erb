@@ -1,0 +1,9 @@
+<h2>My Campaigns</h2>
+
+<% if @campaigns_count == 0 %>
+  <div class="no-campaigns text-center">
+    <p><strong>You have no active campaigns currently running</strong></p>
+  </div>
+<% else %>
+  <%= render 'campaigns' %>
+<% end %>

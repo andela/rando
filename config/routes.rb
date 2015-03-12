@@ -15,9 +15,20 @@ Rails.application.routes.draw do
 
   resources :campaigns
 
-  get 'my_andonation',to: 'my_andonation#index', as: :my_andonation
+  post 'transaction/deposit/', to: 'transactions#deposit', as: :deposit
+  post 'transaction/withdraw/', to: 'transactions#withdraw', as: :withdraw
 
-  # You can have the root of your site routed with "root"
+  get 'transaction/deposit/new', to: 'transactions#new_deposit', as: :new_deposit
+  get 'transaction/withdraw/new', to: 'transactions#new_withdrawal', as: :new_withdrawal
+
+  resources :transactions, only: [:index]
+
+
+  get 'my_andonation', to: 'my_andonation#index', as: :my_andonation
+
+  get 'my_andonation/campaigns', to: 'my_andonation#campaigns', as: :my_campaigns
+
+# You can have the root of your site routed with "root"
   root 'home#index'
 
   # Example of regular route:

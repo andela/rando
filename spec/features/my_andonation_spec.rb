@@ -8,15 +8,19 @@ feature 'Campaigns' do
 
   scenario 'authenticated user sees his campaigns' do
     visit '/'
+
     click_on 'Login'
-    create(:campaign, user: User.first)
+    create(:campaign, title: 'Black Long Coffee is Bitter', user: User.first)
+    create_list(:campaign, 4, user: User.first)
     click_on 'My Andonation'
     expect(page).to have_content('My Campaigns')
     expect(page).to have_content('Food for the Poor')
     expect(page).to have_content((Date.tomorrow + 1.day).strftime('%Y-%m-%d'))
     expect(page).to have_content('6000')
-    click_on 'Food for the Poor'
-    expect(page).to have_content('Never go hungry again.')
+    expect(page).to have_content('View all 5 Campaigns')
+
+    click_on 'View all 5 Campaigns'
+    expect(page).to have_content('Black Long Coffee is Bitter')
   end
 
   scenario 'authenticated user sees message if no current campaigns' do
@@ -24,6 +28,10 @@ feature 'Campaigns' do
 
     click_on 'Login'
     click_on 'My Andonation'
+    expect(page).to_not have_link('View all 0 campaigns')
+    expect(page).to have_content('You have no active campaigns currently running')
+
+    visit '/my_andonation/campaigns'
     expect(page).to have_content('You have no active campaigns currently running')
     click_on 'Logout'
   end
@@ -34,7 +42,7 @@ feature 'Campaigns' do
 end
 
 feature 'Roles' do
-  scenario 'a user with admin role should see Users link' do
+  background do
     OmniAuth.config.test_mode = true
     set_valid_omniauth
     create(:user, first_name: 'Chiemeka', last_name: 'Alim')
@@ -44,6 +52,9 @@ feature 'Roles' do
     visit '/'
     click_on 'Login'
     click_on 'My Andonation'
+  end
+
+  scenario 'a user with admin role should see Users link' do
     expect(page).not_to have_link('Users')
 
     user = User.where(email: 'christopher@andela.co').first

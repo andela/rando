@@ -24,4 +24,8 @@ class User < ActiveRecord::Base
   def add_member_role
     self.add_role :member
   end
+
+  def as_json(opts={})
+    {id: self.id, email: self.email, name: self.name}
+  end
 end
