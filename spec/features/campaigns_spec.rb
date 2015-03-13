@@ -12,6 +12,8 @@ feature 'user manages his campaigns' do
   end
 
   scenario 'authenticated user creates campaign' do
+    res = double("response", body: sample_transaction_api_response)
+    expect(SubledgerClient).to receive(:get) { res }
 
     click_on 'Create Campaign'
     expect(page).to have_content("Title can't be blank")
@@ -55,7 +57,6 @@ feature 'user manages his campaigns' do
     click_on 'Edit Campaign'
     click_on 'Delete Campaign'
     expect(page).to have_content('Campaign was successfully deleted.')
-
     click_on 'Logout'
     expect(page).not_to have_link('Add Campaign')
   end
@@ -73,7 +74,7 @@ feature 'user manages his campaigns' do
     expect(page).to have_link('First')
   end
 
-  scenario 'user clicks in datepicker field', driver: :selenium do
+  scenario 'user clicks in datepicker field', driver: :chrome do
     find_field('Deadline').click
     expect(page).to have_content(Date.tomorrow.day)
     click_on 'Close'

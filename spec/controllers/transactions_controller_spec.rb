@@ -34,11 +34,7 @@ describe TransactionsController, type: :controller do
 
   describe 'POST #deposit' do
     it 'gives a success message' do
-
-      stub_request(:post, "https://2lzQysbyNXhPgYxx8pp2vE:CJzZPwRw01thgquyeD6RYc@api.subledger.com/v2/orgs/EpXxbhcVpxyC8BH0icuIQF/books/tWp8ASEJApGyJvjwjW8pXl/journal_entries/create_and_post").
-          with(:body => /effective_at*/,
-               :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-          to_return(:status => 202, :body => "", :headers => {})
+      allow_any_instance_of(SubledgerClient).to receive(:deposit).and_return(202)
 
       post :deposit, amount: 100
       expect(flash[:notice]).to eq('Deposit Successful')
@@ -47,10 +43,7 @@ describe TransactionsController, type: :controller do
 
   describe 'POST #withdraw' do
     it 'gives a success mesage' do
-      stub_request(:post, "https://2lzQysbyNXhPgYxx8pp2vE:CJzZPwRw01thgquyeD6RYc@api.subledger.com/v2/orgs/EpXxbhcVpxyC8BH0icuIQF/books/tWp8ASEJApGyJvjwjW8pXl/journal_entries/create_and_post").
-          with(:body => /effective_at*/,
-               :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-          to_return(:status => 202, :body => "", :headers => {})
+      allow_any_instance_of(SubledgerClient).to receive(:withdraw).and_return(202)
 
       post :withdraw, amount: 200
       expect(flash[:notice]).to eq('Withdrawal Successful')

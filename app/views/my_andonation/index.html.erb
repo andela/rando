@@ -19,3 +19,15 @@
     <%= link_to "View all #{@campaigns_count} Campaigns", my_campaigns_path  %>
   </div>
 <% end %>
+<h3>Banking transactions</h3>
+<% if @transactions.count ==0 %>
+  <div class="no-campaigns text-center">
+    <p><strong>0 banking transactions </strong></p>
+  </div>
+<% else %>
+  <%= render 'transactions' %>
+
+  <div class="col-md-12 text-right" >
+    <%= link_to "See full banking history", transactions_path  %>
+  </div>
+<% end %>

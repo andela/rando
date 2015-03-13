@@ -1,0 +1,15 @@
+<table class="table table-bordered">
+  <tr>
+    <th>Date</th>
+    <th>Transaction Type</th>
+    <th>Amount</th>
+  </tr>
+  <% @transactions.each do |transaction| %>
+
+    <tr>
+      <td><%= transaction.posted_at %></td>
+      <td><%= transaction.transaction_type %></td>
+      <td><%= transaction.amount %></td>
+    </tr>
+  <% end %>
+</table>

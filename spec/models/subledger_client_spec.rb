@@ -42,7 +42,6 @@ describe SubledgerClient, type: :model do
     it 'returns status code of 202' do
       client = SubledgerClient.new
       current_user = create(:user)
-
       res = double("response", code: "202")
 
       allow(client).to receive(:execute_transaction) { res }
@@ -50,6 +49,15 @@ describe SubledgerClient, type: :model do
     end
   end
 
+  describe '#user_transactions' do
+    it 'returns status code of 202' do
+      client = SubledgerClient.new
+      transaction = Transaction.new(ActiveSupport::JSON.decode(expected_transactions))
+      allow(client).to receive(:transactions) { [transaction] }
+
+      expect(client.user_transactions('franklin.ugwu@andela.co')[0]).to eq(transaction)
+    end
+  end
 
   def sample_transaction_api_response
     '{

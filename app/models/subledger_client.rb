@@ -14,6 +14,11 @@ class SubledgerClient
     Transaction.create(decode(response.body)["posted_lines"])
   end
 
+  def user_transactions email
+    response = transactions
+    select_three(response.select { |transaction| transaction if transaction.email == email })
+  end
+
   def balance
     response = self.class.get("/accounts/#{ENV["SYSTEM_ACC_CREDIT"]}/balance?at=#{time_now}", basic_auth: @auth)
     decode(response.body)["balance"]["value"]["amount"]
@@ -68,5 +73,16 @@ class SubledgerClient
 
   def time_now
     Time.zone.now.iso8601
+  end
+
+  def select_three transactions
+    $i = 0
+    filtered_transaction = []
+    while $i < transactions.length  do
+      filtered_transaction.push(transactions[$i])
+      $i +=1
+      break if $i == 3
+    end
+    filtered_transaction
   end
 end

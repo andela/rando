@@ -1,12 +1,15 @@
 require 'rails_helper'
 
 feature 'Campaigns' do
+  WebMock.disable!
   background do
     OmniAuth.config.test_mode = true
     set_valid_omniauth
   end
 
   scenario 'authenticated user sees his campaigns' do
+    res = double("response", body: sample_transaction_api_response)
+    expect(SubledgerClient).to receive(:get) { res }
     visit '/'
 
     click_on 'Login'
@@ -59,6 +62,7 @@ feature 'Roles' do
 
     user = User.where(email: 'christopher@andela.co').first
     user.add_role :admin
+    save_and_open_page
     click_on 'My Andonation'
     click_on 'Users'
     expect(page).to have_content('Fiyin')
