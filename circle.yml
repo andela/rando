@@ -9,4 +9,4 @@ deployment:
 dependencies:
   pre:
     - sudo aptitude update
-    - sude aptitude upgrade -y google-chrome-stable
+    - sudo aptitude upgrade -y google-chrome-stable
