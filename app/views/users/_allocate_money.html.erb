@@ -1,0 +1,16 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body text-center">
+      <h5>How much do you want to allocate?</h5>
+      <%= form_tag allocate_money_path do %>
+        <%= hidden_field_tag "users_ids[]", @users_ids %>
+        <div>
+          <%= label_tag '$' %>
+          <%= number_field_tag :amount, params[:amount] %>
+        </div>
+        <%= submit_tag "Allocate", class: "btn btn-default btn-primary" %>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <% end %>
+    </div>
+  </div>
+</div>

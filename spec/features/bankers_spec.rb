@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Roles' do
+feature 'Bankers make deposit' do
   scenario 'User with bankers role', js: true do
     stub_request(:get, /.*KcVEdomrdxdHK4P7QFExOi\/lines*/).
         with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
@@ -30,5 +30,27 @@ feature 'Roles' do
     expect(page).to have_content('christopher@andela.co')
 
     OmniAuth.config.test_mode = false
+  end
+end
+
+feature 'bankers allocates money to users', js: :true do
+  scenario 'User with bankers role shares money' do
+    user = create(:user, email:'christopher@andela.co')
+    user2 = create(:user)
+    user.add_role :distributor
+    user.add_role :admin
+    OmniAuth.config.test_mode = true
+    set_valid_omniauth
+    visit '/'
+    click_on 'Login'
+    visit '/users'
+    find(:css, "#users_ids_[value='#{user2.id}']").set(true)
+    click_on 'Allocate Money'
+    within("#modal-window") do
+      fill_in 'amount', with: 100
+      click_on 'Allocate'
+    end
+
+    expect(page).to have_content('Money allocated successfully')
   end
 end

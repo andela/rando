@@ -3,7 +3,6 @@ class SubledgerClient
 
   base_uri "api.subledger.com:443/v2/orgs/#{ENV["ORG_ID"]}/books/#{ENV["BOOK_ID"]}"
 
-
   def initialize
     @auth = { username: ENV["KEY"], password: ENV["SECRET"] }
   end
@@ -25,13 +24,17 @@ class SubledgerClient
   end
 
   def deposit (amount, current_user)
-    response = execute_transaction(amount, current_user, 'credit', 'debit')
+    response = execute_transaction(amount, current_user, 'credit', 'debit', ENV["SYSTEM_ACC_CREDIT"], ENV["SYSTEM_ACC"])
     response.code
   end
 
   def withdraw (amount, current_user)
-    response = execute_transaction(amount, current_user, 'debit', 'credit')
+    response = execute_transaction(amount, current_user, 'debit', 'credit', ENV["SYSTEM_ACC_CREDIT"], ENV["SYSTEM_ACC"])
     response.code
+  end
+
+  def allocate(user_account, ammount)
+    response = self.class.get("/accounts/#{ENV["SYSTEM_ACC_CREDIT"]}/balance?at=#{time_now}", basic_auth: @auth)
   end
 
   private
@@ -40,14 +43,14 @@ class SubledgerClient
     ActiveSupport::JSON.decode(body)
   end
 
-  def body(amount, current_user, type1, type2)
+  def body(amount, current_user, type1, type2, credit_account, debit_account)
 
     {
         effective_at: time_now,
         description: current_user.email,
         reference: "http://www.andela.co/",
         lines: [{
-                    account: ENV["SYSTEM_ACC_CREDIT"],
+                    account: credit_account,
                     description: current_user.email,
                     reference: "http://www.andela.co/",
                     value: {
@@ -56,7 +59,7 @@ class SubledgerClient
                     }
                 },
                 {
-                    account: ENV["SYSTEM_ACC"],
+                    account: debit_account,
                     description: current_user.email,
                     reference: "http://www.andela.co/",
                     value: {
@@ -67,8 +70,8 @@ class SubledgerClient
     }
   end
 
-  def execute_transaction(amount, current_user, type1, type2)
-    self.class.post("/journal_entries/create_and_post", body: body(amount, current_user, type1, type2), basic_auth: @auth)
+  def execute_transaction(amount, current_user, type1, type2, credit_account, debit_account)
+    self.class.post("/journal_entries/create_and_post", body: body(amount, current_user, type1, type2,credit_account , debit_account), basic_auth: @auth)
   end
 
   def time_now

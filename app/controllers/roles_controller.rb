@@ -1,5 +1,6 @@
 class RolesController < ApplicationController
   before_action :authenticate_user!
+  authorize_resource
 
   def edit_multiple
     @users_ids = params[:users_ids]

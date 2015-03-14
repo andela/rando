@@ -6,6 +6,7 @@ describe RolesController, type: :controller do
     
     before do
       allow(request.env['warden']).to receive(:authenticate!) { user }
+      user.add_role :admin
       allow(controller).to receive(:current_user) { user }
     end
 

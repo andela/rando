@@ -62,7 +62,6 @@ feature 'Roles' do
 
     user = User.where(email: 'christopher@andela.co').first
     user.add_role :admin
-    save_and_open_page
     click_on 'My Andonation'
     click_on 'Users'
     expect(page).to have_content('Fiyin')

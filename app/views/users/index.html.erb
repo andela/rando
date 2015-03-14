@@ -2,7 +2,14 @@
 
 <%= form_tag edit_user_roles_path, id: 'edit-form', remote: true, method: :get do %>
   <p class="alert-js ra-error"></p>
-  <p><%= submit_tag 'Edit Roles', class: "btn btn-success" %></p>
+  <p>
+    <% if current_user.has_role? :admin %>
+      <%= submit_tag 'Edit Roles', id: 'edit', class: "btn btn-success" %>
+    <% end %>
+    <% if current_user.has_role? :distributor %>
+      <%= submit_tag 'Allocate Money', id: 'allocate', class: "btn btn-success" %>
+    <% end %>
+  </p>
   <table class="table table-bordered">
     <tr>
       <th><input type="checkbox" id="check-all"></th>

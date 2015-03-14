@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   resources :users, only: :index
   put 'users/roles/update', to: 'roles#update_multiple', as: :update_user_roles
   get 'users/roles/edit', to: 'roles#edit_multiple', as: :edit_user_roles
+  get 'users/allocate_money/new', to: 'users#new_allocation', as: :new_allocation
+  post 'users/allocate_money', to: 'users#allocate_money', as: :allocate_money
 
   resources :campaigns
 

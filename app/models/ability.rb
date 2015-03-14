@@ -5,14 +5,21 @@ class Ability
     # Define abilities for the passed in user here. For example:
     #
     user ||= User.new
-    
+
+    if user.has_role? :distributor
+      can :allocate_money, User
+      can :read, User
+    end
+
     if user.has_role? :admin
       can :read, User
+      can :manage, Role
     end
 
     if user.has_role? :banker
       can :manage, Transaction
     end
+
     #
     # The first argument to `can` is the action you are giving the user
     # permission to do.
