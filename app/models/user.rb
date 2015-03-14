@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:google_oauth2]
   validates_presence_of :name
   validates :email, presence: true, uniqueness: true
-  after_create :add_member_role
+  after_create :add_member_role, :create_account
   scope :unique_roles, ->(users_ids) { where(id: users_ids).where.not(roles: {name: 'member'}).joins(:roles).uniq.order('roles.name').pluck('roles.name') }
 
   def self.find_for_google_oauth2(google_response)
@@ -46,5 +46,11 @@ class User < ActiveRecord::Base
         self.remove_role(role) unless self == admin && role == 'admin'
       end
     end
+  end
+
+  def create_account
+    client = SubledgerClient.new
+    self.account_id = client.create_account(self.to_json)
+    self.save
   end
 end

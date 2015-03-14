@@ -14,6 +14,19 @@ describe Campaign, type: :model do
   it { is_expected.to allow_value('https://www.youtube.com/watch?v=jGnoIDJFrZI').for(:youtube_url) }
 
   describe 'validations' do
+    before do
+      res = double("response", body: '{
+                          "active_account": {
+                            "id": "iDFQmJjGUgXC6ecn7zZxc6",
+                            "book": "tWp8ASEJApGyJvjwjW8pXl",
+                            "description": "example@andela.co",
+                            "reference": "http://www.andela.co/",
+                            "normal_balance": "credit",
+                            "version": 1
+                          }
+                        }')
+      expect(SubledgerClient).to receive(:post) { res }
+    end
     context 'deadline is defined' do
       before do
         @campaign = build(:campaign, deadline: deadline)
@@ -45,7 +58,7 @@ describe Campaign, type: :model do
       end
 
       context 'deadline is tomorrow' do
-        let(:deadline) { Date.tomorrow }
+        let(:deadline) { Date.tomorrow + 1.day }
 
         it 'object is valid' do
           expect(@campaign).to be_valid

@@ -58,6 +58,15 @@ describe User, type: :model do
     end
   end
 
+  describe '#create_account' do
+    let(:user) { create(:user) }
+
+    it 'user has an account' do
+      allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+      expect(user.account_id).to eq("account_id")
+    end
+  end
+
   describe '#update_roles' do
     let(:users) { create_list(:user, 3) }
     let(:admin) {users.first}
