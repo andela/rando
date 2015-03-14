@@ -5,3 +5,8 @@ deployment:
       - git push git@heroku.com:andela-rando.git $CIRCLE_SHA1:refs/heads/master
       - heroku run rake db:migrate --app andela-rando:
           timeout: 400 # if your deploys take a long time
+
+dependencies:
+  pre:
+    - sudo aptitude update
+    - sude aptitude upgrade -y google-chrome-stable
