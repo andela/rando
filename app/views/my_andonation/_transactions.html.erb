@@ -2,14 +2,17 @@
   <tr>
     <th>Date</th>
     <th>Transaction Type</th>
+    <th>Description</th>
     <th>Amount</th>
+    <th>By</th>
   </tr>
   <% @transactions.each do |transaction| %>
-
     <tr>
       <td><%= transaction.posted_at %></td>
-      <td><%= transaction.transaction_type %></td>
+      <td><%= transaction.transaction_type  %></td>
+      <td><%= transaction.description  %></td>
       <td><%= transaction.amount %></td>
+      <td><%= transaction.email %></td>
     </tr>
   <% end %>
 </table>

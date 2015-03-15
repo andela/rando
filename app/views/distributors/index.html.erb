@@ -1,10 +1,10 @@
 <h2>Users</h2>
 
-<%= form_tag edit_user_roles_path, id: 'edit-form', remote: true, method: :get do %>
+<%= form_tag new_allocation_path, id: 'edit-form', remote: true, method: :get do %>
   <p class="alert-js ra-error"></p>
   <p>
-    <% if current_user.has_role? :admin %>
-      <%= submit_tag 'Edit Roles', id: 'edit', class: "btn btn-success" %>
+    <% if current_user.has_role? :distributor %>
+      <%= submit_tag 'Allocate Money', id: 'allocate', class: "btn btn-success" %>
     <% end %>
   </p>
   <table class="table table-bordered">
@@ -12,16 +12,14 @@
       <th><input type="checkbox" id="check-all"></th>
       <th>First Name</th>
       <th>Last Name</th>
-      <th>Email</th>
-      <th>Roles</th>
+      <th>User Balance</th>
     </tr>
     <% @users.each do |user| %>
       <tr>
         <td><%= check_box_tag "users_ids[]", user.id, false, class: "check-box" %></td>
         <td><%= user.first_name %></td>
         <td><%= user.last_name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.pretty_roles %></td>
+        <td><%= user.balance  %></td>
       </tr>
     <% end %>
   </table>

@@ -5,6 +5,11 @@ class UserDecorator < Draper::Decorator
     capitalized_roles.join(', ')
   end
 
+  def balance
+    client = SubledgerClient.new
+    client.balance(account_id)
+  end
+
   private
   def sorted_roles
     roles.order(:name)

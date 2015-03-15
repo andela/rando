@@ -23,12 +23,13 @@ describe SubledgerClient, type: :model do
       res = double("response", body: balance)
 
       expect(SubledgerClient).to receive(:get) { res }
-      expect(client.balance).to eq("34160")
+      expect(client.balance("account")).to eq("34160")
     end
   end
 
   describe '#deposit' do
     it 'returns status code of 202' do
+      allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
       client = SubledgerClient.new
       current_user = create(:user)
       res = double("response", code: "202")
@@ -40,6 +41,7 @@ describe SubledgerClient, type: :model do
 
   describe '#withdraw' do
     it 'returns status code of 202' do
+      allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
       client = SubledgerClient.new
       current_user = create(:user)
       res = double("response", code: "202")
@@ -75,6 +77,29 @@ describe SubledgerClient, type: :model do
       expect(SubledgerClient).to receive(:post) { res }
 
       expect(client.create_account("franklin.ugwu@andela.co")).to eq("iDFQmJjGUgXC6ecn7zZxc6")
+    end
+  end
+
+  describe '#allocate' do
+    it 'return status 202 code' do
+      allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+      user = create(:user)
+      client = SubledgerClient.new
+      res = double("response", body: '{
+                          "active_account": {
+                            "id": "iDFQmJjGUgXC6ecn7zZxc6",
+                            "book": "tWp8ASEJApGyJvjwjW8pXl",
+                            "description": "example@andela.co",
+                            "reference": "http://www.andela.co/",
+                            "normal_balance": "credit",
+                            "version": 1
+                          }
+                        }',
+      code: 202)
+
+      expect(SubledgerClient).to receive(:post) { res }
+
+      expect(client.allocate([user.id], 12, user)).to eq(202)
     end
   end
 

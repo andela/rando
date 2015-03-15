@@ -28,23 +28,45 @@ class SubledgerClient
     select_three(response.select { |transaction| transaction if transaction.email == email })
   end
 
-  def balance
-    response = self.class.get("/accounts/#{ENV["SYSTEM_ACC_CREDIT"]}/balance?at=#{time_now}", basic_auth: @auth)
+  def balance account
+    response = self.class.get("/accounts/#{account}/balance?at=#{time_now}", basic_auth: @auth)
     decode(response.body)["balance"]["value"]["amount"]
   end
 
   def deposit (amount, current_user)
-    response = execute_transaction(amount, current_user, 'credit', 'debit', ENV["SYSTEM_ACC_CREDIT"], ENV["SYSTEM_ACC"])
+    description = {
+        user: current_user.to_json,
+        description: "Deposit into system accout"
+    }
+    response = execute_transaction(amount, description, ENV["SYSTEM_ACC_CREDIT"], ENV["SYSTEM_ACC"])
     response.code
   end
 
   def withdraw (amount, current_user)
-    response = execute_transaction(amount, current_user, 'debit', 'credit', ENV["SYSTEM_ACC_CREDIT"], ENV["SYSTEM_ACC"])
+    description = {
+        user: current_user.to_json,
+        description: "Withdrawal from system accout"
+    }
+
+    response = execute_transaction(amount, description, ENV["SYSTEM_ACC_CREDIT"], ENV["SYSTEM_ACC"])
     response.code
   end
 
-  def allocate(user_account, ammount)
-    response = self.class.get("/accounts/#{ENV["SYSTEM_ACC_CREDIT"]}/balance?at=#{time_now}", basic_auth: @auth)
+  def allocate(user_ids, amount, current_user)
+    responses = []
+    user_ids.each do |user_id|
+      user = User.find(user_id)
+      description = {
+          user: current_user.to_json,
+          description: "Allocate money to #{user.name}"
+      }
+      responses << execute_transaction(amount, description, user.account_id, ENV["SYSTEM_ACC_CREDIT"]).code
+    end
+    if responses.include?(201)
+      201
+    else
+      202
+    end
   end
 
   private
@@ -53,35 +75,35 @@ class SubledgerClient
     ActiveSupport::JSON.decode(body)
   end
 
-  def body(amount, current_user, type1, type2, credit_account, debit_account)
+  def body(amount, current_user, credit_account, debit_account)
 
     {
         effective_at: time_now,
-        description: current_user.email,
+        description: current_user.to_json,
         reference: "http://www.andela.co/",
         lines: [{
-                    account: ENV["SYSTEM_ACC_CREDIT"],
+                    account: credit_account,
                     description: current_user.to_json,
                     reference: "http://www.andela.co/",
                     value: {
-                        type: type1,
+                        type: 'credit',
                         amount:amount
                     }
                 },
                 {
-                    account: ENV["SYSTEM_ACC"],
+                    account: debit_account,
                     description: current_user.to_json,
                     reference: "http://www.andela.co/",
                     value: {
-                        type: type2,
+                        type: 'debit',
                         amount:amount
                     }
                 }]
     }
   end
 
-  def execute_transaction(amount, current_user, type1, type2, credit_account, debit_account)
-    self.class.post("/journal_entries/create_and_post", body: body(amount, current_user, type1, type2,credit_account , debit_account), basic_auth: @auth)
+  def execute_transaction(amount, current_user,credit_account, debit_account)
+    self.class.post("/journal_entries/create_and_post", body: body(amount, current_user, credit_account , debit_account), basic_auth: @auth)
   end
 
   def time_now

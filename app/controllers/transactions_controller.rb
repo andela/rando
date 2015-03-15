@@ -5,7 +5,7 @@ class TransactionsController < ApplicationController
 
   def index
     @transactions = @client.transactions
-    @balance = @client.balance
+    @balance = @client.balance(ENV["SYSTEM_ACC_CREDIT"])
   end
 
   def new_deposit

@@ -13,4 +13,15 @@ describe UserDecorator do
       expect(user.pretty_roles).to eq('Admin, Banker, Member')
     end
   end
+
+  describe '#balance' do
+    let(:user) { create(:user).decorate }
+
+    it 'returns the balance of user' do
+      allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(100)
+      allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+
+      expect(user.balance).to eq(100)
+    end
+  end
 end

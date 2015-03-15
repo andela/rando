@@ -7,6 +7,9 @@
   <% if current_user.has_role? :banker %>
     <span><%= link_to 'Bankers Page', transactions_path, class: "btn btn-default" %></span>
   <% end %>
+  <% if current_user.has_role? :distributor %>
+    <span><%= link_to 'Distributors Page', distributors_path, class: "btn btn-default" %></span>
+  <% end %>
 </div>
 <% if @campaigns_count == 0 %>
   <div class="no-campaigns text-center">
