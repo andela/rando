@@ -59,6 +59,25 @@ describe SubledgerClient, type: :model do
     end
   end
 
+  describe '#create_account' do
+    it 'returns and account id' do
+      client = SubledgerClient.new
+      res = double("response", body: '{
+                          "active_account": {
+                            "id": "iDFQmJjGUgXC6ecn7zZxc6",
+                            "book": "tWp8ASEJApGyJvjwjW8pXl",
+                            "description": "example@andela.co",
+                            "reference": "http://www.andela.co/",
+                            "normal_balance": "credit",
+                            "version": 1
+                          }
+                        }')
+      expect(SubledgerClient).to receive(:post) { res }
+
+      expect(client.create_account("franklin.ugwu@andela.co")).to eq("iDFQmJjGUgXC6ecn7zZxc6")
+    end
+  end
+
   def sample_transaction_api_response
     '{
         "posted_lines": [

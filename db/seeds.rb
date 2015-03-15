@@ -17,3 +17,11 @@ User.find_each do |user|
   user.update_attributes(first_name: first, last_name: last)
   user.add_role :member
 end
+
+User.find_each do |user|
+  if !user.account_id?
+    client = SubledgerClient.new
+    user.account_id = client.create_account(user.to_json)
+    user.save
+  end
+end

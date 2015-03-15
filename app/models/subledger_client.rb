@@ -2,6 +2,16 @@ class SubledgerClient
   include HTTParty
 
   base_uri "api.subledger.com:443/v2/orgs/#{ENV["ORG_ID"]}/books/#{ENV["BOOK_ID"]}"
+  
+  def create_account(user)
+    body = {
+        description: user,
+        reference: "http://www.andela.co/",
+        normal_balance: "credit"
+    }
+    response = self.class.post("/accounts", body: body, basic_auth: @auth).body
+    decode(response)["active_account"]["id"]
+  end
 
   def initialize
     @auth = { username: ENV["KEY"], password: ENV["SECRET"] }
@@ -50,8 +60,8 @@ class SubledgerClient
         description: current_user.email,
         reference: "http://www.andela.co/",
         lines: [{
-                    account: credit_account,
-                    description: current_user.email,
+                    account: ENV["SYSTEM_ACC_CREDIT"],
+                    description: current_user.to_json,
                     reference: "http://www.andela.co/",
                     value: {
                         type: type1,
@@ -59,8 +69,8 @@ class SubledgerClient
                     }
                 },
                 {
-                    account: debit_account,
-                    description: current_user.email,
+                    account: ENV["SYSTEM_ACC"],
+                    description: current_user.to_json,
                     reference: "http://www.andela.co/",
                     value: {
                         type: type2,
