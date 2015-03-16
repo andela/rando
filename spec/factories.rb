@@ -6,6 +6,12 @@ FactoryGirl.define do
     sequence(:last_name) { |n| "LastName#{n}" }
     sequence(:name) { |n| "FirstName#{n} LastName#{n}" }
     sequence(:email) { |n| "email#{n}@andela.co" }
+
+    after(:build) { |user| user.class.skip_callback(:create, :after, :create_account) }
+
+    factory :user_with_callback do
+      after(:create) { |user| user.send(:create_account) }
+    end
   end
 
   factory :campaign do

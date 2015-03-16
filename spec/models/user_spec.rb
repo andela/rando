@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe User, type: :model do
+  before do
+    allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+  end
+
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to validate_uniqueness_of(:email) }
@@ -59,7 +63,7 @@ describe User, type: :model do
   end
 
   describe '#create_account' do
-    let(:user) { create(:user) }
+    let(:user) { create(:user_with_callback) }
 
     it 'user has an account' do
       allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")

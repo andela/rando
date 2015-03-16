@@ -1,13 +1,16 @@
 require 'rails_helper'
 
 feature 'Update Roles' do
+  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)) }
   before do
+    allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+    allow_any_instance_of(SubledgerClient).to receive(:user_transactions).and_return([transaction])
+
     OmniAuth.config.test_mode = true
     set_valid_omniauth
 
     visit '/'
     click_on 'Login'
-
     @user = User.first
     @user.add_role :admin
 
