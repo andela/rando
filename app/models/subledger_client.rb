@@ -48,7 +48,7 @@ class SubledgerClient
         description: "Withdrawal from system accout"
     }
 
-    response = execute_transaction(amount, description, ENV["SYSTEM_ACC_CREDIT"], ENV["SYSTEM_ACC"])
+    response = execute_transaction(amount, description, ENV["SYSTEM_ACC"], ENV["SYSTEM_ACC_CREDIT"])
     response.code
   end
 
