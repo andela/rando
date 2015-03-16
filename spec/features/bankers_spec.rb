@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 feature 'Bankers make deposit' do
+  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
   scenario 'User with bankers role', js: true do
-    stub_request(:get, /.*KcVEdomrdxdHK4P7QFExOi\/lines*/).
-        with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-        to_return(:status => 200, :body => sample_transaction_api_response, :headers => {})
 
     res = double("response", code: 202)
     allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(200)
     allow_any_instance_of(SubledgerClient).to receive(:execute_transaction).and_return(res)
     allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+    allow_any_instance_of(SubledgerClient).to receive(:user_transactions).and_return([transaction])
+    allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
 
     user = create(:user, email:'christopher@andela.co')
     user.add_role :banker

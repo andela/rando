@@ -30,7 +30,6 @@ feature 'Campaigns' do
     visit '/'
 
     click_on 'Login'
-    save_and_open_page
     click_on 'My Andonation'
     expect(page).to_not have_link('View all 0 campaigns')
     expect(page).to have_content('You have no active campaigns currently running')
