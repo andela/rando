@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe HomeController, type: :controller do
+  before do
+    allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+  end
+
   describe 'GET #index' do
     it 'assigns a list of campaigns' do
       create(:campaign) # oldest not included

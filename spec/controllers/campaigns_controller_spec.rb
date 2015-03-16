@@ -5,6 +5,7 @@ describe CampaignsController,  type: :controller do
     let(:user) { create(:user) }
 
     before do
+      allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
       allow(request.env['warden']).to receive(:authenticate!) { user }
       allow(controller).to receive(:current_user) { user }
     end
@@ -122,6 +123,10 @@ describe CampaignsController,  type: :controller do
   end
 
   describe 'Get #index' do
+    before do
+      allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+    end
+
     let!(:campaigns) { create_list(:campaign, 3).reverse! }
 
     it 'assigns @campaigns' do

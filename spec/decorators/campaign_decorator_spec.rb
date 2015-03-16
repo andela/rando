@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe CampaignDecorator do
+  before do
+    allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+  end
+
   describe '#embedded_youtube_url' do
     it 'creates an embedded youtube url' do
       campaign = create(:campaign, youtube_url: 'https://www.youtube.com/watch?v=7WJk-z5AmXk').decorate

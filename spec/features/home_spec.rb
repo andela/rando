@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 feature 'Campaigns exists' do
+  before do
+    allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+  end
+
   let!(:campaign) { create(:campaign, title: 'Science and Tech', deadline: Date.tomorrow + 1, amount: '320000', description: 'New innovation comes out daily') }
 
   scenario 'User visits homepage and sees current campaigns' do

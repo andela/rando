@@ -3,9 +3,9 @@ class SubledgerClient
 
   base_uri "api.subledger.com:443/v2/orgs/#{ENV["ORG_ID"]}/books/#{ENV["BOOK_ID"]}"
   
-  def create_account(user)
+  def create_account(account_name)
     body = {
-        description: user,
+        description: account_name,
         reference: "http://www.andela.co/",
         normal_balance: "credit"
     }

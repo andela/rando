@@ -9,6 +9,8 @@ class Campaign < ActiveRecord::Base
   validates_numericality_of :amount, greater_than: 0
   validate :deadline_is_in_range, if: :deadline?
 
+  after_create :create_account
+
   delegate :name, to: :user, prefix: true
 
   private
@@ -23,6 +25,12 @@ class Campaign < ActiveRecord::Base
     elsif deadline > created_at + 30.days
       errors.add(:deadline, "can't be more than 30 days from created date")
     end
+  end
+
+  def create_account
+    client = SubledgerClient.new
+    self.account_id = client.create_account(self.to_json)
+    self.save
   end
 end
 

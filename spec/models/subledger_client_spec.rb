@@ -62,7 +62,7 @@ describe SubledgerClient, type: :model do
   end
 
   describe '#create_account' do
-    it 'returns and account id' do
+    it 'returns an account id' do
       client = SubledgerClient.new
       res = double("response", body: '{
                           "active_account": {
@@ -174,6 +174,7 @@ describe SubledgerClient, type: :model do
     '
 
   end
+
   def balance
     '
     {

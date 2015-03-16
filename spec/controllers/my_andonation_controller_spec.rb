@@ -7,6 +7,7 @@ describe MyAndonationController, type: :controller do
       before do
         allow(request.env['warden']).to receive(:authenticate!) { user }
         allow(controller).to receive(:current_user) { user }
+        allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
       end
 
       describe '#index' do
