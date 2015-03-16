@@ -74,7 +74,7 @@ feature 'user manages his campaigns' do
     expect(page).to have_link('First')
   end
 
-  scenario 'user clicks in datepicker field', driver: :chrome do
+  scenario 'user clicks in datepicker field', driver: :selenium do
     find_field('Deadline').click
     expect(page).to have_content(Date.tomorrow.day)
     click_on 'Close'

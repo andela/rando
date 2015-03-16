@@ -102,10 +102,6 @@ group :development, :test do
 
   # To open a file(snapshot) automaitcally
   gem 'launchy'
-
-  # for testing with chrome
-  gem "chromedriver-helper"
-
 end
 
 group :test do
