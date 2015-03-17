@@ -4,12 +4,12 @@ describe SubledgerClient, type: :model do
 
   describe '#transactions' do
     it 'returns status code of 202' do
-      client = SubledgerClient.new
+      client = SubledgerClient.instance
       res = double("response", body: sample_transaction_api_response)
       transaction = Transaction.new(ActiveSupport::JSON.decode(expected_transactions))
 
       expect(SubledgerClient).to receive(:get) { res }
-      result_transaction = client.transactions.first
+      result_transaction = client.transactions("").first
       expect(result_transaction.amount).to eq(transaction.amount)
       expect(result_transaction.transaction_type).to eq(transaction.transaction_type)
       expect(result_transaction.posted_at).to eq(transaction.posted_at)
@@ -19,7 +19,7 @@ describe SubledgerClient, type: :model do
 
   describe '#balance' do
     it 'returns the system balance' do
-      client = SubledgerClient.new
+      client = SubledgerClient.instance
       res = double("response", body: balance)
 
       expect(SubledgerClient).to receive(:get) { res }
@@ -30,7 +30,7 @@ describe SubledgerClient, type: :model do
   describe '#deposit' do
     it 'returns status code of 202' do
       allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
-      client = SubledgerClient.new
+      client = SubledgerClient.instance
       current_user = create(:user)
       res = double("response", code: "202")
 
@@ -42,7 +42,7 @@ describe SubledgerClient, type: :model do
   describe '#withdraw' do
     it 'returns status code of 202' do
       allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
-      client = SubledgerClient.new
+      client = SubledgerClient.instance
       current_user = create(:user)
       res = double("response", code: "202")
 
@@ -53,7 +53,7 @@ describe SubledgerClient, type: :model do
 
   describe '#user_transactions' do
     it 'returns status code of 202' do
-      client = SubledgerClient.new
+      client = SubledgerClient.instance
       transaction = Transaction.new(ActiveSupport::JSON.decode(expected_transactions))
       allow(client).to receive(:transactions) { [transaction] }
 
@@ -63,7 +63,7 @@ describe SubledgerClient, type: :model do
 
   describe '#create_account' do
     it 'returns an account id' do
-      client = SubledgerClient.new
+      client = SubledgerClient.instance
       res = double("response", body: '{
                           "active_account": {
                             "id": "iDFQmJjGUgXC6ecn7zZxc6",
@@ -77,6 +77,7 @@ describe SubledgerClient, type: :model do
       expect(SubledgerClient).to receive(:post) { res }
 
       expect(client.create_account("franklin.ugwu@andela.co")).to eq("iDFQmJjGUgXC6ecn7zZxc6")
+
     end
   end
 
@@ -84,7 +85,7 @@ describe SubledgerClient, type: :model do
     it 'return status 202 code' do
       allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
       user = create(:user)
-      client = SubledgerClient.new
+      client = SubledgerClient.instance
       res = double("response", body: '{
                           "active_account": {
                             "id": "iDFQmJjGUgXC6ecn7zZxc6",

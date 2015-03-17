@@ -104,4 +104,30 @@ describe User, type: :model do
       expect(admin).to have_role(:admin)
     end
   end
+
+  describe 'methods that makes call to SubledgerClient.transactions ' do
+    let(:user) { create(:user_with_callback) }
+    let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
+
+    describe '#transactions' do
+      it 'returns an array of transactions' do
+        allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
+        expect(user.transactions).to eq([transaction])
+      end
+    end
+
+    describe '#transactions_history' do
+      it 'returns an array of 3 transactions' do
+        allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction, transaction, transaction, transaction])
+        expect(user.transactions_history.count).to eq(3)
+      end
+    end
+
+    describe '#all_transactions_history' do
+      it 'returns an array of transactions' do
+        allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
+        expect(user.all_transactions_history).to eq([transaction])
+      end
+    end
+  end
 end

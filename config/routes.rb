@@ -34,6 +34,8 @@ Rails.application.routes.draw do
 
   get 'my_andonation/campaigns', to: 'my_andonation#campaigns', as: :my_campaigns
 
+  get 'my_andonation/transactions', to: 'my_andonation#my_transactions', as: :my_transactions
+
 # You can have the root of your site routed with "root"
   root 'home#index'
 

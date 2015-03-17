@@ -22,24 +22,16 @@ class Transaction
     @line["value"]["amount"]
   end
 
+  def balance
+    @line['balance']['value']['amount']
+  end
+
   def name
-    begin
-      h = ActiveSupport::JSON.decode(@line['description'])
-      h = ActiveSupport::JSON.decode(h['user'])
-      h['name']
-    rescue
-      @line['description']
-    end
+    get_field 'name'
   end
 
   def email
-    begin
-      h = ActiveSupport::JSON.decode(@line['description'])
-      h = ActiveSupport::JSON.decode(h['user'])
-      h['email']
-    rescue
-      @line['description']
-    end
+    get_field 'email'
   end
 
   def description
@@ -48,6 +40,17 @@ class Transaction
       h['description']
     rescue
       'No description for this transaction'
+    end
+  end
+
+  private
+  def get_field field
+    begin
+      h = ActiveSupport::JSON.decode(@line['description'])
+      h = ActiveSupport::JSON.decode(h['user'])
+      h[field]
+    rescue
+      @line['description']
     end
   end
 end

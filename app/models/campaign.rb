@@ -28,7 +28,7 @@ class Campaign < ActiveRecord::Base
   end
 
   def create_account
-    client = SubledgerClient.new
+    client = SubledgerClient.instance
     self.account_id = client.create_account(self.to_json)
     self.save
   end

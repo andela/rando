@@ -1,4 +1,7 @@
+require 'singleton'
+
 class SubledgerClient
+  include Singleton
   include HTTParty
 
   base_uri "api.subledger.com:443/v2/orgs/#{ENV["ORG_ID"]}/books/#{ENV["BOOK_ID"]}"
@@ -17,15 +20,16 @@ class SubledgerClient
     @auth = { username: ENV["KEY"], password: ENV["SECRET"] }
   end
 
-  def transactions
-    response = self.class.get("/accounts/#{ENV["SYSTEM_ACC_CREDIT"]}/lines?action=before&effective_at=#{time_now}",
+  def transactions account
+    response = self.class.get("/accounts/#{account}/lines?action=before&effective_at=#{time_now}",
                               basic_auth: @auth)
     Transaction.create(decode(response.body)["posted_lines"])
   end
 
   def user_transactions email
-    response = transactions
-    select_three(response.select { |transaction| transaction if transaction.email == email })
+    response = transactions ENV["SYSTEM_ACC_CREDIT"]
+    response.select { |transaction| transaction if transaction.email == email }
+    response.take(3)
   end
 
   def balance account
@@ -34,22 +38,11 @@ class SubledgerClient
   end
 
   def deposit (amount, current_user)
-    description = {
-        user: current_user.to_json,
-        description: "Deposit into system accout"
-    }
-    response = execute_transaction(amount, description, ENV["SYSTEM_ACC_CREDIT"], ENV["SYSTEM_ACC"])
-    response.code
+    system_deposit_withdraw(amount, current_user, ENV["SYSTEM_ACC_CREDIT"], ENV["SYSTEM_ACC"] )
   end
 
   def withdraw (amount, current_user)
-    description = {
-        user: current_user.to_json,
-        description: "Withdrawal from system accout"
-    }
-
-    response = execute_transaction(amount, description, ENV["SYSTEM_ACC"], ENV["SYSTEM_ACC_CREDIT"])
-    response.code
+    system_deposit_withdraw(amount, current_user, ENV["SYSTEM_ACC"], ENV["SYSTEM_ACC_CREDIT"] )
   end
 
   def allocate(user_ids, amount, current_user)
@@ -110,14 +103,12 @@ class SubledgerClient
     Time.zone.now.iso8601
   end
 
-  def select_three transactions
-    $i = 0
-    filtered_transaction = []
-    while $i < transactions.length  do
-      filtered_transaction.push(transactions[$i])
-      $i +=1
-      break if $i == 3
-    end
-    filtered_transaction
+  def system_deposit_withdraw (amount, current_user, first, second)
+    description = {
+        user: current_user.to_json,
+        description: "Deposit into system accout"
+    }
+    response = execute_transaction(amount, description, first, second )
+    response.code
   end
 end

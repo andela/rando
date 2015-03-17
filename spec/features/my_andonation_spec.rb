@@ -1,15 +1,17 @@
 require 'rails_helper'
 
 feature 'Campaigns' do
+  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
+
   background do
     allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+    allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
     OmniAuth.config.test_mode = true
     set_valid_omniauth
   end
 
   scenario 'authenticated user sees his campaigns' do
     res = double("response", body: sample_transaction_api_response)
-    expect(SubledgerClient).to receive(:get) { res }
     visit '/'
 
     click_on 'Login'
@@ -45,10 +47,11 @@ feature 'Campaigns' do
 end
 
 feature 'Roles' do
-  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)) }
+  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
 
   background do
     allow_any_instance_of(SubledgerClient).to receive(:user_transactions).and_return([transaction])
+    allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
     OmniAuth.config.test_mode = true
     set_valid_omniauth
     create(:user, first_name: 'Chiemeka', last_name: 'Alim')

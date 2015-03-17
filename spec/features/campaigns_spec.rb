@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 feature 'Campaigns' do
+  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
   before do
     allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+    allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
   end
 
   feature 'user manages his campaigns' do
@@ -17,9 +19,6 @@ feature 'Campaigns' do
     end
 
     scenario 'authenticated user creates campaign' do
-      res = double("response", body: sample_transaction_api_response)
-      expect(SubledgerClient).to receive(:get) { res }
-
       click_on 'Create Campaign'
       expect(page).to have_content("Title can't be blank")
       expect(page).to have_content("Deadline can't be blank")

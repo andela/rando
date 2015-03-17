@@ -4,7 +4,7 @@ class TransactionsController < ApplicationController
   before_action :load_client, only: [:index, :deposit, :withdraw]
 
   def index
-    @transactions = @client.transactions
+    @transactions = @client.transactions ENV["SYSTEM_ACC_CREDIT"]
     @balance = @client.balance(ENV["SYSTEM_ACC_CREDIT"])
   end
 
@@ -45,6 +45,6 @@ class TransactionsController < ApplicationController
   private
 
   def load_client
-    @client = SubledgerClient.new
+    @client = SubledgerClient.instance
   end
 end

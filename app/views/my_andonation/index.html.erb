@@ -35,3 +35,12 @@
     <%= link_to "See full banking history", transactions_path  %>
   </div>
 <% end %>
+<h3>My Account History</h3>
+<% if @history.empty? %>
+  <p><strong>0 banking transactions </strong></p>
+<% else %>
+  <%= render 'my_transactions' %>
+  <div class="col-md-12 text-right" >
+    <%= link_to "See all your transactions", my_transactions_path  %>
+  </div>
+<% end %>

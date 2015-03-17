@@ -13,7 +13,7 @@ class DistributorsController < ApplicationController
 
   def allocate_money
     authorize! :allocate_money, User
-    client = SubledgerClient.new
+    client = SubledgerClient.instance
     user_ids = params[:users].split(" ").map { |s| s.to_i }
 
     response = client.allocate(user_ids, params[:amount], current_user)

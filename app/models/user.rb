@@ -49,8 +49,23 @@ class User < ActiveRecord::Base
   end
 
   def create_account
-    client = SubledgerClient.new
+    client = SubledgerClient.instance
     self.account_id = client.create_account(self.to_json)
     self.save
+  end
+
+  def transactions
+    client = SubledgerClient.instance
+    client.user_transactions(email)
+  end
+
+  def transactions_history
+    client = SubledgerClient.instance
+    client.transactions(account_id).take(3)
+  end
+
+  def all_transactions_history
+    client = SubledgerClient.instance
+    client.transactions(account_id)
   end
 end
