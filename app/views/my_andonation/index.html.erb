@@ -1,6 +1,6 @@
 <h2>My Campaigns</h2>
 <div class="pull-right">
-  <% if current_user.has_role? :admin or current_user.has_role? :distributor %>
+  <% if current_user.has_role? :admin %>
     <span><%= link_to 'Users', users_path, class: "btn btn-default" %></span>
   <% end %>
 
@@ -24,7 +24,7 @@
 <% end %>
 <% if current_user.has_role? :banker %>
   <h3>Banking transactions</h3>
-  <% if @transactions.count ==0 %>
+  <% if @transactions.empty? %>
     <div class="no-campaigns text-center">
       <p><strong>0 banking transactions </strong></p>
     </div>
