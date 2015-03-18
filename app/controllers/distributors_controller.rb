@@ -16,7 +16,7 @@ class DistributorsController < ApplicationController
     client = SubledgerClient.instance
     user_ids = params[:users].split(" ").map { |s| s.to_i }
 
-    response = client.allocate(user_ids, params[:amount], current_user)
+    response = client.allocate(user_ids, params[:amount], current_user, params[:reason])
     if response == 202
       flash[:notice] = 'Money distributed successfully'
     else

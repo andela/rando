@@ -20,6 +20,7 @@ feature 'Distributors allocates money to users', js: :true do
     click_on 'Allocate Money'
     within("#modal-window") do
       fill_in 'amount', with: 100
+      fill_in 'reason', with: 'he is a good boy'
       click_on 'Allocate'
     end
 

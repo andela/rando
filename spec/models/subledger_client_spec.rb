@@ -100,7 +100,7 @@ describe SubledgerClient, type: :model do
 
       expect(SubledgerClient).to receive(:post) { res }
 
-      expect(client.allocate([user.id], 12, user)).to eq(202)
+      expect(client.allocate([user.id], 12, user, 'he is a good person')).to eq(202)
     end
   end
 

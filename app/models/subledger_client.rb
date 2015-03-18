@@ -45,13 +45,13 @@ class SubledgerClient
     system_deposit_withdraw(amount, current_user, ENV["SYSTEM_ACC"], ENV["SYSTEM_ACC_CREDIT"] )
   end
 
-  def allocate(user_ids, amount, current_user)
+  def allocate(user_ids, amount, current_user, reason)
     responses = []
     user_ids.each do |user_id|
       user = User.find(user_id)
       description = {
           user: current_user.to_json,
-          description: "Allocate money to #{user.name}"
+          description: reason
       }
       responses << execute_transaction(amount, description, user.account_id, ENV["SYSTEM_ACC_CREDIT"]).code
     end
