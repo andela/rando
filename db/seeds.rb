@@ -29,7 +29,7 @@ end
 
 Campaign.find_each do |campaign|
   if !campaign.account_id?
-    client = SubledgerClient.new
+    client = SubledgerClient.instance
     campaign.account_id = client.create_account(campaign.to_json)
     campaign.save
   end

@@ -62,6 +62,10 @@ class SubledgerClient
     end
   end
 
+  def execute_transaction(amount, current_user,credit_account, debit_account)
+    self.class.post("/journal_entries/create_and_post", body: body(amount, current_user, credit_account , debit_account), basic_auth: @auth)
+  end
+
   private
 
   def decode body
@@ -93,10 +97,6 @@ class SubledgerClient
                     }
                 }]
     }
-  end
-
-  def execute_transaction(amount, current_user,credit_account, debit_account)
-    self.class.post("/journal_entries/create_and_post", body: body(amount, current_user, credit_account , debit_account), basic_auth: @auth)
   end
 
   def time_now

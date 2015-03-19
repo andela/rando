@@ -21,6 +21,9 @@ class CampaignsController < ApplicationController
 
   def show
     @campaign = Campaign.find(params[:id]).try(:decorate)
+
+    client = SubledgerClient.instance
+    @transactions = client.transactions @campaign.account_id
   end
 
   def edit

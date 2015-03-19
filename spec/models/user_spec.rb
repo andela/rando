@@ -105,7 +105,7 @@ describe User, type: :model do
   end
 
   describe 'methods that makes call to SubledgerClient.transactions ' do
-    let(:user) { create(:user_with_callback) }
+    let(:user) { create(:user_with_account) }
     let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
 
     describe '#transactions' do

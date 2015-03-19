@@ -22,8 +22,13 @@ FactoryGirl.define do
     youtube_url 'https://www.youtube.com/watch?v=7WJk-z5AmXk'
     raised '2000'
 
-    user
     after(:build) { |campaign| campaign.class.skip_callback(:create, :after, :create_account) }
+
+    factory :campaign_with_account do
+      after(:create) { |campaign| campaign.send(:create_account) }
+    end
+
+    user
   end
 
   factory :role do

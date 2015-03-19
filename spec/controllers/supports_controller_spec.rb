@@ -24,6 +24,7 @@ describe SupportsController, type: :controller do
   describe 'POST #create' do
     before do
       allow_any_instance_of(SubledgerClient).to receive(:balance).and_return("400")
+      allow_any_instance_of(SubledgerClient).to receive(:execute_transaction).and_return(202)
     end
 
     it 'supports a campaign' do

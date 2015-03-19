@@ -51,6 +51,12 @@ describe CampaignsController,  type: :controller do
     end
 
     describe '#show' do
+      let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
+
+      before do
+        allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
+      end
+
       it 'assigns campaign' do
         campaign = create(:campaign)
         get :show, id: campaign
@@ -123,10 +129,6 @@ describe CampaignsController,  type: :controller do
   end
 
   describe 'Get #index' do
-    before do
-      allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
-    end
-
     let!(:campaigns) { create_list(:campaign, 3).reverse! }
     let!(:funded) { create_list(:funded_campaign, 2).reverse! }
 

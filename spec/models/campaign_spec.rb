@@ -2,9 +2,6 @@ require 'rails_helper'
 
 describe Campaign, type: :model do
 
-  before do
-    allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
-  end
 
   it { is_expected.to validate_presence_of(:user) }
   it { is_expected.to validate_presence_of(:title) }
@@ -109,7 +106,7 @@ describe Campaign, type: :model do
   end
 
   describe '#create_campaign_account' do
-    let(:campaign) { create (:campaign) }
+    let(:campaign) { create(:campaign_with_account) }
 
     it 'campaign has an account' do
       allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
