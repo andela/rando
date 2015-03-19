@@ -1,3 +1,12 @@
+<h2>
+  <% if current_user.transaction_count <= 3 %>
+    <%= link_to 'Account Balance', my_andonation_path(anchor: 'my_account_history') %>
+  <% else %>
+    <%= link_to 'Account Balance', my_transactions_path %>
+  <% end %>
+  : $<%= @balance %>
+</h2>
+
 <h2>My Campaigns</h2>
 <div class="pull-right">
   <% if current_user.has_role? :admin %>
@@ -35,7 +44,7 @@
     <%= link_to "See full banking history", transactions_path  %>
   </div>
 <% end %>
-<h3>My Account History</h3>
+<h3 id="my_account_history">My Account History</h3>
 <% if @history.empty? %>
   <p><strong>0 banking transactions </strong></p>
 <% else %>

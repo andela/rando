@@ -10,6 +10,7 @@ describe MyAndonationController, type: :controller do
         allow(request.env['warden']).to receive(:authenticate!) { user }
         allow(controller).to receive(:current_user) { user }
         allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+        allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(200)
       end
 
       describe '#index' do
@@ -59,5 +60,21 @@ describe MyAndonationController, type: :controller do
 
   describe 'methods not allowed for unauthenticated user' do
     it_should_behave_like "an unauthenticated user", [[:get, :index]]
+  end
+
+  describe 'Users account balance' do
+    let(:user) { create(:user, email: 'christopher@andela.co') }
+    let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
+
+    before do
+      allow(request.env['warden']).to receive(:authenticate!) { user }
+      allow(controller).to receive(:current_user) { user }
+      allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction, transaction])
+      allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(5000)
+    end
+    it 'returns the users current balance' do
+      get :index
+      expect(assigns(:balance)).to eq(5000)
+    end
   end
 end

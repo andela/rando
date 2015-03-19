@@ -6,12 +6,14 @@ feature 'Campaigns' do
   background do
     allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
     allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
+    allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(200)
+
     OmniAuth.config.test_mode = true
     set_valid_omniauth
   end
 
   scenario 'authenticated user sees his campaigns' do
-    res = double("response", body: sample_transaction_api_response)
+    double("response", body: sample_transaction_api_response)
     visit '/'
 
     click_on 'Login'
@@ -52,6 +54,8 @@ feature 'Roles' do
   background do
     allow_any_instance_of(SubledgerClient).to receive(:user_transactions).and_return([transaction])
     allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
+    allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(200)
+
     OmniAuth.config.test_mode = true
     set_valid_omniauth
     create(:user, first_name: 'Chiemeka', last_name: 'Alim')
@@ -77,5 +81,30 @@ feature 'Roles' do
     expect(page).to have_content('Foluwa')
     expect(page).to have_content('Nnaemeka')
     expect(page).to have_content('Admin, Member')
+  end
+end
+
+feature 'Account Balance' do
+  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
+
+  before do
+    allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(300)
+    allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
+    OmniAuth.config.test_mode = true
+    set_valid_omniauth
+    visit '/'
+    click_on 'Login'
+    click_on 'My Andonation'
+  end
+
+  scenario 'User sees his account balance and has 1 transaction' do
+    expect(page).to have_content('Account Balance : $300')
+    expect(page).to have_link('Account Balance', href:'/my_andonation#my_account_history')
+  end
+
+  scenario 'User has 3 and above transactions' do
+    allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction, transaction, transaction, transaction])
+    click_on 'My Andonation'
+    expect(page).to have_link('Account Balance', href:'/my_andonation/transactions')
   end
 end

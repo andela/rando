@@ -68,4 +68,13 @@ class User < ActiveRecord::Base
     client = SubledgerClient.instance
     client.transactions(account_id)
   end
+
+  def transaction_count
+    all_transactions_history.count
+  end
+
+  def account_balance
+    client = SubledgerClient.instance
+    client.balance(account_id)
+  end
 end

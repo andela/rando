@@ -7,6 +7,8 @@ class MyAndonationController < ApplicationController
 
     @transactions = current_user.transactions
     @history = current_user.transactions_history
+
+    @balance = current_user.account_balance
   end
 
   def campaigns

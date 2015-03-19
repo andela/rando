@@ -1,5 +1,5 @@
 class Transaction
-  attr_accessor :line, :transaction_type, :posted_at, :amount, :email
+  attr_accessor :line, :transaction_type, :transaction_count, :posted_at, :amount, :email
 
   def self.create json_lines
     lines = json_lines

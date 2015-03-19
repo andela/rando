@@ -118,7 +118,7 @@ describe User, type: :model do
 
     describe '#transactions_history' do
       it 'returns an array of 3 transactions' do
-        allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction, transaction, transaction, transaction])
+        allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction, transaction, transaction])
         expect(user.transactions_history.count).to eq(3)
       end
     end
@@ -127,6 +127,25 @@ describe User, type: :model do
       it 'returns an array of transactions' do
         allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
         expect(user.all_transactions_history).to eq([transaction])
+      end
+    end
+  end
+
+  describe 'returns user account balance and transaction count' do
+    let(:user) { create(:user) }
+    let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
+
+    describe 'number of transactions' do
+      it 'returns the users total number of transactions' do
+        allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction] * 7)
+        expect(user.transaction_count).to eq(7)
+      end
+    end
+
+    describe 'account balance' do
+      it 'returns the users current balance' do
+        allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(7500)
+        expect(user.account_balance).to eq(7500)
       end
     end
   end
