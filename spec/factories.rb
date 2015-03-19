@@ -29,6 +29,12 @@ FactoryGirl.define do
     end
 
     user
+
+    after(:build) { |campaign| campaign.class.skip_callback(:create, :after, :create_account) }
+
+    factory :campaign_with_callback do
+      after(:create) { |campaign| campaign.send(:create_account) }
+    end
   end
 
   factory :role do

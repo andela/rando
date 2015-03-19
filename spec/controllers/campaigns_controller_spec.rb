@@ -5,7 +5,7 @@ describe CampaignsController,  type: :controller do
     let(:user) { create(:user) }
 
     before do
-      allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+      allow_any_instance_of(FundManager).to receive(:create_account).and_return("account_id")
       allow(request.env['warden']).to receive(:authenticate!) { user }
       allow(controller).to receive(:current_user) { user }
     end
@@ -54,7 +54,7 @@ describe CampaignsController,  type: :controller do
       let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
 
       before do
-        allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
+        allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
       end
 
       it 'assigns campaign' do

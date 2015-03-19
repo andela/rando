@@ -8,6 +8,7 @@ class Ability
 
     if user.has_role? :distributor
       can :allocate_money, User
+      can :read, :distributors
     end
 
     if user.has_role? :admin

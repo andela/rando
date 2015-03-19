@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(version: 20150316155533) do
     t.integer  "user_id"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
-    t.integer  "raised",      limit: 8, default: 0
     t.string   "account_id"
+    t.integer  "raised",      limit: 8, default: 0
   end
 
   create_table "roles", force: :cascade do |t|

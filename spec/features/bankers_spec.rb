@@ -5,11 +5,11 @@ feature 'Bankers make deposit' do
   scenario 'User with bankers role', js: true do
 
     res = double("response", code: 202)
-    allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(200)
-    allow_any_instance_of(SubledgerClient).to receive(:execute_transaction).and_return(res)
-    allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
-    allow_any_instance_of(SubledgerClient).to receive(:user_transactions).and_return([transaction])
-    allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
+    allow_any_instance_of(FundManager).to receive(:balance).and_return(200)
+    allow_any_instance_of(BankFundManager).to receive(:deposit).and_return(res)
+    allow_any_instance_of(User).to receive(:create_account).and_return("account_id")
+    allow_any_instance_of(BankFundManager).to receive(:user_transactions).and_return([transaction])
+    allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
 
     user = create(:user, email:'christopher@andela.co')
     user.add_role :banker

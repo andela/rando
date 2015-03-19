@@ -4,10 +4,9 @@ feature 'Campaigns' do
   let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
 
   background do
-    allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
-    allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
-    allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(200)
-
+    allow_any_instance_of(FundManager).to receive(:balance).and_return(200)
+    allow_any_instance_of(FundManager).to receive(:create_account).and_return("account_id")
+    allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
     OmniAuth.config.test_mode = true
     set_valid_omniauth
   end
@@ -52,10 +51,9 @@ feature 'Roles' do
   let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
 
   background do
-    allow_any_instance_of(SubledgerClient).to receive(:user_transactions).and_return([transaction])
-    allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
-    allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(200)
-
+    allow_any_instance_of(FundManager).to receive(:balance).and_return(200)
+    allow_any_instance_of(BankFundManager).to receive(:user_transactions).and_return([transaction])
+    allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
     OmniAuth.config.test_mode = true
     set_valid_omniauth
     create(:user, first_name: 'Chiemeka', last_name: 'Alim')
@@ -88,8 +86,8 @@ feature 'Account Balance' do
   let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
 
   before do
-    allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(300)
-    allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
+    allow_any_instance_of(FundManager).to receive(:balance).and_return(300)
+    allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
     OmniAuth.config.test_mode = true
     set_valid_omniauth
     visit '/'
@@ -103,7 +101,7 @@ feature 'Account Balance' do
   end
 
   scenario 'User has 3 and above transactions' do
-    allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction, transaction, transaction, transaction])
+    allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction, transaction, transaction, transaction])
     click_on 'My Andonation'
     expect(page).to have_link('Account Balance', href:'/my_andonation/transactions')
   end

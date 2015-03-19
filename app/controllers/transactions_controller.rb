@@ -1,11 +1,11 @@
 class TransactionsController < ApplicationController
   before_action :authenticate_user!
-  authorize_resource
+  authorize_resource except: :user_transactions
   before_action :load_client, only: [:index, :deposit, :withdraw]
 
   def index
-    @transactions = @client.transactions ENV["SYSTEM_ACC_CREDIT"]
-    @balance = @client.balance(ENV["SYSTEM_ACC_CREDIT"])
+    @transactions = FundManager.new.transactions ENV["SYSTEM_ACC_CREDIT"]
+    @balance = FundManager.new.balance(ENV["SYSTEM_ACC_CREDIT"])
   end
 
   def new_deposit
@@ -21,7 +21,7 @@ class TransactionsController < ApplicationController
   end
 
   def deposit
-    response = @client.deposit(params[:amount], current_user)
+    response = @client.deposit(params[:amount])
 
     if response == 202
       flash[:notice] = 'Deposit Successful'
@@ -32,7 +32,7 @@ class TransactionsController < ApplicationController
   end
 
   def withdraw
-    response = @client.withdraw(params[:amount], current_user)
+    response = @client.withdraw(params[:amount])
 
     if response == 202
       flash[:notice] = 'Withdrawal Successful'
@@ -42,9 +42,19 @@ class TransactionsController < ApplicationController
     redirect_to transactions_path
   end
 
+  def user_transactions
+    authorize! :read, :distributors
+    @user = User.find(params[:id])
+    @transactions = @user.credit_transactions
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   def load_client
-    @client = SubledgerClient.instance
+    @client = BankFundManager.new current_user
   end
 end

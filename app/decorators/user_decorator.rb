@@ -6,7 +6,7 @@ class UserDecorator < Draper::Decorator
   end
 
   def balance
-    client = SubledgerClient.instance
+    client = FundManager.new
     client.balance(account_id)
   end
 

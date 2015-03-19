@@ -1,9 +1,12 @@
 class DistributorsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
+    authorize! :read, :distributors
     @users = User.order(name: :asc).decorate
   end
 
-  def new_allocation
+  def new
     authorize! :allocate_money, User
     @users_ids = params[:users_ids]
     respond_to do |format|
@@ -11,12 +14,12 @@ class DistributorsController < ApplicationController
     end
   end
 
-  def allocate_money
+  def create
     authorize! :allocate_money, User
-    client = SubledgerClient.instance
-    user_ids = params[:users].split(" ").map { |s| s.to_i }
+    client = UserFundManager.new current_user
+    user_ids = params[:users].split(" ").map(&:to_i)
 
-    response = client.allocate(user_ids, params[:amount], current_user, params[:reason])
+    response = client.allocate(user_ids, params[:amount], params[:reason])
     if response == 202
       flash[:notice] = 'Money distributed successfully'
     else

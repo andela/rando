@@ -17,7 +17,7 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= check_box_tag "users_ids[]", user.id, false, class: "check-box" %></td>
-        <td><%= user.first_name %></td>
+        <td><%= link_to user.first_name, allocations_path(user.id), remote: true %></td>
         <td><%= user.last_name %></td>
         <td><%= user.balance  %></td>
       </tr>

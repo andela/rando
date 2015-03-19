@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe User, type: :model do
   before do
-    allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
+    allow_any_instance_of(FundManager).to receive(:create_account).and_return("account_id")
   end
 
   it { is_expected.to validate_presence_of(:name) }
@@ -110,21 +110,22 @@ describe User, type: :model do
 
     describe '#transactions' do
       it 'returns an array of transactions' do
-        allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
+        allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
         expect(user.transactions).to eq([transaction])
       end
     end
 
     describe '#transactions_history' do
       it 'returns an array of 3 transactions' do
-        allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction, transaction, transaction])
+
+        allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction, transaction, transaction, transaction])
         expect(user.transactions_history.count).to eq(3)
       end
     end
 
     describe '#all_transactions_history' do
       it 'returns an array of transactions' do
-        allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction])
+        allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
         expect(user.all_transactions_history).to eq([transaction])
       end
     end
@@ -136,14 +137,14 @@ describe User, type: :model do
 
     describe 'number of transactions' do
       it 'returns the users total number of transactions' do
-        allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return([transaction] * 7)
+        allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction] * 7)
         expect(user.transaction_count).to eq(7)
       end
     end
 
     describe 'account balance' do
       it 'returns the users current balance' do
-        allow_any_instance_of(SubledgerClient).to receive(:balance).and_return(7500)
+        allow_any_instance_of(FundManager).to receive(:balance).and_return(7500)
         expect(user.account_balance).to eq(7500)
       end
     end

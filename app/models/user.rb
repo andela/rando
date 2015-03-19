@@ -49,23 +49,23 @@ class User < ActiveRecord::Base
   end
 
   def create_account
-    client = SubledgerClient.instance
-    self.account_id = client.create_account(self.to_json)
+    manager = FundManager.new
+    self.account_id = manager.create_account(self.to_json)
     self.save
   end
 
   def transactions
-    client = SubledgerClient.instance
-    client.user_transactions(email)
+    manager = BankFundManager.new self
+    manager.user_transactions(email)
   end
 
   def transactions_history
-    client = SubledgerClient.instance
-    client.transactions(account_id).take(3)
+    manager = FundManager.new
+    manager.transactions(account_id).take(3)
   end
 
   def all_transactions_history
-    client = SubledgerClient.instance
+    client = FundManager.new
     client.transactions(account_id)
   end
 
@@ -74,7 +74,11 @@ class User < ActiveRecord::Base
   end
 
   def account_balance
-    client = SubledgerClient.instance
+    client = FundManager.new
     client.balance(account_id)
+  end
+
+  def credit_transactions
+    all_transactions_history.select { |transaction| transaction.transaction_type == 'Credit' }
   end
 end

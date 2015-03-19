@@ -6,14 +6,15 @@ describe TransactionsController, type: :controller do
 
   before do
     user.add_role :banker
+    user.add_role :distributor
     allow(request.env['warden']).to receive(:authenticate!) { user }
     allow(controller).to receive(:current_user) { user }
   end
 
   describe 'GET #index' do
     before do
-      allow_any_instance_of(SubledgerClient).to receive(:transactions).and_return(transaction)
-      allow_any_instance_of(SubledgerClient).to receive(:balance).and_return("200")
+      allow_any_instance_of(FundManager).to receive(:transactions).and_return(transaction)
+      allow_any_instance_of(FundManager).to receive(:balance).and_return("200")
     end
 
     it 'renders the :index view' do
@@ -34,7 +35,7 @@ describe TransactionsController, type: :controller do
 
   describe 'POST #deposit' do
     it 'gives a success message' do
-      allow_any_instance_of(SubledgerClient).to receive(:deposit).and_return(202)
+      allow_any_instance_of(BankFundManager).to receive(:deposit).and_return(202)
 
       post :deposit, amount: 100
       expect(flash[:notice]).to eq('Deposit Successful')
@@ -42,11 +43,29 @@ describe TransactionsController, type: :controller do
   end
 
   describe 'POST #withdraw' do
-    it 'gives a success message' do
-      allow_any_instance_of(SubledgerClient).to receive(:withdraw).and_return(202)
+    it 'gives a success mesage' do
+      allow_any_instance_of(BankFundManager).to receive(:withdraw).and_return(202)
 
       post :withdraw, amount: 200
       expect(flash[:notice]).to eq('Withdrawal Successful')
+    end
+  end
+
+  describe '#user_transactions' do
+    it 'assigns user' do
+      transaction = Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0])
+      allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
+
+      xhr :get, :user_transactions, id: "#{user.id}"
+      expect(assigns(:user)).to eq(user)
+    end
+
+    it 'assigns transactions' do
+      transaction = Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0])
+      allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
+
+      xhr :get, :user_transactions, id: "#{user.id}"
+      expect(assigns(:transactions)).to eq([transaction])
     end
   end
 
@@ -87,41 +106,7 @@ describe TransactionsController, type: :controller do
     '
   end
 
-  def expected_transactions
-    '
-    [
-      {
-        "id": "wrlFLCuz7cDldBUoUrlvDQ",
-        "journal_entry": "nGM69VE1GUc9QqeZ9jfmgV",
-        "account": "vsfM9fHDnEB6J8jHliNTKq",
-        "description": "franklin.ugwu@andela.co",
-        "reference": "http://www.andela.co/",
-        "value": {
-          "type": "debit",
-          "amount": "100"
-        },
-        "order": "0001.00",
-        "version": 1,
-        "effective_at": "2014-08-01T01:02:50.000Z",
-        "posted_at": "2015-03-07T23:34:12.244Z",
-        "balance": {
-          "debit_value": {
-            "type": "debit",
-            "amount": "100"
-          },
-          "credit_value": {
-            "type": "zero",
-            "amount": "0"
-          },
-          "value": {
-            "type": "debit",
-            "amount": "100"
-          }
-        }
-      }
-    ]
-    '
-  end
+
 
   def t_balance
     '

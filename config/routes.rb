@@ -11,9 +11,10 @@ Rails.application.routes.draw do
     delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
 
+  get 'users/allocations/:id', to: 'transactions#user_transactions', as: :allocations
   get 'users/distribute', to: 'distributors#index', as: :distributors
-  get 'users/allocate_money/new', to: 'distributors#new_allocation', as: :new_allocation
-  post 'users/allocate_money', to: 'distributors#allocate_money', as: :allocate_money
+  get 'users/allocate_money/new', to: 'distributors#new', as: :new_allocation
+  post 'users/allocate_money', to: 'distributors#create', as: :allocate_money
 
   resources :users, only: :index
   put 'users/roles/update', to: 'roles#update_multiple', as: :update_user_roles
