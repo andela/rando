@@ -9,7 +9,7 @@ FactoryGirl.define do
 
     after(:build) { |user| user.class.skip_callback(:create, :after, :create_account) }
 
-    factory :user_with_callback do
+    factory :user_with_account do
       after(:create) { |user| user.send(:create_account) }
     end
   end
@@ -17,11 +17,13 @@ FactoryGirl.define do
   factory :campaign do
     sequence(:title) { |n| "Food for the Poor #{n}"}
     deadline Date.tomorrow + 1
-    amount '60000'
+    needed '60000'
     description 'Never go hungry again.'
     youtube_url 'https://www.youtube.com/watch?v=7WJk-z5AmXk'
+    raised '2000'
 
     user
+    after(:build) { |campaign| campaign.class.skip_callback(:create, :after, :create_account) }
   end
 
   factory :role do
@@ -31,8 +33,20 @@ FactoryGirl.define do
   factory :invalid_campaign, class: Campaign do
     title ''
     deadline ''
-    amount ''
+    needed ''
     description ''
     youtube_url ''
+    raised ''
+  end
+
+  factory :funded_campaign, class: Campaign do
+    sequence(:title) { |n| "Food for the Poor #{n}"}
+    deadline Date.tomorrow + 1
+    needed '23000'
+    description 'Never go hungry again.'
+    youtube_url 'https://www.youtube.com/watch?v=7WJk-z5AmXk'
+    raised '23000'
+
+    user
   end
 end

@@ -23,7 +23,7 @@ feature 'Campaigns' do
       click_on 'Create Campaign'
       expect(page).to have_content("Title can't be blank")
       expect(page).to have_content("Deadline can't be blank")
-      expect(page).to have_content("Amount can't be blank")
+      expect(page).to have_content("Needed can't be blank")
       expect(page).to have_content("Description can't be blank")
       expect(page).to have_content("Youtube url can't be blank")
 
@@ -97,14 +97,14 @@ feature 'Campaigns' do
     end
   end
 
-  feature 'User can only edit his own campaigns' do
-    background do
-      OmniAuth.config.test_mode = true
-      set_valid_omniauth
+feature 'User can only edit his own campaigns' do
+  background do
+    OmniAuth.config.test_mode = true
+    set_valid_omniauth
 
-      visit root_path
-      click_on 'Login'
-    end
+    visit root_path
+    click_on 'Login'
+  end
 
     given(:user_one) { create(:user) }
     given(:user_two) { create(:user) }
@@ -114,6 +114,34 @@ feature 'Campaigns' do
       visit '/campaigns'
       click_on campaign_one.title
       expect(page).not_to have_link('Edit Campaign')
+    end
+  end
+
+  feature 'User supports a campaign' do
+    background do
+      OmniAuth.config.test_mode = true
+      set_valid_omniauth
+    end
+
+    scenario 'user accesses a campaign and supports it', js: true do
+      create(:campaign, title: 'Rich Culture')
+      visit '/'
+      click_on 'Login'
+      visit '/campaigns'
+      within '.campaign-title' do
+        click_on 'Rich Culture'
+      end
+      expect(page).to have_content('Raised')
+      expect(page).to have_content('Needs')
+
+      click_on '$ Support!'
+      expect(page).to have_content('You have a balance of')
+      within '#modal-window' do
+        fill_in 'raised', with: '240'
+        click_on '$ Support!'
+      end
+      expect(page).to have_content('Raised: $2240')
+      expect(page).to have_content('You have supported this campaign')
     end
   end
 end

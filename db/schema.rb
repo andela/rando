@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315181854) do
+ActiveRecord::Schema.define(version: 20150316155533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,12 +19,13 @@ ActiveRecord::Schema.define(version: 20150315181854) do
   create_table "campaigns", force: :cascade do |t|
     t.string   "title"
     t.date     "deadline"
-    t.integer  "amount",      limit: 8
+    t.integer  "needed",      limit: 8
     t.text     "description"
     t.string   "youtube_url"
     t.integer  "user_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "raised",      limit: 8, default: 0
     t.string   "account_id"
   end
 

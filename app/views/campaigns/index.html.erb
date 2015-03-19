@@ -1,8 +1,12 @@
-<h2>Current Campaigns</h2>
+<div class="container">
+  <div class="container">
+    <h2>Current Campaigns</h2>
 
-<div class="campaigns_list">
-  <%= render(@campaigns) %>
-</div>
-<div class="col-md-6 col-md-offset-5">
- <%= paginate @campaigns %>
+    <div class="campaigns_list">
+      <%= render(@current_campaigns) %>
+    </div>
+    <div class="col-md-6 col-md-offset-5">
+     <%= paginate @current_campaigns %>
+    </div>
+  </div>
 </div>

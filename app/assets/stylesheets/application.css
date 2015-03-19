@@ -16,3 +16,7 @@
  *= require bootstrap-material-design
  *= require_self
  */
+
+.btn {
+    text-transform: none;
+}

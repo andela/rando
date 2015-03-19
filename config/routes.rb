@@ -19,7 +19,9 @@ Rails.application.routes.draw do
   put 'users/roles/update', to: 'roles#update_multiple', as: :update_user_roles
   get 'users/roles/edit', to: 'roles#edit_multiple', as: :edit_user_roles
 
-  resources :campaigns
+  resources :campaigns do
+    resource :support, only: [:new, :create]
+  end
 
   post 'transaction/deposit/', to: 'transactions#deposit', as: :deposit
   post 'transaction/withdraw/', to: 'transactions#withdraw', as: :withdraw

@@ -1,16 +1,17 @@
-<div class="row">
-  <div class="col-md-12">
-    <h1>Bank</h1>
-  </div>
-  <div class="col-md-7">
-    <span>System Balance: <%= number_to_currency @balance %> </span>
-  </div>
-  <div class="col-md-5">
-    <div class="pull-right">
-      <%= link_to "Deposit $", new_deposit_path,  remote: true, class: "btn btn-default waves-effect waves-light"  %>
-      <%= link_to "Withdraw $", new_withdrawal_path,  remote: true, class: "btn btn-default"  %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Bank</h1>
     </div>
-  </div>
+    <div class="col-md-7">
+      <span>System Balance: <%= number_to_currency @balance %> </span>
+    </div>
+    <div class="col-md-5">
+      <div class="pull-right">
+        <%= link_to "Deposit $", new_deposit_path, remote: true, class: "btn btn-default waves-effect waves-light"  %>
+        <%= link_to "Withdraw $", new_withdrawal_path, remote: true, class: "btn btn-default"  %>
+      </div>
+    </div>
 
   <div class="col-md-12">
     <table class="table table-bordered">
@@ -28,10 +29,11 @@
           <td><%= transaction.description  %></td>
           <td><%= transaction.amount %></td>
           <td><%= transaction.name %></td>
-        </tr>
-      <% end %>
+          </tr>
+        <% end %>
 
-    </table>
+      </table>
+    </div>
   </div>
+  <div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel"></div>
 </div>
-<div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel"></div>

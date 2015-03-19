@@ -128,10 +128,16 @@ describe CampaignsController,  type: :controller do
     end
 
     let!(:campaigns) { create_list(:campaign, 3).reverse! }
+    let!(:funded) { create_list(:funded_campaign, 2).reverse! }
 
-    it 'assigns @campaigns' do
+    it 'assigns current campaigns' do
       get :index
-      expect(assigns(:campaigns)).to eq(campaigns)
+      expect(assigns(:current_campaigns)).to eq(campaigns)
+    end
+
+    it 'assigns funded campaigns' do
+      get :index
+      expect(assigns(:funded_campaigns)).to eq(funded)
     end
 
     it 'renders the :index view' do

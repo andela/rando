@@ -6,12 +6,12 @@ describe HomeController, type: :controller do
   end
 
   describe 'GET #index' do
-    it 'assigns a list of campaigns' do
+    it 'assigns a list of current campaigns' do
       create(:campaign) # oldest not included
       campaigns = create_list(:campaign, 3).reverse
 
       get :index
-      expect(assigns(:campaigns)).to eq(campaigns)
+      expect(assigns(:current_campaigns)).to eq(campaigns)
     end
 
     it 'assigns @campaigns_count' do

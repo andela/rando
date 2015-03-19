@@ -2,7 +2,8 @@ class CampaignsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
 
   def index
-    @campaigns = Campaign.page(params[:page]).per(Campaign::DISPLAY_COUNT).order(created_at: :desc).decorate
+    @current_campaigns = Campaign.current.page(params[:page]).per(Campaign::DISPLAY_COUNT).order(created_at: :desc).decorate
+    @funded_campaigns = Campaign.funded.page(params[:page]).per(Campaign::DISPLAY_COUNT).order(created_at: :desc).decorate
   end
 
   def new
@@ -45,6 +46,6 @@ class CampaignsController < ApplicationController
 
   private
     def campaign_params
-      params.require(:campaign).permit(:title, :deadline, :amount, :description, :youtube_url)
+      params.require(:campaign).permit(:title, :deadline, :needed, :description, :youtube_url)
     end
 end

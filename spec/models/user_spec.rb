@@ -63,7 +63,7 @@ describe User, type: :model do
   end
 
   describe '#create_account' do
-    let(:user) { create(:user_with_callback) }
+    let(:user) { create(:user_with_account) }
 
     it 'user has an account' do
       allow_any_instance_of(SubledgerClient).to receive(:create_account).and_return("account_id")
@@ -86,9 +86,8 @@ describe User, type: :model do
     end
 
     it 'removes a role' do
-      user = create(:user)
-      user.remove_role :banker
-      expect(user).to_not have_role :banker
+      users.second.remove_role :banker
+      expect(users.second).to_not have_role :banker
       expect(admin).to have_role :admin
     end
 

@@ -42,7 +42,7 @@ describe TransactionsController, type: :controller do
   end
 
   describe 'POST #withdraw' do
-    it 'gives a success mesage' do
+    it 'gives a success message' do
       allow_any_instance_of(SubledgerClient).to receive(:withdraw).and_return(202)
 
       post :withdraw, amount: 200

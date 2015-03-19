@@ -1,55 +1,57 @@
-<h2>
-  <% if current_user.transaction_count <= 3 %>
-    <%= link_to 'Account Balance', my_andonation_path(anchor: 'my_account_history') %>
-  <% else %>
-    <%= link_to 'Account Balance', my_transactions_path %>
-  <% end %>
-  : $<%= @balance %>
-</h2>
+<div class="container">
+  <h2>
+    <% if current_user.transaction_count <= 3 %>
+      <%= link_to 'Account Balance', my_andonation_path(anchor: 'my_account_history') %>
+    <% else %>
+      <%= link_to 'Account Balance', my_transactions_path %>
+    <% end %>
+    : $<%= @balance %>
+  </h2>
 
-<h2>My Campaigns</h2>
-<div class="pull-right">
-  <% if current_user.has_role? :admin %>
-    <span><%= link_to 'Users', users_path, class: "btn btn-default" %></span>
-  <% end %>
+  <h2>My Campaigns</h2>
+  <div class="pull-right">
+    <% if current_user.has_role? :admin %>
+      <span><%= link_to 'Users', users_path, class: "btn btn-default" %></span>
+    <% end %>
 
-  <% if current_user.has_role? :banker %>
-    <span><%= link_to 'Bankers Page', transactions_path, class: "btn btn-default" %></span>
-  <% end %>
-  <% if current_user.has_role? :distributor %>
-    <span><%= link_to 'Distributors Page', distributors_path, class: "btn btn-default" %></span>
-  <% end %>
-</div>
-<% if @campaigns_count == 0 %>
-  <div class="no-campaigns text-center">
-    <p><strong>You have no active campaigns currently running</strong></p>
+    <% if current_user.has_role? :banker %>
+      <span><%= link_to 'Bankers Page', transactions_path, class: "btn btn-default" %></span>
+    <% end %>
+    <% if current_user.has_role? :distributor %>
+      <span><%= link_to 'Distributors Page', distributors_path, class: "btn btn-default" %></span>
+    <% end %>
   </div>
-<% else %>
-  <%= render 'campaigns' %>
-
-  <div class="col-md-12 text-right" >
-    <%= link_to "View all #{@campaigns_count} Campaigns", my_campaigns_path  %>
-  </div>
-<% end %>
-<% if current_user.has_role? :banker %>
-  <h3>Banking transactions</h3>
-  <% if @transactions.empty? %>
+  <% if @campaigns_count == 0 %>
     <div class="no-campaigns text-center">
-      <p><strong>0 banking transactions </strong></p>
+      <p><strong>You have no active campaigns currently running</strong></p>
     </div>
   <% else %>
-    <%= render 'transactions' %>
+    <%= render 'campaigns' %>
+
+    <div class="col-md-12 text-right" >
+      <%= link_to "View all #{@campaigns_count} Campaigns", my_campaigns_path  %>
+    </div>
   <% end %>
-  <div class="col-md-12 text-right" >
-    <%= link_to "See full banking history", transactions_path  %>
-  </div>
-<% end %>
-<h3 id="my_account_history">My Account History</h3>
-<% if @history.empty? %>
-  <p><strong>0 banking transactions </strong></p>
-<% else %>
-  <%= render 'my_transactions' %>
-  <div class="col-md-12 text-right" >
-    <%= link_to "See all your transactions", my_transactions_path  %>
-  </div>
-<% end %>
+  <% if current_user.has_role? :banker %>
+    <h3>Banking transactions</h3>
+    <% if @transactions.empty? %>
+      <div class="no-campaigns text-center">
+        <p><strong>0 banking transactions </strong></p>
+      </div>
+    <% else %>
+      <%= render 'transactions' %>
+    <% end %>
+    <div class="col-md-12 text-right" >
+      <%= link_to "See full banking history", transactions_path  %>
+    </div>
+  <% end %>
+  <h3 id="my_account_history">My Account History</h3>
+  <% if @history.empty? %>
+    <p><strong>0 banking transactions </strong></p>
+  <% else %>
+    <%= render 'my_transactions' %>
+    <div class="col-md-12 text-right" >
+      <%= link_to "See all your transactions", my_transactions_path  %>
+    </div>
+  <% end %>
+</div>

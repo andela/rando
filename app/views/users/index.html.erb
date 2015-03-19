@@ -1,4 +1,5 @@
-<h2>Users</h2>
+<div class="container">
+  <h2>Users</h2>
 
 <%= form_tag edit_user_roles_path, id: 'edit-form', remote: true, method: :get do %>
   <p class="alert-js ra-error"></p>
@@ -16,15 +17,16 @@
       <th>Roles</th>
     </tr>
     <% @users.each do |user| %>
-      <tr>
-        <td><%= check_box_tag "users_ids[]", user.id, false, class: "check-box" %></td>
-        <td><%= user.first_name %></td>
-        <td><%= user.last_name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.pretty_roles %></td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
+        <tr>
+          <td><%= check_box_tag "users_ids[]", user.id, false, class: "check-box" %></td>
+          <td><%= user.first_name %></td>
+          <td><%= user.last_name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.pretty_roles %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
 
-<div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel"></div>
+  <div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel"></div>
+</div>

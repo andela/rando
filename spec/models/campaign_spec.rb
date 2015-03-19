@@ -9,8 +9,8 @@ describe Campaign, type: :model do
   it { is_expected.to validate_presence_of(:user) }
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:deadline) }
-  it { is_expected.to validate_presence_of(:amount) }
-  it { is_expected.to validate_numericality_of(:amount).is_greater_than(0) }
+  it { is_expected.to validate_presence_of(:needed) }
+  it { is_expected.to validate_numericality_of(:needed).is_greater_than(0) }
   it { is_expected.to validate_presence_of(:description) }
   it { is_expected.to validate_presence_of(:youtube_url) }
   it { is_expected.to validate_length_of(:title).is_at_least(5) }
@@ -117,4 +117,18 @@ describe Campaign, type: :model do
     end
   end
 
+  describe '.current' do
+    let(:non_expired_campaign) { create(:campaign, deadline: Date.today + 1.day, raised: 250) }
+    let(:non_funded_campaign) { create(:campaign, needed: 200, raised: 100) }
+    let(:expired_campaign) { create(:campaign) }
+    let(:funded_campaign) { create(:campaign, needed: 200, raised: 200) }
+
+    subject { Campaign.current }
+
+    it { is_expected.to include(non_expired_campaign) }
+    it { is_expected.to include(non_funded_campaign) }
+    it { expired_campaign.update_attribute(:deadline, Date.yesterday)
+         is_expected.to_not include(expired_campaign) }
+    it { is_expected.to_not include(funded_campaign) }
+  end
 end
