@@ -14,6 +14,14 @@ describe HomeController, type: :controller do
       expect(assigns(:current_campaigns)).to eq(campaigns)
     end
 
+    it 'assigns a list of funded campaigns' do
+      create(:funded_campaign)
+      funded_campaigns = create_list(:funded_campaign, 3).reverse
+
+      get :index
+      expect(assigns(:funded_campaigns)).to eq(funded_campaigns)
+    end
+
     it 'assigns @campaigns_count' do
       allow(Campaign).to receive(:count) { 10 }
 

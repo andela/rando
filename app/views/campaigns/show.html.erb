@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-12">
       <h3><%= @campaign.uppercase_title %></h3>
-      <% if user_signed_in? && current_user == @campaign.user%>
+      <% if user_signed_in? && current_user == @campaign.user && @campaign.needed != @campaign.raised %>
         <p><%= link_to 'Edit Campaign', edit_campaign_path %></p>
       <% end %>
       <p><i><%= "Created by: #{@campaign.user_name}" %></i></p>
@@ -14,7 +14,11 @@
         <% if user_signed_in? %>
         <%= form_tag new_campaign_support_path(@campaign), remote: true, method: :get do %>
           <%= hidden_field_tag "campaign_id", @campaign.id %>
-          <%= submit_tag '$ Support!', id: 'support', class: "btn btn-success" %>
+          <% if @campaign.needed == @campaign.raised %>
+            <%= submit_tag '$ Support!', id: 'support', disabled: true, class: "btn btn-success" %><br>
+          <% else %>
+              <%= submit_tag '$ Support!', id: 'support', class: "btn btn-success" %>
+          <% end %>
         <% end %>
         <% else %>
           <p class="campaign-support">
@@ -25,9 +29,14 @@
       </div>
 
       <div class="needs-raised col-lg-4">
-        <p><%= "Needs: $#{@campaign.needed}" %></p>
-        <p><%= "Raised: $#{@campaign.raised}" %></p>
+        <% if @campaign.needed == @campaign.raised %>
+          <p class="funded-text"><strong>100% Funded</strong></p>
+        <% else %>
+          <p><%= "Needs: $#{@campaign.needed}" %></p>
+          <p><%= "Raised: $#{@campaign.raised}" %></p>
+        <% end %>
       </div>
+
     </div>
 
     <div class="video-container">

@@ -22,6 +22,9 @@ Rails.application.routes.draw do
 
   resources :campaigns do
     resource :support, only: [:new, :create]
+    collection do
+      get :funded
+    end
   end
 
   post 'transaction/deposit/', to: 'transactions#deposit', as: :deposit

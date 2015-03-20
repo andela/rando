@@ -88,10 +88,16 @@ feature 'Campaigns' do
   end
 
   feature 'User views all campaigns' do
-    scenario 'user sees all the campaigns on the system' do
+    scenario 'user sees no redirect link when 3 campaigns or less' do
       create_list(:campaign, 3)
       visit '/'
-      click_on 'See all 3 open campaigns'
+      expect(page).to_not have_link('See all 3 open campaigns')
+    end
+
+    scenario 'user sees all the current campaigns on the system' do
+      create_list(:campaign, 4)
+      visit '/'
+      click_on 'See all 4 open campaigns'
       expect(page).to have_content('Food for the Poor')
       expect(page).to have_content("Deadline: #{(Date.tomorrow + 1.day)}")
       expect(page).to have_content('Needs: $60000')
@@ -152,6 +158,37 @@ feature 'User can only edit his own campaigns' do
         expect(page).to have_content('Amount')
         expect(page).to have_content('20')
       end
+    end
+  end
+
+  feature 'Funded Campaigns' do
+    scenario 'User accesses a fully funded campaign' do
+      create(:funded_campaign, title: 'Beautiful Scenery')
+
+      visit '/'
+
+      within '#funded-campaigns' do
+        click_on 'Beautiful Scenery'
+      end
+
+      expect(page).to have_content('BEAUTIFUL SCENERY')
+      expect(page).to_not have_link('Edit Campaign')
+      expect(page).to have_content('100% Funded')
+    end
+
+    scenario 'User sees all fully funded campaigns' do
+      create_list(:funded_campaign, 6)
+
+      visit '/'
+
+      within '#funded-campaigns' do
+        click_on 'See all 6 funded campaigns'
+      end
+
+      expect(page).to have_content('Funded Campaigns')
+      expect(page).to have_content('Food for the Poor')
+      expect(page).to have_content('100% Funded')
+      expect(page).to have_content('Never go hungry again')
     end
   end
 end

@@ -58,6 +58,8 @@ FactoryGirl.define do
     youtube_url 'https://www.youtube.com/watch?v=7WJk-z5AmXk'
     raised '23000'
 
+    after(:build) { |campaign| campaign.class.skip_callback(:create, :after, :create_account) }
+
     user
   end
 end
