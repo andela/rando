@@ -19,4 +19,7 @@
 
 .btn {
     text-transform: none;
+    padding: 12px 50px;
+    font-size: 1.3em;
+    margin: 0;
 }

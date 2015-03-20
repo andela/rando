@@ -1,33 +1,44 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h2><%= @campaign.uppercase_title %></h2>
+      <h3><%= @campaign.uppercase_title %></h3>
       <% if user_signed_in? && current_user == @campaign.user%>
         <p><%= link_to 'Edit Campaign', edit_campaign_path %></p>
       <% end %>
       <p><i><%= "Created by: #{@campaign.user_name}" %></i></p>
       <p><i><%= "Funding Deadline: #{formatted_date(@campaign.deadline, '/')}" %></i></p>
     </div>
-    <div class="col-lg-7 description" >
-      <p><%= "#{@campaign.description}" %></p>
-    </div>
-    <div class="col-lg-5">
-      <div>
+
+    <div class="support-contain col-lg-4">
+      <div class="col-lg-8">
+        <% if user_signed_in? %>
         <%= form_tag new_campaign_support_path(@campaign), remote: true, method: :get do %>
           <%= hidden_field_tag "campaign_id", @campaign.id %>
           <%= submit_tag '$ Support!', id: 'support', class: "btn btn-success" %>
         <% end %>
+        <% else %>
+          <p class="campaign-support">
+            <%= submit_tag '$ Support!', id: 'support', disabled: true, class: "btn btn-success" %><br>
+            Login to support this Campaign
+          </p>
+        <% end %>
       </div>
-      <div>
+
+      <div class="needs-raised col-lg-4">
         <p><%= "Needs: $#{@campaign.needed}" %></p>
         <p><%= "Raised: $#{@campaign.raised}" %></p>
       </div>
-      <div class="video-container">
-        <iframe width="560" height="315" src="<%= @campaign.embedded_youtube_url %>" frameborder="0" allowfullscreen></iframe>
-      </div>
-    </div><br>
+    </div>
 
-    <div>
+    <div class="video-container">
+      <iframe width="560" height="315" src="<%= @campaign.embedded_youtube_url %>" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="col-lg-6 description" >
+      <p><%= "#{@campaign.description}" %></p>
+    </div>
+
+    <div id="backers">
       <h4>Backers</h4>
       <table class="table table-bordered">
         <tr>
