@@ -20,6 +20,9 @@ class Campaign < ActiveRecord::Base
 
   scope :current, lambda { non_expired.non_funded }
 
+  scope :desc_order, -> { order(created_at: :desc) }
+  scope :ordered_page, -> (page) { page(page).per(DISPLAY_COUNT).desc_order }
+
   private
 
   def deadline_is_in_range

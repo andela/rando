@@ -28,12 +28,10 @@ feature 'Campaigns exists' do
     visit '/'
 
     expect(page).to have_content('Funded Campaigns')
-    within '#funded-campaigns' do
-      expect(page).to have_link('Rich Culture')
-      expect(page).to have_content('100% Funded')
-      expect(page).to have_content((Date.tomorrow + 1).strftime('%Y-%m-%d'))
-      expect(page).to have_content('We are rich in minerals and resources')
-    end
+    expect(page).to have_link('Rich Culture')
+    expect(page).to have_content('100% Funded')
+    expect(page).to have_content((Date.tomorrow + 1).strftime('%Y-%m-%d'))
+    expect(page).to have_content('We are rich in minerals and resources')
   end
 end
 
@@ -41,8 +39,7 @@ feature 'No Campaigns' do
   scenario 'User visits homepage and sees no current campaigns' do
     visit '/'
 
-    expect(page).to have_selector('.no-campaigns', count: 2)
-    expect(page).to have_content('There are no active campaigns currently running')
+    expect(page).to have_content('There are no current campaigns')
     expect(page).to have_content('There are no funded campaigns')
   end
 end

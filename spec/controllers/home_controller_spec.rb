@@ -6,6 +6,9 @@ describe HomeController, type: :controller do
   end
 
   describe 'GET #index' do
+    let!(:c_campaigns) { create_list(:campaign, 10) }
+    let!(:f_campaigns) { create_list(:funded_campaign, 8) }
+
     it 'assigns a list of current campaigns' do
       create(:campaign) # oldest not included
       campaigns = create_list(:campaign, 3).reverse
@@ -23,10 +26,9 @@ describe HomeController, type: :controller do
     end
 
     it 'assigns @campaigns_count' do
-      allow(Campaign).to receive(:count) { 10 }
-
       get :index
-      expect(assigns(:campaigns_count)).to eq(10)
+      expect(assigns(:current_campaigns_count)).to eq(10)
+      expect(assigns(:funded_campaigns_count)).to eq(8)
     end
 
     it 'renders the index template' do

@@ -97,7 +97,7 @@ feature 'Campaigns' do
     scenario 'user sees all the current campaigns on the system' do
       create_list(:campaign, 4)
       visit '/'
-      click_on 'See all 4 open campaigns'
+      click_on 'See all 4 current campaigns'
       expect(page).to have_content('Food for the Poor')
       expect(page).to have_content("Deadline: #{(Date.tomorrow + 1.day)}")
       expect(page).to have_content('Needs: $60000')
@@ -167,9 +167,7 @@ feature 'User can only edit his own campaigns' do
 
       visit '/'
 
-      within '#funded-campaigns' do
-        click_on 'Beautiful Scenery'
-      end
+      click_on 'Beautiful Scenery'
 
       expect(page).to have_content('BEAUTIFUL SCENERY')
       expect(page).to_not have_link('Edit Campaign')
@@ -181,9 +179,7 @@ feature 'User can only edit his own campaigns' do
 
       visit '/'
 
-      within '#funded-campaigns' do
-        click_on 'See all 6 funded campaigns'
-      end
+      click_on 'See all 6 funded campaigns'
 
       expect(page).to have_content('Funded Campaigns')
       expect(page).to have_content('Food for the Poor')

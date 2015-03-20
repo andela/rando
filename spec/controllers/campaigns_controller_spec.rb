@@ -133,7 +133,7 @@ describe CampaignsController,  type: :controller do
 
     it 'assigns current campaigns' do
       get :index
-      expect(assigns(:current_campaigns)).to eq(campaigns)
+      expect(assigns(:campaigns)).to eq(campaigns)
     end
 
     it 'renders the :index view' do
@@ -147,7 +147,7 @@ describe CampaignsController,  type: :controller do
 
     it 'assigns funded campaigns' do
       get :funded
-      expect(assigns(:funded_campaigns)).to eq(funded)
+      expect(assigns(:campaigns)).to eq(funded)
     end
 
     it 'renders funded view' do

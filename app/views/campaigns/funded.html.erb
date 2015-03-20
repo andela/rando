@@ -1,12 +1,1 @@
-<div class="container">
-  <div class="container">
-    <h2>Funded Campaigns</h2>
-
-    <div class="campaigns_list">
-      <%= render(@funded_campaigns) %>
-    </div>
-    <div class="col-md-6 col-md-offset-5">
-      <%= paginate @funded_campaigns %>
-    </div>
-  </div>
-</div>
+<%= render partial: 'index', locals: { type: 'Funded' } %>

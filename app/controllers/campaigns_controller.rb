@@ -2,11 +2,11 @@ class CampaignsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index, :funded]
 
   def index
-    @current_campaigns = Campaign.current.page(params[:page]).per(Campaign::DISPLAY_COUNT).order(created_at: :desc).decorate
+    @campaigns = Campaign.ordered_page(params[:page]).current.decorate
   end
 
   def funded
-    @funded_campaigns = Campaign.funded.page(params[:page]).per(Campaign::DISPLAY_COUNT).order(created_at: :desc).decorate
+    @campaigns = Campaign.ordered_page(params[:page]).funded.decorate
   end
 
   def new

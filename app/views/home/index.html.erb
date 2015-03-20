@@ -1,39 +1,5 @@
 <div class="container">
-  <h2>Current Campaigns</h2>
+  <%= render partial: 'campaigns', locals: { campaigns: @current_campaigns, type: 'current', see_all_path: campaigns_path, count: @current_campaigns_count } %>
 
-  <div class="row">
-    <% if @current_campaigns_count == 0 %>
-      <div class="no-campaigns text-center">
-        <p><strong>There are no active campaigns currently running</strong></p>
-      </div>
-    <% else %>
-      <%= render @current_campaigns %>
-
-      <% if @current_campaigns_count > 3 %>
-        <div class="col-md-11 text-right" >
-          <%= link_to "See all #{@current_campaigns_count} open campaigns", campaigns_path %>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-
-  <div id="funded-campaigns">
-    <h2 class="funded-header">Funded Campaigns</h2>
-
-    <div class="row">
-      <% if @funded_campaigns_count == 0 %>
-        <div class="no-campaigns text-center">
-          <p><strong>There are no funded campaigns</strong></p>
-        </div>
-      <% else %>
-        <%= render @funded_campaigns %>
-
-        <% if @funded_campaigns_count > 3 %>
-          <div class="col-md-11 text-right" >
-            <%= link_to "See all #{@funded_campaigns_count} funded campaigns", funded_campaigns_path %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
+  <%= render partial: 'campaigns', locals: { campaigns: @funded_campaigns, type: 'funded', see_all_path: funded_campaigns_path, count: @funded_campaigns_count } %>
 </div>
