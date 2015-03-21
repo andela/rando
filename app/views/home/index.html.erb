@@ -1,3 +1,42 @@
+<header id="myCarousel" class="carousel slide">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+      <div class="fill" style="background-image:url(<%= asset_path('rando_bg_1.jpg') %>);"></div>
+      <div class="carousel-caption">
+        <h2>Welcome to Andonation...<em>fuel your passion</em></h2>
+      </div>
+    </div>
+    <div class="item">
+      <div class="fill" style="background-image:url(<%= asset_path('rando_bg_2.jpg') %>);"></div>
+      <div class="carousel-caption">
+        <h2>Bring Your Projects to Light</h2>
+      </div>
+    </div>
+    <div class="item">
+      <div class="fill" style="background-image:url(<%= asset_path('rando_bg_3.jpg') %>);"></div>
+      <div class="carousel-caption">
+        <h2>Grow Your Ideas</h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="icon-prev"></span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="icon-next"></span>
+  </a>
+</header>
+
 <div class="container">
   <%= render partial: 'campaigns', locals: { campaigns: @current_campaigns, type: 'current', see_all_path: campaigns_path, count: @current_campaigns_count } %>
 
