@@ -19,7 +19,10 @@
 
 .btn {
     text-transform: none;
+    margin: 0;
+}
+
+.btn-support {
     padding: 12px 50px;
     font-size: 1.3em;
-    margin: 0;
 }

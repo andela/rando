@@ -9,20 +9,20 @@
       <p><i><%= "Funding Deadline: #{formatted_date(@campaign.deadline, '/')}" %></i></p>
     </div>
 
-    <div class="support-contain col-lg-4">
-      <div class="col-lg-8">
+    <div class="support-contain col-lg-5">
+      <div class="col-lg-6">
         <% if user_signed_in? %>
         <%= form_tag new_campaign_support_path(@campaign), remote: true, method: :get do %>
           <%= hidden_field_tag "campaign_id", @campaign.id %>
           <% if @campaign.needed == @campaign.raised %>
-            <%= submit_tag '$ Support!', id: 'support', disabled: true, class: "btn btn-success" %><br>
+            <%= submit_tag '$ Support!', id: 'support', disabled: true, class: "btn btn-support btn-success" %><br>
           <% else %>
-              <%= submit_tag '$ Support!', id: 'support', class: "btn btn-success" %>
+              <%= submit_tag '$ Support!', id: 'support', class: "btn btn-support btn-success" %>
           <% end %>
         <% end %>
         <% else %>
           <p class="campaign-support">
-            <%= submit_tag '$ Support!', id: 'support', disabled: true, class: "btn btn-success" %><br>
+            <%= submit_tag '$ Support!', id: 'support', disabled: true, class: "btn btn-support btn-success" %><br>
             Login to support this Campaign
           </p>
         <% end %>

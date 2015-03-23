@@ -11,12 +11,16 @@ describe SupportsController, type: :controller do
 
   describe 'GET #new' do
     before do
-      allow_any_instance_of(FundManager).to receive(:balance).and_return("200")
+      allow_any_instance_of(FundManager).to receive(:balance).and_return('200')
     end
 
     it 'assigns campaign' do
+      needed_rem = campaign.needed - campaign.raised
+
       xhr :get, :new, campaign_id: campaign
       expect(assigns(:campaign_id)).to eq(campaign.id.to_s)
+      expect(assigns(:needed)).to eq(needed_rem)
+      expect(assigns(:user_balance)).to eq('200')
     end
 
     it 'renders support modal window' do

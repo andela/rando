@@ -18,7 +18,7 @@ feature 'Bankers make deposit' do
     visit '/'
     click_on 'Login'
     click_on 'My Andonation'
-    click_on 'Bankers Page'
+    click_on 'Bankers'
     click_on 'Deposit $'
     within("#modal-window") do
       fill_in 'amount', with: '100'

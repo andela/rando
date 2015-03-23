@@ -54,13 +54,14 @@ describe CampaignsController,  type: :controller do
       let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
 
       before do
-        allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
+        allow_any_instance_of(FundManager).to receive(:transactions).and_return(transaction)
       end
 
       it 'assigns campaign' do
         campaign = create(:campaign)
         get :show, id: campaign
         expect(assigns(:campaign)).to eq(campaign)
+        expect(assigns(:transactions)).to eq(transaction)
       end
 
       it 'renders the show template' do

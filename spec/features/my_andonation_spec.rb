@@ -96,7 +96,7 @@ feature 'Account Balance' do
   end
 
   scenario 'User sees his account balance and has 1 transaction' do
-    expect(page).to have_content('Account Balance : $300')
+    expect(page).to have_content('Account Balance: $ 300')
     expect(page).to have_link('Account Balance', href:'/my_andonation#my_account_history')
   end
 
