@@ -3,7 +3,7 @@
     <div class="modal-body text-center">
 
       <div>
-        You have a balance of . How much would you like to give to this campaign?
+        You have a balance of $ <%= @user_balance %>. How much would you like to give to this campaign?
       </div><br>
 
       <%= form_tag campaign_support_path do %>
@@ -11,7 +11,13 @@
           <%= hidden_field_tag "campaign_id", @campaign_id %>
           <%= label_tag '$' %>
           <%= number_field_tag :raised, params[:raised], required: true, max: @needed, min: 1 %>
-        </div>
+        </div><br>
+
+        <%= label_tag 'reason', 'Reason', class: 'col-sm-2 control-label' %>
+        <div class="col-sm-10">
+          <%= text_field_tag :reason, params[:reason], pattern: '.{5,140}', required: true, title: 'The reason must be more than 5 characters and less than 140 characters', class: 'form-control', id: 'reason' %>
+        </div><br><br><br>
+
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         <%= submit_tag "$ Support!", class: "btn btn-default btn-success" %>
       <% end %>

@@ -10,6 +10,10 @@ describe SupportsController, type: :controller do
   end
 
   describe 'GET #new' do
+    before do
+      allow_any_instance_of(FundManager).to receive(:balance).and_return("200")
+    end
+
     it 'assigns campaign' do
       xhr :get, :new, campaign_id: campaign
       expect(assigns(:campaign_id)).to eq(campaign.id.to_s)
@@ -24,7 +28,7 @@ describe SupportsController, type: :controller do
   describe 'POST #create' do
     before do
       allow_any_instance_of(FundManager).to receive(:balance).and_return("400")
-      allow_any_instance_of(UserFundManager).to receive(:allocate).and_return(202)
+      allow_any_instance_of(UserFundManager).to receive(:allocate_campaign).and_return(202)
     end
 
     it 'supports a campaign' do

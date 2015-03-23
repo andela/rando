@@ -25,8 +25,8 @@ class CampaignsController < ApplicationController
   def show
     @campaign = Campaign.find(params[:id]).try(:decorate)
 
-    manager = FundManager.new
-    @transactions = manager.transactions @campaign.account_id
+    client = FundManager.new
+    @transactions = client.transactions @campaign.account_id
   end
 
   def edit

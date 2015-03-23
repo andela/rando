@@ -21,4 +21,19 @@ class UserFundManager < FundManager
       202
     end
   end
+
+  def allocate_campaign(user_id, user_acct, campaign_acct, amount, reason)
+    responses = []
+    user = User.find(user_id)
+    description = {
+        user: user.to_json,
+        description: reason
+    }
+    responses << @client.journal_entry(amount, description, campaign_acct, user_acct)
+    if responses.include?(201)
+      201
+    else
+      202
+    end
+  end
 end

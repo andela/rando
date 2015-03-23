@@ -125,16 +125,17 @@ feature 'User can only edit his own campaigns' do
   end
 
   feature 'User supports a campaign' do
+    let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
+
     background do
+      allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
+      allow_any_instance_of(UserFundManager).to receive(:allocate_campaign).and_return(202)
       page.driver.block_unknown_urls
       OmniAuth.config.test_mode = true
       set_valid_omniauth
     end
 
     scenario 'user accesses a campaign and supports it', js: true do
-      allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
-      allow_any_instance_of(UserFundManager).to receive(:allocate).and_return(202)
-
       create(:campaign, title: 'Rich Culture')
       visit '/'
       click_on 'Login'
@@ -146,18 +147,14 @@ feature 'User can only edit his own campaigns' do
       expect(page).to have_content('Needs')
 
       click_on '$ Support!'
-      expect(page).to have_content('You have a balance of')
+      expect(page).to have_content('You have a balance of $ 200. How much would you like to give to this campaign?')
       within '#modal-window' do
-        fill_in 'raised', with: '20'
+        fill_in 'raised', with: '30'
+        fill_in 'reason', with: 'Its a great idea!'
         click_on '$ Support!'
       end
-      expect(page).to have_content('Raised: $2020')
+      expect(page).to have_content('Raised: $2030')
       expect(page).to have_content('You have supported this campaign')
-
-      within '.table-bordered' do
-        expect(page).to have_content('Amount')
-        expect(page).to have_content('20')
-      end
     end
   end
 

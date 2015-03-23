@@ -17,7 +17,7 @@ class DistributorsController < ApplicationController
   def create
     authorize! :allocate_money, User
     client = UserFundManager.new current_user
-    user_ids = params[:users].split(" ").map(&:to_i)
+    user_ids = params[:users].split(' ').map(&:to_i)
 
     response = client.allocate(user_ids, params[:amount], params[:reason])
     if response == 202
