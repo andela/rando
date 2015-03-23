@@ -6,6 +6,10 @@ class MyAndonationController < ApplicationController
     @campaigns_count = current_user.campaigns.count
 
     @transactions = current_user.transactions
+    #from chiemeka
+    @distributions_history = current_user.distributions
+    @distributions_three = current_user.distributions.take(3)
+
     @history = current_user.transactions_history
 
     @balance = current_user.account_balance
@@ -18,5 +22,9 @@ class MyAndonationController < ApplicationController
 
   def my_transactions
     @history = current_user.all_transactions_history
+  end
+  #from chiemeka
+  def my_distributions
+    @history = current_user.distributions
   end
 end

@@ -35,12 +35,11 @@ class Transaction
   end
 
   def description
-    begin
-      h = ActiveSupport::JSON.decode(@line['description'])
-      h['description']
-    rescue
-      'No description for this transaction'
-    end
+    get_field_two 'description'
+  end
+
+  def recipient
+    get_field_two 'recipient'
   end
 
   private
@@ -51,6 +50,15 @@ class Transaction
       h[field]
     rescue
       @line['description']
+    end
+  end
+
+  def get_field_two field
+    begin
+      h = ActiveSupport::JSON.decode(@line['description'])
+      h[field]
+    rescue
+      'Not set'
     end
   end
 end

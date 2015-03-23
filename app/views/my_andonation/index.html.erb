@@ -45,6 +45,24 @@
       <%= link_to "See full banking history", transactions_path  %>
     </div>
   <% end %>
+
+
+  <% if current_user.has_role? :distributor %>
+      <h3>My Distributions</h3>
+      <% if @distributions_history.empty? %>
+          <div class="no-campaigns text-center">
+        <p><strong>0 banking distributions </strong></p>
+      </div>
+        <% else %>
+          <%= render 'distributions' %>
+        <% end %>
+      <% if @distributions_history.count > 3 %>
+          <div class="col-md-12 text-right" >
+        <%= link_to "See all #{@distributions_history.count} of my distributions", my_distributions_path %>
+      </div>
+        <% end %>
+    <% end %>
+
   <h3 id="my_account_history">My Account History</h3>
   <% if @history.empty? %>
     <p><strong>0 banking transactions </strong></p>

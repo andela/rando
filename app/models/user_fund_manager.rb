@@ -10,8 +10,9 @@ class UserFundManager < FundManager
     user_ids.each do |user_id|
       user = User.find(user_id)
       description = {
-          user: user.to_json,
-          description: reason
+          user: @user.to_json,
+          description: reason,
+          recipient: user.name
       }
       responses << @client.journal_entry(amount, description, user.account_id, ENV["SYSTEM_ACC_CREDIT"]).code
     end

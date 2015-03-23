@@ -56,6 +56,13 @@ describe MyAndonationController, type: :controller do
           expect(assigns(:campaigns_count)).to eq(0)
         end
       end
+
+      describe '#my_distributions' do
+        it 'assigns a list of distributions' do
+          get :my_distributions
+          expect(response).to render_template(:my_distributions)
+        end
+      end
   end
 
   describe 'methods not allowed for unauthenticated user' do

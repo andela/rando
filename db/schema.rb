@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150316155533) do
+ActiveRecord::Schema.define(version: 20150322220851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,17 @@ ActiveRecord::Schema.define(version: 20150316155533) do
     t.datetime "updated_at",                        null: false
     t.string   "account_id"
     t.integer  "raised",      limit: 8, default: 0
+  end
+
+  create_table "journal_entries", force: :cascade do |t|
+    t.string   "transaction_type"
+    t.string   "description"
+    t.integer  "amount"
+    t.integer  "balance"
+    t.string   "by"
+    t.string   "recipient"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "roles", force: :cascade do |t|

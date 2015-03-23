@@ -73,6 +73,12 @@ class User < ActiveRecord::Base
     all_transactions_history.count
   end
 
+  def distributions
+    client = FundManager.new
+    response = client.transactions(ENV["SYSTEM_ACC_CREDIT"])
+    response.select { |distribution| distribution.transaction_type == 'Debit' && distribution.email == email }
+  end
+
   def account_balance
     client = FundManager.new
     client.balance(account_id)

@@ -106,3 +106,40 @@ feature 'Account Balance' do
     expect(page).to have_link('Account Balance', href:'/my_andonation/transactions')
   end
 end
+
+feature 'Distributions' do
+  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
+
+  before do
+    allow_any_instance_of(FundManager).to receive(:balance).and_return(400)
+    allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
+
+    OmniAuth.config.test_mode = true
+    set_valid_omniauth
+    visit '/'
+    click_on 'Login'
+    click_on 'My Andonation'
+  end
+
+  scenario 'Distributor sees their distribution history' do
+    expect(page).to_not have_content('My Distributions')
+
+    allow_any_instance_of(User).to receive(:distributions).and_return([transaction] * 2)
+    user = User.where(email: 'christopher@andela.co').first
+    user.add_role :distributor
+
+    click_on 'My Andonation'
+    expect(page).to have_content('My Distributions')
+    expect(page).to_not have_link('See all 2 of my distributions')
+  end
+
+  scenario 'Distributor has more than one distributions' do
+    allow_any_instance_of(User).to receive(:distributions).and_return([transaction] * 4)
+    user = User.where(email: 'christopher@andela.co').first
+    user.add_role :distributor
+
+    click_on 'My Andonation'
+    click_on 'See all 4 of my distributions'
+    expect(page).to have_content('My Distributions History')
+  end
+end

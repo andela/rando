@@ -1,0 +1,16 @@
+<table class="table table-bordered">
+    <tr>
+      <th>Date</th>
+      <th>Recipient</th>
+      <th>Amount</th>
+      <th>Reason</th>
+    </tr>
+    <% @distributions_three.each do |distribution| %>
+    <tr>
+      <td><%= distribution.posted_at %></td>
+      <td><%= distribution.recipient %></td>
+      <td><%= distribution.amount %></td>
+      <td><%= distribution.description %></td>
+    </tr>
+  <% end %>
+  </table>
