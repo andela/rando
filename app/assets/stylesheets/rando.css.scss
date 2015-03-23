@@ -208,3 +208,12 @@ h1 {
 .andonation-tables {
   margin-top: 60px;
 }
+
+.flash {
+  position: fixed;
+  -moz-opacity: 0.5;          /* Netscape */
+  -khtml-opacity: 0.5;        /* Safari 1.x */
+  opacity: 0.7;
+  width: 100%;
+  z-index: 9999;
+}
