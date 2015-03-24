@@ -16,4 +16,8 @@ class CampaignDecorator < Draper::Decorator
   def truncate_description
     description.truncate(140, separator: ' ')
   end
+
+  def youtube_static_image
+    "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
+  end
 end

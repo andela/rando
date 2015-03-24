@@ -12,6 +12,13 @@ describe CampaignDecorator do
     end
   end
 
+  describe '#youtube_static_image' do
+    it 'gets youtube video static image' do
+      campaign = create(:campaign, youtube_url: 'https://www.youtube.com/watch?v=7WJk-z5AmXk').decorate
+      expect(campaign.youtube_static_image).to eq('http://img.youtube.com/vi/7WJk-z5AmXk/0.jpg')
+    end
+  end
+
   describe '#youtube_id' do
     it 'extracts youtube id from youtube url' do
       campaign = create(:campaign, youtube_url: 'http://www.youtu.be/s3wXkv1VW54&feature=fvst').decorate
