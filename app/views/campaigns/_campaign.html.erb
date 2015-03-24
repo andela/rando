@@ -1,18 +1,27 @@
 <div class="col-md-4 current-campaigns">
-  <div class="needs">
-    <% if campaign.needed == campaign.raised %>
-      <strong>100% Funded</strong>
-    <% else %>
-      <strong>Needs:</strong> $<%= campaign.needed %><br>
-      <strong>Raised:</strong> $<%= campaign.raised %><br>
-    <% end %>
+
+  <div id="img-preview">
+    <img src="http://img.youtube.com/vi/<%= campaign.youtube_id %>/0.jpg" alt="campaign thumbnail" width="349" >
+    <br>
+
   </div>
-  <div class="campaign-title">
-    <h5><%= link_to campaign.title, campaign %></h5>
-  </div>
-  Deadline: <%= campaign.deadline %><br><br>
-  <div class="campaign-description">
-    <%= campaign.truncate_description %>
+
+  <div class="current-campaigns-inside">
+    <div class="needs">
+      <% if campaign.needed == campaign.raised %>
+        <strong>100% Funded</strong>
+      <% else %>
+        <strong>Needs:</strong> $<%= campaign.needed %><br>
+        <strong>Raised:</strong> $<%= campaign.raised %><br>
+      <% end %>
+    </div>
+    <div class="campaign-title">
+      <h5><%= link_to campaign.title, campaign %></h5>
+    </div>
+    Deadline: <%= campaign.deadline %><br><br>
+    <div class="campaign-description">
+      <%= campaign.truncate_description %>
+    </div>
   </div>
   <br>
 </div>

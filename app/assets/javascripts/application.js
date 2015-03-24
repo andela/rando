@@ -18,15 +18,3 @@
 //= require pickadate/picker
 //= require pickadate/picker.date
 //= require_tree .
-
-flashCallback = function(_this){
-    $('.flash').fadeOut()
-}
-
-$(document).ready(function(){
-
-    $(".flash").bind('click',function(e){
-        flashCallback()
-    })
-    setTimeout(flashCallback, 3000)
-})

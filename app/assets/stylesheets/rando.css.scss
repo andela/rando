@@ -25,6 +25,15 @@ body {
   border: 1px solid #730E15;
 }
 
+.flash {
+  position: fixed;
+  -moz-opacity: 0.5;          /* Netscape */
+  -khtml-opacity: 0.5;        /* Safari 1.x */
+  opacity: 0.7;
+  width: 100%;
+  z-index: 9999;
+}
+
 .ra-success {
   color: #00B825;
 }
@@ -155,11 +164,18 @@ h1 {
 
 .current-campaigns {
   border: 1px solid #000000;
+  border-radius: .25em;
   margin: 10px 10px;
   max-width: 350px;
   -webkit-box-shadow: 0 0 .3em .1em #333333;
   -moz-box-shadow: 0 0 .3em .1em #333333;
-  box-shadow: 0 0 .3em .1em #333333;
+  box-shadow: 0 0 .1em .05em #333333;
+  padding: 0;
+}
+
+.current-campaigns-inside {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .needs {
@@ -207,13 +223,4 @@ h1 {
 
 .andonation-tables {
   margin-top: 60px;
-}
-
-.flash {
-  position: fixed;
-  -moz-opacity: 0.5;          /* Netscape */
-  -khtml-opacity: 0.5;        /* Safari 1.x */
-  opacity: 0.7;
-  width: 100%;
-  z-index: 9999;
 }
