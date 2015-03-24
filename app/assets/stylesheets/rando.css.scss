@@ -11,6 +11,10 @@ body {
   padding-top: 60px;
 }
 
+.nav-link {
+  text-decoration: underline;
+}
+
 .alert,
 .alert-js {
   font-size: 1.12em;
@@ -60,10 +64,6 @@ body {
 
 .nav-head {
   font-size: 1.5em;
-}
-
-.nav-link {
-  text-decoration: underline;
 }
 
 h1 {

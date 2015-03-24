@@ -12,9 +12,6 @@ feature 'Campaigns exists' do
     visit '/'
 
     expect(page).to have_content('Andonation')
-    within '.navbar' do
-      expect(page).to have_link('Andonation', href: '/')
-    end
 
     expect(page).to have_content('Current Campaigns')
     expect(page).to have_link('Science and Tech')
