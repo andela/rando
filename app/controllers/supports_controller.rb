@@ -1,5 +1,6 @@
 class SupportsController < ApplicationController
 before_action :authenticate_user!
+before_action :set_campaign
 before_action :check_balance, only: :create
 
   def new
@@ -39,5 +40,11 @@ before_action :check_balance, only: :create
     if @raised_value > @user_balance.to_i
       redirect_to campaign_path(params[:campaign_id]), alert: 'You cannot support more than you have in your account'
     end
+  end
+
+  private
+
+  def set_campaign
+    @campaign = Campaign.find(params[:campaign_id])
   end
 end
