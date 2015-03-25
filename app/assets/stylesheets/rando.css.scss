@@ -8,11 +8,21 @@ body {
   background: #fff;
   line-height: 1.5;
   color: #333;
-  padding-top: 60px;
+  padding-top: 80px;
 }
 
 .nav-link {
-  text-decoration: underline;
+  text-transform: uppercase;
+  font-size: .9em;
+}
+
+a {
+  text-decoration: none;
+  color: #2C6700;
+}
+
+a:hover {
+  color: #92CD00;
 }
 
 .alert,
@@ -60,6 +70,16 @@ body {
 
 .btn {
   text-transform: none;
+}
+
+.btn {
+  text-transform: none;
+  margin: 0;
+}
+
+.btn-support {
+  padding: 12px 50px;
+  font-size: 1.3em;
 }
 
 .nav-head {
@@ -163,13 +183,10 @@ h1 {
 }
 
 .current-campaigns {
-  border: 1px solid #000000;
-  border-radius: .25em;
+  border: 1px solid #888888;
+  border-radius: .4em;
   margin: 10px 10px;
   max-width: 350px;
-  -webkit-box-shadow: 0 0 .3em .1em #333333;
-  -moz-box-shadow: 0 0 .3em .1em #333333;
-  box-shadow: 0 0 .1em .05em #333333;
   padding: 0;
 }
 
@@ -223,4 +240,21 @@ h1 {
 
 .andonation-tables {
   margin-top: 60px;
+}
+
+.ando-nav {
+  margin-top: 10px;
+}
+
+footer {
+  font-size: 1.2em;
+  color: #E5E4D7;
+  margin-top: 50px;
+  padding: 30px 0;
+  background-color: #000000;
+  border-top: 2px solid #2C6700;
+}
+
+footer p {
+  margin: 0;
 }

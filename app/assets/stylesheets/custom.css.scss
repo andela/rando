@@ -1,12 +1,15 @@
 html {
   height: 100%;
 }
+
 body {
   height: 100%;
 }
+
 .img-portfolio {
   margin-bottom: 30px;
 }
+
 header.carousel {
   height: 100%;
   margin-bottom: 40px;
@@ -28,6 +31,20 @@ header.carousel {
   opacity: 0.8;
 }
 
+.navbar.navbar,
+.navbar-default.navbar
+.navbar-custom .nav li a:focus,
+.navbar-custom .nav li a:active {
+  outline: 0;
+  background-color: transparent;
+  color: #e5bc33;
+}
+
+.navbar-custom .nav li a:hover {
+  color: #00B825;
+}
+
+
 @media(max-width:991px) {
   .customer-img {
     margin-bottom: 30px;
@@ -42,5 +59,25 @@ header.carousel {
   }
   header.carousel .carousel {
     height: 70%;
+  }
+}
+
+@media(min-width:768px) {
+  .navbar-custom {
+    padding: 10px 0;
+    border-bottom: 0;
+    letter-spacing: 1px;
+    background: 0 0;
+    -webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
+    -moz-transition: background .5s ease-in-out,padding .5s ease-in-out;
+    transition: background .5s ease-in-out,padding .5s ease-in-out;
+  }
+
+  .navbar-custom.top-nav-collapse {
+    font-size: .8em;
+    padding: 0;
+    color: #E5E4D7;
+    border-bottom: 1px solid #2C6700;
+    background: #000;
   }
 }

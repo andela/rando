@@ -12,17 +12,7 @@
  *
  *= require pickadate/classic
  *= require pickadate/classic.date
- *= require_tree .
  *= require bootstrap-material-design
+ *= require_tree .
  *= require_self
  */
-
-.btn {
-    text-transform: none;
-    margin: 0;
-}
-
-.btn-support {
-    padding: 12px 50px;
-    font-size: 1.3em;
-}

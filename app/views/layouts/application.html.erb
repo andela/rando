@@ -9,44 +9,48 @@
 </head>
 
 <body>
-
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type ="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <i class="fa fa-bars"></i>
-      </button>
-      <%= link_to(root_path) do %>
-        <img src="<%= asset_path('rando_green.png') %>" alt="logo" height="60">
-      <% end %>
-    </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <% if user_signed_in? %>
-          <li><%= link_to "Add Campaign", new_campaign_path, class: "nav-link" %></li>
-          <li><%= link_to "My Andonation", my_andonation_path, class: "nav-link" %></li>
-          <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
-        <% else %>
-          <li>
-            <%= link_to(user_omniauth_authorize_path(:google_oauth2)) do %>
-              <span class="btn btn-block btn-social btn-google-plus"><i class="fa fa-google-plus"></i>Login with Google</span>
-            <% end %>
-          </li>
+  <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type ="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <i class="fa fa-bars"></i>
+        </button>
+        <%= link_to(root_path) do %>
+          <img src="<%= asset_path('rando_logo.gif') %>" alt="logo" height="60">
         <% end %>
-      </ul>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <li><%= link_to "Add Campaign", new_campaign_path, class: "nav-link" %></li>
+            <li><%= link_to "My Andonation", my_andonation_path, class: "nav-link" %></li>
+            <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
+          <% else %>
+            <li>
+              <%= link_to(user_omniauth_authorize_path(:google_oauth2), class: "logo btn-custom") do %>
+                <span class="btn btn-social btn-google-plus"><i class="fa fa-google-plus"></i>Login with Google</span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<% if notice %>
-  <p class="alert ra-success flash"><%= notice %></p>
-<% end %>
-<% if alert %>
-  <p class="alert ra-error flash"><%= alert %></p>
-<% end %>
+  <% if notice %>
+    <p class="alert ra-success flash"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+    <p class="alert ra-error flash"><%= alert %></p>
+  <% end %>
 
-<%= yield %>
+  <%= yield %>
 
+  <footer class="ando-footer">
+    <div class="text-center">
+      <p><a href="http://www.andela.co/">Andela</a> Rando &copy; 2015</p>
+    </div>
+  </footer>
 </body>
 </html>
