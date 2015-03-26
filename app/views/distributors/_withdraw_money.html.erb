@@ -16,9 +16,31 @@
             <%= text_field_tag :reason, params[:reason], pattern: '.{5,140}', required: true, title: 'The reason must be more than 5 characters and less than 140 characters', class: 'form-control', id: 'reason' %>
           </div>
         </div>
-        <%= submit_tag "Withdraw", class: "btn btn-default btn-primary", id: 'withdraw_btn' %>
+        <button type="button" class="btn btn-default btn-primary" id="withdraw_btn">Withdraw</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+        <div id="confirm" class="hidden">
+          <div class="container">
+            <p>Are you sure you want to remove $<span id="confirm_amount"></span> from <span id="confirm_users"></span></p>
+            <%= submit_tag "Sure, Withdraw!", class: "btn btn-default btn-primary", id: 'withdraw_btn' %>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
       <% end %>
     </div>
+  </div>
+</div>
+
+
+<button type="button" class="btn btn-default btn-primary" id="withdraw_btn">Withdraw</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+
+<div id="confirm" class="hidden">
+  <div class="container">
+    <p>Are you sure you want to remove $<span id="confirm_amount"></span> from <span id="confirm_users"></span></p>
+    <%= submit_tag "Sure, Withdraw!", class: "btn btn-default btn-primary" %>
+
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
   </div>
 </div>
