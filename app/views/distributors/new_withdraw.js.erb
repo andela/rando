@@ -2,3 +2,16 @@
   $("#modal-window").html("<%= escape_javascript(render 'withdraw_money') %>");
   $("#modal-window").modal();
 <% end %>
+
+<% if @users_number == 1 %>
+$("#confirm_users").html("<%= @str_all_users %>'s account?")
+<% else @users_number != 1 %>
+$("#confirm_users").html("these <%= @users_number %> accounts?")
+<% end %>
+
+$("#withdraw_btn").on("click", function() {
+  $("#amount").addClass("hidden");
+  $("#confirm").removeClass("hidden");
+
+  $("#confirm_amount").html($('#amount_field').val());
+});
