@@ -13,8 +13,10 @@ Rails.application.routes.draw do
 
   get 'users/allocations/:id', to: 'transactions#user_transactions', as: :allocations
   get 'users/distribute', to: 'distributors#index', as: :distributors
-  get 'users/allocate_money/new', to: 'distributors#new', as: :new_allocation
-  post 'users/allocate_money', to: 'distributors#create', as: :allocate_money
+  get 'users/allocate_money/new', to: 'distributors#new_allocate', as: :new_allocate
+  post 'users/allocate_money', to: 'distributors#allocate_money', as: :allocate_money
+  get 'users/withdraw_money/:id', to: 'distributors#new_withdraw', as: :new_withdraw
+  put 'users/withdraw_money/:id', to: 'distributors#withdraw_money', as: :withdraw_money
 
   resources :users, only: :index
   put 'users/roles/update', to: 'roles#update_multiple', as: :update_user_roles

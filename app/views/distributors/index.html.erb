@@ -1,7 +1,7 @@
 <div class="container">
   <h2>Users</h2>
 
-  <%= form_tag new_allocation_path, id: 'edit-form', remote: true, method: :get do %>
+  <%= form_tag new_allocate_path, id: 'edit-form', remote: true, method: :get do %>
     <p class="alert-js ra-error"></p>
     <p>
       <% if current_user.has_role? :distributor %>
@@ -14,6 +14,7 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>User Balance</th>
+        <th>Withdraw</th>
       </tr>
       <% @users.each do |user| %>
         <tr>
@@ -21,6 +22,7 @@
           <td><%= link_to user.first_name, allocations_path(user.id), remote: true %></td>
           <td><%= user.last_name %></td>
           <td><%= user.user_balance  %></td>
+          <td><%= link_to 'Withdraw Money', new_withdraw_path(user), remote: true %></td>
         </tr>
       <% end %>
     </table>

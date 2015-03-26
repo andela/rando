@@ -1,9 +1,9 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-body text-center">
-      <h5>How much do you want to allocate?</h5>
-      <%= form_tag allocate_money_path, class: 'form-horizontal' do %>
-        <%= hidden_field_tag "users", @users_ids %>
+      <h5>How much do you want to withdraw?</h5>
+      <%= form_tag withdraw_money_path, class: 'form-horizontal', method: :put do %>
+        <%= hidden_field_tag "user", @user_id %>
         <div class="form-group">
           <%= label_tag '', '$', class: 'col-sm-2 control-label' %>
           <div class="col-sm-5">
@@ -16,7 +16,7 @@
             <%= text_field_tag :reason, params[:reason], pattern: '.{5,140}', required: true, title: 'The reason must be more than 5 characters and less than 140 characters', class: 'form-control', id: 'reason' %>
           </div>
         </div>
-        <%= submit_tag "Allocate", class: "btn btn-default btn-primary", id: 'allocate_btn' %>
+        <%= submit_tag "Withdraw", class: "btn btn-default btn-primary", id: 'withdraw_btn' %>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       <% end %>
     </div>

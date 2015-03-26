@@ -5,6 +5,7 @@ feature 'Distributors allocates money to users', js: :true do
     allow_any_instance_of(FundManager).to receive(:balance).and_return(100)
     allow_any_instance_of(FundManager).to receive(:create_account).and_return("account_id")
     allow_any_instance_of(UserFundManager).to receive(:allocate).and_return(202)
+    allow_any_instance_of(UserFundManager).to receive(:withdraw).and_return(202)
     OmniAuth.config.test_mode = true
     set_valid_omniauth
 
@@ -25,8 +26,32 @@ feature 'Distributors allocates money to users', js: :true do
       fill_in 'reason', with: 'he is a good boy'
       click_on 'Allocate'
     end
-
     expect(page).to have_content('Money distributed successfully')
+  end
+
+  scenario 'User with distributor role withdraws money' do
+    visit '/users/distribute'
+    # find(:css, "#users_ids_[value='#{usr.id}']").set(true)
+    click_on 'Withdraw Money'
+    within("#modal-window") do
+      fill_in 'amount', with: 50
+      fill_in 'reason', with: 'he is not such a good boy after all'
+      click_on 'Withdraw'
+
+      click_on 'Sure, Withdraw!'
+    end
+    expect(page).to have_content('Money withdrawn successfully')
+
+    # find(:css, "#users_ids_[value='#{usr.id}']").set(true)
+    click_on 'Withdraw Money'
+    within("#modal-window") do
+      fill_in 'amount', with: 200
+      fill_in 'reason', with: 'Empty him out!'
+      click_on 'Withdraw'
+
+      click_on 'Sure, Withdraw'
+    end
+    expect(page).to have_content('The maximum amount that can be withdrawn is $N150')
   end
 
   scenario 'Distributors sees users transaction history' do
@@ -41,4 +66,4 @@ feature 'Distributors allocates money to users', js: :true do
       expect(page).to have_content(user.name)
     end
   end
- end
+end

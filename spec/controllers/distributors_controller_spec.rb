@@ -13,8 +13,17 @@ describe DistributorsController, type: :controller do
     it 'allocates money' do
       allow_any_instance_of(UserFundManager).to receive(:allocate).and_return(202)
 
-      post :create, users: "#{user.id}"
+      post :allocate_money, users: "#{user.id}"
       expect(flash[:notice]).to eq('Money distributed successfully')
+    end
+  end
+
+  describe '#withdraw_money' do
+    it 'withdraws money' do
+      allow_any_instance_of(UserFundManager).to receive(:withdraw).and_return(202)
+
+      put :withdraw_money, users: "#{user}"
+      expect(flash[:notice]).to eq('Money withdrawn successfully')
     end
   end
 end

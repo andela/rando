@@ -1,0 +1,4 @@
+<% if @user_id %>
+  $("#modal-window").html("<%= escape_javascript(render 'withdraw_money') %>");
+  $("#modal-window").modal();
+<% end %>

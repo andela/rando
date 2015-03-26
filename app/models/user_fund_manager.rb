@@ -95,4 +95,20 @@ class UserFundManager < FundManager
       202
     end
   end
+
+  def withdraw(user_id, amount, reason)
+    responses = []
+    user = User.find(user_id)
+    description = {
+        user: @user.to_json,
+        description: reason,
+        recipient: user.name
+    }
+    responses << @client.journal_entry(amount, description, ENV["SYSTEM_ACC_CREDIT"], user.account_id).code
+    if responses.include?(201)
+      201
+    else
+      202
+    end
+  end
 end
