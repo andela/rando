@@ -1,12 +1,9 @@
 require 'rails_helper'
 
 feature 'Campaigns' do
-  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
-
   background do
     allow_any_instance_of(FundManager).to receive(:balance).and_return(200)
     allow_any_instance_of(FundManager).to receive(:create_account).and_return("account_id")
-    allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
     OmniAuth.config.test_mode = true
     set_valid_omniauth
   end
@@ -48,12 +45,8 @@ feature 'Campaigns' do
 end
 
 feature 'Roles' do
-  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
-
   background do
     allow_any_instance_of(FundManager).to receive(:balance).and_return(200)
-    allow_any_instance_of(BankFundManager).to receive(:user_transactions).and_return([transaction])
-    allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
     OmniAuth.config.test_mode = true
     set_valid_omniauth
     create(:user, first_name: 'Chiemeka', last_name: 'Alim')
@@ -83,11 +76,8 @@ feature 'Roles' do
 end
 
 feature 'Account Balance' do
-  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
-
   before do
-    allow_any_instance_of(FundManager).to receive(:balance).and_return(300)
-    allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
+    allow_any_instance_of(User).to receive(:user_balance).and_return(300)
     OmniAuth.config.test_mode = true
     set_valid_omniauth
     visit '/'
@@ -101,18 +91,16 @@ feature 'Account Balance' do
   end
 
   scenario 'User has 3 and above transactions' do
-    allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction, transaction, transaction, transaction])
+    user = User.where(email: 'christopher@andela.co').first
+    create_list(:journal_entry, 4, user: user, recipient: user, account_id: user.account_id, transaction_type: 'debit')
     click_on 'My Andonation'
     expect(page).to have_link('Account Balance', href:'/my_andonation/transactions')
   end
 end
 
 feature 'Distributions' do
-  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
-
   before do
     allow_any_instance_of(FundManager).to receive(:balance).and_return(400)
-    allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
 
     OmniAuth.config.test_mode = true
     set_valid_omniauth
@@ -123,8 +111,6 @@ feature 'Distributions' do
 
   scenario 'Distributor sees their distribution history' do
     expect(page).to_not have_content('My Distributions')
-
-    allow_any_instance_of(User).to receive(:distributions).and_return([transaction] * 2)
     user = User.where(email: 'christopher@andela.co').first
     user.add_role :distributor
 
@@ -134,10 +120,9 @@ feature 'Distributions' do
   end
 
   scenario 'Distributor has more than one distributions' do
-    allow_any_instance_of(User).to receive(:distributions).and_return([transaction] * 4)
     user = User.where(email: 'christopher@andela.co').first
     user.add_role :distributor
-
+    create_list(:journal_entry, 4, user: user, recipient: user, transaction_type: 'debit')
     click_on 'My Andonation'
     click_on 'See all 4 of my distributions'
     expect(page).to have_content('My Distributions History')

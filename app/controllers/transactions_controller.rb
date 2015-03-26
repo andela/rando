@@ -4,8 +4,9 @@ class TransactionsController < ApplicationController
   before_action :load_client, only: [:index, :deposit, :withdraw]
 
   def index
-    @transactions = FundManager.new.transactions ENV["SYSTEM_ACC_CREDIT"]
-    @balance = FundManager.new.balance(ENV["SYSTEM_ACC_CREDIT"])
+    @transactions = JournalEntry.where(account_id: ENV["SYSTEM_ACC_CREDIT"]).order(created_at: :DESC).decorate
+    account = Account.where(subledger_id: ENV["SYSTEM_ACC_CREDIT"]).first
+    @balance = account.balance
   end
 
   def new_deposit
@@ -45,7 +46,8 @@ class TransactionsController < ApplicationController
   def user_transactions
     authorize! :read, :distributors
     @user = User.find(params[:id])
-    @transactions = @user.credit_transactions
+    @transactions = JournalEntry.where("journal_entries.account_id = ? AND journal_entries.transaction_type = ?",
+                                       @user.account_id, 'credit').order(created_at: :DESC).decorate
 
     respond_to do |format|
       format.js

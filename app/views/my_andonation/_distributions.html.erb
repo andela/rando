@@ -7,8 +7,8 @@
     </tr>
     <% @distributions_three.each do |distribution| %>
     <tr>
-      <td><%= distribution.posted_at %></td>
-      <td><%= distribution.recipient %></td>
+      <td><%= distribution.formatted_date %></td>
+      <td><%= distribution.recipient.name %></td>
       <td><%= distribution.amount %></td>
       <td><%= distribution.description %></td>
     </tr>

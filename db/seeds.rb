@@ -34,3 +34,4 @@ Campaign.find_each do |campaign|
     campaign.save
   end
 end
+Account.create(subledger_id: ENV["SYSTEM_ACC_CREDIT"])

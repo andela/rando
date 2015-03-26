@@ -7,8 +7,8 @@
    </tr>
    <% @history.each do |distribution| %>
       <tr>
-       <td><%= distribution.posted_at %></td>
-       <td><%= distribution.recipient %></td>
+       <td><%= distribution.formatted_date %></td>
+       <td><%= distribution.user.name %></td>
        <td><%= distribution.amount %></td>
        <td><%= distribution.description %></td>
      </tr>

@@ -10,7 +10,7 @@ describe HomeController, type: :controller do
     let!(:f_campaigns) { create_list(:funded_campaign, 8) }
 
     it 'assigns a list of current campaigns' do
-      create(:campaign) # oldest not included
+      create(:campaign)
       campaigns = create_list(:campaign, 3).reverse
 
       get :index

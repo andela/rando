@@ -30,16 +30,15 @@ feature 'Distributors allocates money to users', js: :true do
   end
 
   scenario 'Distributors sees users transaction history' do
-    transaction = Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0])
-    allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
     user = create(:user)
+    create(:journal_entry, user: user, account_id: user.account_id)
     visit '/users/distribute'
     click_on user.first_name
     within("#modal-window") do
       expect(page).to have_content(user.name)
-      expect(page).to have_content('Credit')
-      expect(page).to have_content('100')
-      expect(page).to have_content('christopher@andela.co')
+      expect(page).to have_content('credit')
+      expect(page).to have_content('for a job well done')
+      expect(page).to have_content(user.name)
     end
   end
  end

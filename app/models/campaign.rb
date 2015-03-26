@@ -1,6 +1,7 @@
 class Campaign < ActiveRecord::Base
   DISPLAY_COUNT = 20
   belongs_to :user
+  has_many :journal_entries, as: :recipient
   validates_presence_of :deadline, :needed, :user
   validates :title, length: { minimum: 5 }, presence: true
   validates :description, length: { minimum: 20 }, presence: true

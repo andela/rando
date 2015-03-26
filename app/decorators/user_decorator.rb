@@ -5,11 +5,6 @@ class UserDecorator < Draper::Decorator
     capitalized_roles.join(', ')
   end
 
-  def balance
-    client = FundManager.new
-    client.balance(account_id)
-  end
-
   private
   def sorted_roles
     roles.order(:name)

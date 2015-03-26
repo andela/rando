@@ -12,11 +12,11 @@
         </tr>
         <% @transactions.each do |transaction| %>
           <tr>
-            <td><%= transaction.posted_at %></td>
+            <td><%= transaction.formatted_date %></td>
             <td><%= transaction.transaction_type  %></td>
             <td><%= transaction.description %></td>
             <td><%= transaction.amount %></td>
-            <td><%= transaction.name %></td>
+            <td><%= transaction.user.name %></td>
           </tr>
         <% end %>
       </table>

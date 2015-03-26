@@ -56,7 +56,7 @@
   <div class="andonation-tables">
     <% if current_user.has_role? :distributor %>
       <h3>My Distributions</h3>
-      <% if @distributions_history.empty? %>
+      <% if @distributions_three.empty? %>
       <div class="no-campaigns text-center">
         <p><strong>0 banking distributions </strong></p>
       </div>

@@ -5,14 +5,17 @@ class MyAndonationController < ApplicationController
     @campaigns = current_user.campaigns.order(created_at: :desc).limit(3)
     @campaigns_count = current_user.campaigns.count
 
-    @transactions = current_user.transactions
-    #from chiemeka
-    @distributions_history = current_user.distributions
-    @distributions_three = current_user.distributions.take(3)
+    @transactions = JournalEntry.where(account_id: ENV["SYSTEM_ACC_CREDIT"]).order(created_at: :DESC).limit(3).decorate
 
-    @history = current_user.transactions_history
+    @distributions_history = current_user.journal_entry_records.where("journal_entries.account_id = ? AND journal_entries.transaction_type = ?",
+                                                                ENV["SYSTEM_ACC_CREDIT"], 'debit').order(created_at: :DESC).decorate
 
-    @balance = current_user.account_balance
+    @distributions_three = current_user.journal_entry_records.where("journal_entries.account_id = ? AND journal_entries.transaction_type = ?",
+                                                              ENV["SYSTEM_ACC_CREDIT"], 'debit').order(created_at: :DESC).limit(3).decorate
+
+    @history = JournalEntry.where(account_id: current_user.account_id).order(created_at: :DESC).limit(3).decorate
+
+    @balance = current_user.user_balance
   end
 
   def campaigns
@@ -21,10 +24,11 @@ class MyAndonationController < ApplicationController
   end
 
   def my_transactions
-    @history = current_user.all_transactions_history
+    @history = JournalEntry.where(account_id: current_user.account_id).order(created_at: :DESC).decorate
   end
-  #from chiemeka
+
   def my_distributions
-    @history = current_user.distributions
+    @history = current_user.journal_entry_records.where("journal_entries.account_id = ? AND journal_entries.transaction_type = ?",
+                                                  ENV["SYSTEM_ACC_CREDIT"], 'debit').order(created_at: :DESC).decorate
   end
 end

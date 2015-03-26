@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   rolify
   has_many :campaigns
+  has_many :journal_entry_records, class_name: 'JournalEntry', foreign_key: 'user_id'
+  has_many :journal_entries, as: :recipient
+  has_one :account
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:google_oauth2]
   validates_presence_of :name
   validates :email, presence: true, uniqueness: true
@@ -54,37 +57,7 @@ class User < ActiveRecord::Base
     self.save
   end
 
-  def transactions
-    manager = BankFundManager.new self
-    manager.user_transactions(email)
-  end
-
-  def transactions_history
-    manager = FundManager.new
-    manager.transactions(account_id).take(3)
-  end
-
-  def all_transactions_history
-    client = FundManager.new
-    client.transactions(account_id)
-  end
-
   def transaction_count
-    all_transactions_history.count
-  end
-
-  def distributions
-    client = FundManager.new
-    response = client.transactions(ENV["SYSTEM_ACC_CREDIT"])
-    response.select { |distribution| distribution.transaction_type == 'Debit' && distribution.email == email }
-  end
-
-  def account_balance
-    client = FundManager.new
-    client.balance(account_id)
-  end
-
-  def credit_transactions
-    all_transactions_history.select { |transaction| transaction.transaction_type == 'Credit' }
+    self.journal_entry_records.where(account_id: account_id).count
   end
 end

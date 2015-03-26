@@ -33,6 +33,10 @@ class SubledgerClient
     self.class.post("/journal_entries/create_and_post", body: body(amount, description, credit_account , debit_account), basic_auth: @auth)
   end
 
+  def journal_entry_balance(entry_id)
+    self.class.get("/journal_entries/#{entry_id}/balance", basic_auth: @auth)
+  end
+
   private
 
   def body(amount, description, credit_account, debit_account)

@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 describe TransactionsController, type: :controller do
-  let(:user) { create(:user, email: 'email1@andela.co') }
-  let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)) }
+  let(:user) { create(:user, email: 'email@andela.co') }
+  let(:transaction) { create(:journal_entry) }
 
   before do
+    create(:account, subledger_id: 'KcVEdomrdxdHK4P7QFExOi')
     user.add_role :banker
     user.add_role :distributor
     allow(request.env['warden']).to receive(:authenticate!) { user }
@@ -12,11 +13,6 @@ describe TransactionsController, type: :controller do
   end
 
   describe 'GET #index' do
-    before do
-      allow_any_instance_of(FundManager).to receive(:transactions).and_return(transaction)
-      allow_any_instance_of(FundManager).to receive(:balance).and_return("200")
-    end
-
     it 'renders the :index view' do
       get :index
       expect(response).to render_template :index
@@ -24,12 +20,12 @@ describe TransactionsController, type: :controller do
 
     it 'assigns response to system_transactions' do
       get :index
-      expect(assigns(:transactions)).to eq(transaction)
+      expect(assigns(:transactions)).to eq([transaction.decorate])
     end
 
     it 'assigns the system balance' do
       get :index
-      expect(assigns(:balance)).to eq("200")
+      expect(assigns(:balance)).to eq(200)
     end
   end
 
@@ -53,79 +49,14 @@ describe TransactionsController, type: :controller do
 
   describe '#user_transactions' do
     it 'assigns user' do
-      transaction = Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0])
-      allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
-
       xhr :get, :user_transactions, id: "#{user.id}"
       expect(assigns(:user)).to eq(user)
     end
 
     it 'assigns transactions' do
-      transaction = Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0])
-      allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
-
+      transaction = create(:journal_entry, account_id: user.account_id)
       xhr :get, :user_transactions, id: "#{user.id}"
-      expect(assigns(:transactions)).to eq([transaction])
+      expect(assigns(:transactions)).to eq([transaction.decorate])
     end
-  end
-
-  def sample_transaction_api_response
-    '{
-        "posted_lines": [
-          {
-            "id": "wrlFLCuz7cDldBUoUrlvDQ",
-            "journal_entry": "nGM69VE1GUc9QqeZ9jfmgV",
-            "account": "vsfM9fHDnEB6J8jHliNTKq",
-            "description": "franklin.ugwu@andela.co",
-            "reference": "http://www.andela.co/",
-            "value": {
-              "type": "debit",
-              "amount": "100"
-            },
-            "order": "0001.00",
-            "version": 1,
-            "effective_at": "2014-08-01T01:02:50.000Z",
-            "posted_at": "2015-03-07T23:34:12.244Z",
-            "balance": {
-              "debit_value": {
-                "type": "debit",
-                "amount": "100"
-              },
-              "credit_value": {
-                "type": "zero",
-                "amount": "0"
-              },
-              "value": {
-                "type": "debit",
-                "amount": "100"
-              }
-            }
-          }
-        ]
-      }
-    '
-  end
-
-
-
-  def t_balance
-    '
-    {
-  "balance": {
-    "debit_value": {
-      "type": "debit",
-      "amount": "283538"
-    },
-    "credit_value": {
-      "type": "credit",
-      "amount": "246343"
-    },
-    "value": {
-      "type": "debit",
-      "amount": "37195"
-    }
-  }
-}
-    '
   end
 end

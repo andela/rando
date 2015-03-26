@@ -3,19 +3,15 @@ require 'rails_helper'
 describe MyAndonationController, type: :controller do
   describe 'methods allowed for authenticated user' do
       let(:user) { create(:user, email: 'christopher@andela.co') }
-      let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
 
       before do
-        allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction])
         allow(request.env['warden']).to receive(:authenticate!) { user }
         allow(controller).to receive(:current_user) { user }
-        allow_any_instance_of(FundManager).to receive(:create_account).and_return("account_id")
-        allow_any_instance_of(FundManager).to receive(:balance).and_return(200)
       end
 
       describe '#index' do
         it 'assigns a list of campaigns' do
-          create(:campaign, user: user) # oldest campaign not included in result
+          create(:campaign, user: user)
           campaigns = create_list(:campaign, 3, user: user).reverse!
 
           get :index
@@ -71,17 +67,14 @@ describe MyAndonationController, type: :controller do
 
   describe 'Users account balance' do
     let(:user) { create(:user, email: 'christopher@andela.co') }
-    let(:transaction) { Transaction.new(ActiveSupport::JSON.decode(expected_transactions)[0]) }
 
     before do
       allow(request.env['warden']).to receive(:authenticate!) { user }
       allow(controller).to receive(:current_user) { user }
-      allow_any_instance_of(FundManager).to receive(:transactions).and_return([transaction, transaction])
-      allow_any_instance_of(FundManager).to receive(:balance).and_return(5000)
     end
     it 'returns the users current balance' do
       get :index
-      expect(assigns(:balance)).to eq(5000)
+      expect(assigns(:balance)).to eq(56)
     end
   end
 end

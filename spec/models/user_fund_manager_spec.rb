@@ -1,12 +1,16 @@
 require 'rails_helper'
 
 describe UserFundManager, type: :model do
+  before do
+    allow_any_instance_of(FundManager).to receive(:balance).and_return(200)
+    allow_any_instance_of(FundManager).to receive(:update_system_balance).and_return(200)
+  end
   describe '#allocate' do
     it 'return status 202 code' do
       user = create(:user)
       manager = UserFundManager.new user
       res = double("response", body: '{
-                          "active_account": {
+                          "posting_journal_entry": {
                             "id": "iDFQmJjGUgXC6ecn7zZxc6",
                             "book": "tWp8ASEJApGyJvjwjW8pXl",
                             "description": "example@andela.co",
@@ -30,7 +34,7 @@ describe UserFundManager, type: :model do
 
       client = UserFundManager.new user
       res = double("response", body: '{
-                            "active_account": {
+                            "posting_journal_entry": {
                             "id": "iDFQmJjGUgXC6ecn7zZxc6",
                             "book": "tWp8ASEJApGyJvjwjW8pXl",
                             "description": "example@andela.co",
@@ -43,7 +47,7 @@ describe UserFundManager, type: :model do
 
       expect(SubledgerClient).to receive(:post) { res }
 
-      expect(client.allocate_campaign([user.id], user.account_id, campaign.account_id, 40, 'Its a nice campaign')).to eq(202)
+      expect(client.allocate_campaign(user.id, user.account_id, campaign.account_id, 40, 'Its a nice campaign')).to eq(202)
     end
   end
 end
