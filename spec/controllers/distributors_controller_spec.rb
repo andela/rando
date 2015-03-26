@@ -22,8 +22,16 @@ describe DistributorsController, type: :controller do
     it 'withdraws money' do
       allow_any_instance_of(UserFundManager).to receive(:withdraw).and_return(202)
 
-      put :withdraw_money, users: "#{user}"
+      put :withdraw_money, id: "#{user.id}"
       expect(flash[:notice]).to eq('Money withdrawn successfully')
+    end
+
+    it 'displays error if distributor withdraws more than users balance' do
+      allow_any_instance_of(FundManager).to receive(:balance).and_return(500)
+      allow_any_instance_of(UserFundManager).to receive(:withdraw).and_return(202)
+
+      put :withdraw_money, id: "#{user.id}", amount: 600
+      expect(flash[:notice]).to eq('The maximum amount that can be withdrawn is 500')
     end
   end
 end
