@@ -39,14 +39,40 @@ class DistributorsController < ApplicationController
   def withdraw_money
     authorize! :withdraw_money, User
     client = UserFundManager.new current_user
-    user_id = User.find(params[:id])
+    @user_id = User.find(params[:id])
+    @amount = params[:amount].to_i
 
-    response = client.withdraw(user_id, params[:amount], params[:reason])
-    if response == 202
-      flash[:notice] = 'Money withdrawn successfully'
+    balance = check_balance
+    if balance == false
+      response = client.withdraw(@user_id, @amount, params[:reason])
+      if response == 202
+        flash[:notice] = 'Money withdrawn successfully'
+      else
+        flash[:notice] = 'There was a problem withdrawing money'
+      end
+      redirect_to distributors_path and return
     else
-      flash[:notice] = 'There was a problem withdrawing money'
+      flash[:notice] = "The maximum amount that can be withdrawn is $#{balance}"
+      redirect_to distributors_path
     end
-    redirect_to distributors_path
+  end
+
+  private
+
+  def check_balance
+    user_balance = find_balance(@user_id)
+
+    if @amount > user_balance
+      user_balance
+    else
+      false
+    end
+  end
+
+  def find_balance user_id
+    sel_user = User.find(user_id.id)
+    client = FundManager.new
+    user_balance = client.balance sel_user.account_id
+    user_balance.to_i
   end
 end

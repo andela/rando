@@ -20,9 +20,10 @@ describe DistributorsController, type: :controller do
 
   describe '#withdraw_money' do
     it 'withdraws money' do
+      allow_any_instance_of(FundManager).to receive(:balance).and_return(450)
       allow_any_instance_of(UserFundManager).to receive(:withdraw).and_return(202)
 
-      put :withdraw_money, id: "#{user.id}"
+      put :withdraw_money, id: "#{user.id}", amount: 400
       expect(flash[:notice]).to eq('Money withdrawn successfully')
     end
 
@@ -31,7 +32,7 @@ describe DistributorsController, type: :controller do
       allow_any_instance_of(UserFundManager).to receive(:withdraw).and_return(202)
 
       put :withdraw_money, id: "#{user.id}", amount: 600
-      expect(flash[:notice]).to eq('The maximum amount that can be withdrawn is 500')
+      expect(flash[:notice]).to eq('The maximum amount that can be withdrawn is $500')
     end
   end
 end

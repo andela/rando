@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Distributors allocates money to users', js: :true do
   background do
-    allow_any_instance_of(FundManager).to receive(:balance).and_return(100)
+    allow_any_instance_of(FundManager).to receive(:balance).and_return(250)
     allow_any_instance_of(FundManager).to receive(:create_account).and_return("account_id")
     allow_any_instance_of(UserFundManager).to receive(:allocate).and_return(202)
     allow_any_instance_of(UserFundManager).to receive(:withdraw).and_return(202)
@@ -44,13 +44,13 @@ feature 'Distributors allocates money to users', js: :true do
 
     click_on 'Withdraw Money'
     within("#modal-window") do
-      fill_in 'amount', with: 200
+      fill_in 'amount', with: 300
       fill_in 'reason', with: 'Empty him out!'
       click_on 'Withdraw'
 
       click_on 'Sure, Withdraw'
     end
-    expect(page).to have_content('The maximum amount that can be withdrawn is $150')
+    expect(page).to have_content('The maximum amount that can be withdrawn is $250')
   end
 
   scenario 'Distributors sees users transaction history' do
