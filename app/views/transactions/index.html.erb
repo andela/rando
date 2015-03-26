@@ -4,12 +4,12 @@
       <h1>Bank</h1>
     </div>
     <div class="col-md-7">
-      <span>System Balance: <%= number_to_currency @balance %> </span>
+      <h4>System Balance: <%= number_to_currency @balance %> </h4>
     </div>
     <div class="col-md-5">
-      <div class="pull-right">
-        <%= link_to "Deposit $", new_deposit_path, remote: true, class: "btn btn-default waves-effect waves-light"  %>
-        <%= link_to "Withdraw $", new_withdrawal_path, remote: true, class: "btn btn-default"  %>
+      <div class="table-nav pull-right">
+        <%= link_to "Deposit $", new_deposit_path, remote: true, class: "btn btn-success btn-default waves-effect waves-light"  %>
+        <%= link_to "Withdraw $", new_withdrawal_path, remote: true, class: "btn btn-success btn-default"  %>
       </div>
     </div>
 

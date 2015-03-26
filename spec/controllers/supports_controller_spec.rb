@@ -18,7 +18,6 @@ describe SupportsController, type: :controller do
       needed_rem = campaign.needed - campaign.raised
 
       xhr :get, :new, campaign_id: campaign
-      expect(assigns(:campaign_id)).to eq(campaign.id.to_s)
       expect(assigns(:needed)).to eq(needed_rem)
       expect(assigns(:user_balance)).to eq('200')
     end
@@ -37,7 +36,6 @@ describe SupportsController, type: :controller do
 
     it 'supports a campaign' do
       xhr :post, :create, campaign_id: campaign, raised: '300'
-      expect(assigns(:campaign_id)).to eq(campaign.id.to_s)
       expect(assigns(:raised_value)).to eq(300)
       expect(response).to redirect_to campaign
       expect(flash[:notice]).to eq('You have supported this campaign')
@@ -49,4 +47,3 @@ describe SupportsController, type: :controller do
     end
   end
 end
-

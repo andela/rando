@@ -18,5 +18,5 @@ $('document').ready ->
   $('.flash').bind 'click', (e) ->
     flashCallback()
     return
-  setTimeout flashCallback, 2000
+  setTimeout flashCallback, 3000
   return

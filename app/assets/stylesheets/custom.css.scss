@@ -32,11 +32,16 @@ header.carousel {
 }
 
 .navbar.navbar,
+.navbar-default.navbar {
+  background-color: #000000;
+  opacity: .8;
+}
+
+.navbar.navbar,
 .navbar-default.navbar
 .navbar-custom .nav li a:focus,
 .navbar-custom .nav li a:active {
   outline: 0;
-  background-color: transparent;
   color: #e5bc33;
 }
 
@@ -54,6 +59,10 @@ header.carousel {
   }
 }
 @media(max-width:767px) {
+  body {
+    padding-top: 60px;
+  }
+
   .img-portfolio {
     margin-bottom: 15px;
   }
@@ -63,6 +72,21 @@ header.carousel {
 }
 
 @media(min-width:768px) {
+  body {
+    padding-top: 80px;
+  }
+
+  .navbar .navbar-nav > li > a{
+    padding-top: 15px;
+  }
+
+  .navbar.navbar,
+  .navbar-default.navbar
+  .navbar-custom .nav li a:focus,
+  .navbar-custom .nav li a:active {
+    background-color: transparent;
+  }
+
   .navbar-custom {
     padding: 10px 0;
     border-bottom: 0;
@@ -74,10 +98,11 @@ header.carousel {
   }
 
   .navbar-custom.top-nav-collapse {
-    font-size: .8em;
+    font-size: .85em;
     padding: 0;
     color: #E5E4D7;
     border-bottom: 1px solid #2C6700;
     background: #000;
+    opacity: .7;
   }
 }

@@ -8,7 +8,10 @@ body {
   background: #fff;
   line-height: 1.5;
   color: #333;
-  padding-top: 80px;
+}
+
+.container {
+  min-height: 100%;
 }
 
 .nav-link {
@@ -35,15 +38,14 @@ a:hover {
 
 .alert {
   background: #FCF2F3;
-  border-radius: .5em;
-  border: 1px solid #730E15;
+  border: 1px solid #e5e36a;
 }
 
 .flash {
   position: fixed;
-  -moz-opacity: 0.5;          /* Netscape */
-  -khtml-opacity: 0.5;        /* Safari 1.x */
-  opacity: 0.7;
+  -moz-opacity: 0.8;          /* Netscape */
+  -khtml-opacity: 0.8;        /* Safari 1.x */
+  opacity: 0.8;
   width: 100%;
   z-index: 9999;
 }
@@ -60,12 +62,6 @@ a:hover {
   font-size: .8em;
   color: #ff0000;
   font-style: italic;
-}
-
-.g-btn {
-  max-width: 80%;
-  margin: 20px auto;
-  text-decoration: none;
 }
 
 .btn {
@@ -88,6 +84,53 @@ a:hover {
 
 h1 {
   margin-bottom: 40px;
+}
+
+.login-btn {
+  background-color: #DD4B39;
+  color: #ffffff;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none !important;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  background-image: none;
+  border: 1px solid transparent;
+  line-height: 1.5;
+  padding: 6px 12px 6px 44px;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.login-btn:hover {
+  background-color: #c23321;
+
+}
+
+.g-btn {
+  max-width: 70%;
+  text-decoration: none;
+}
+
+.restricted p {
+  font-size: 1.3em;
+}
+
+.restricted a {
+  margin: 20px auto;
+  font-size: .8em;
+}
+
+.restricted a:hover {
+  text-decoration: none;
 }
 
 /* NEW CAMPAIGN FORM */
@@ -246,6 +289,10 @@ h1 {
   margin-top: 10px;
 }
 
+.table-nav {
+  margin-bottom: 15px;
+}
+
 footer {
   font-size: 1.2em;
   color: #E5E4D7;
@@ -253,8 +300,13 @@ footer {
   padding: 30px 0;
   background-color: #000000;
   border-top: 2px solid #2C6700;
+  opacity: .8;
 }
 
 footer p {
   margin: 0;
+}
+
+footer p a {
+  color: #00B825;
 }

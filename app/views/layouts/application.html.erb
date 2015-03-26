@@ -28,8 +28,8 @@
             <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
           <% else %>
             <li>
-              <%= link_to(user_omniauth_authorize_path(:google_oauth2), class: "logo btn-custom") do %>
-                <span class="btn btn-social btn-google-plus"><i class="fa fa-google-plus"></i>Login with Google</span>
+              <%= link_to(user_omniauth_authorize_path(:google_oauth2), class: "btn-custom") do %>
+                <span class="login-btn btn-social btn-google-plus"><i class="fa fa-google-plus"></i>Login with Google</span>
               <% end %>
             </li>
           <% end %>
@@ -47,7 +47,7 @@
 
   <%= yield %>
 
-  <footer class="ando-footer">
+  <footer>
     <div class="text-center">
       <p><a href="http://www.andela.co/">Andela</a> Rando &copy; 2015</p>
     </div>
