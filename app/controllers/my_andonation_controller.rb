@@ -13,6 +13,12 @@ class MyAndonationController < ApplicationController
     @distributions_three = current_user.journal_entry_records.where("journal_entries.account_id = ? AND journal_entries.transaction_type = ?",
                                                               ENV["SYSTEM_ACC_CREDIT"], 'debit').order(created_at: :DESC).limit(3).decorate
 
+    # @withdrawals_history = current_user.journal_entry_records.where("journal_entries.account_id = ? AND journal_entries.transactions_type = ?",
+    #                                                           ENV["SYSTEM_ACC_CREDIT"], 'debit').order(created_at: :DESC).decorate
+    #
+    # @withdrawals_three = current_user.journal_entry_records.where("journal_entries.account_id = ? AND journal_entries.transaction_type = ?",
+    #                                                         ENV["SYSTEM_ACC_CREDIT"], 'debit').order(created_at: :DESC).limit(3).decorate
+
     @history = JournalEntry.where(account_id: current_user.account_id).order(created_at: :DESC).limit(3).decorate
 
     @balance = current_user.user_balance

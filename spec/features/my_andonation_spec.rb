@@ -124,7 +124,39 @@ feature 'Distributions' do
     user.add_role :distributor
     create_list(:journal_entry, 4, user: user, recipient: user, transaction_type: 'debit')
     click_on 'My Andonation'
+    save_and_open_page
     click_on 'See all 4 of my distributions'
     expect(page).to have_content('My Distributions History')
   end
 end
+
+# feature 'Withdrawals' do
+#   before do
+#     allow_any_instance_of(FundManager).to receive(:balance).and_return(400)
+#
+#     OmniAuth.config.test_mode = true
+#     set_valid_omniauth
+#     visit '/'
+#     click_on 'Login'
+#     click_on 'My Andonation'
+#   end
+#
+#   scenario 'Distributor sees their withdrawal history' do
+#     expect(page).to_not have_content('My Withdrawals')
+#     user = User.where(email: 'christopher@andela.co').first
+#     user.add_role :distributor
+#
+#     click_on 'My Andonation'
+#     expect(page).to have_content('My Withdrawals')
+#     expect(page).to_not have_link('See all 2 of my withdrawals')
+#   end
+#
+#   scenario 'Distributor has more than one withdrawal' do
+#     user = User.where(email: 'christopher@andela.co').first
+#     user.add_role :distributor
+#     create_list(:journal_entry, 4, user: user, recipient: user, transaction_type: 'credit')
+#     click_on 'My Andonation'
+#     click_on 'See all 4 of my withdrawals'
+#     expect(page).to have_content('My Withdrawals History')
+#   end
+# end

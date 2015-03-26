@@ -65,6 +65,14 @@ ActiveRecord::Schema.define(version: 20150324170517) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
+  create_table "transactions", force: :cascade do |t|
+    t.integer  "deposit"
+    t.string   "type"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name",                default: "", null: false
     t.string   "email",               default: "", null: false
