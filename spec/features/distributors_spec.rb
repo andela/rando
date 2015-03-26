@@ -31,7 +31,6 @@ feature 'Distributors allocates money to users', js: :true do
 
   scenario 'User with distributor role withdraws money' do
     visit '/users/distribute'
-    # find(:css, "#users_ids_[value='#{usr.id}']").set(true)
     click_on 'Withdraw Money'
     within("#modal-window") do
       fill_in 'amount', with: 50
@@ -41,8 +40,8 @@ feature 'Distributors allocates money to users', js: :true do
       click_on 'Sure, Withdraw!'
     end
     expect(page).to have_content('Money withdrawn successfully')
+    sleep 2
 
-    # find(:css, "#users_ids_[value='#{usr.id}']").set(true)
     click_on 'Withdraw Money'
     within("#modal-window") do
       fill_in 'amount', with: 200
@@ -51,7 +50,7 @@ feature 'Distributors allocates money to users', js: :true do
 
       click_on 'Sure, Withdraw'
     end
-    expect(page).to have_content('The maximum amount that can be withdrawn is $N150')
+    expect(page).to have_content('The maximum amount that can be withdrawn is $150')
   end
 
   scenario 'Distributors sees users transaction history' do
