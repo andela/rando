@@ -1,46 +1,34 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-body text-center">
-      <h5>How much do you want to withdraw?</h5>
       <%= form_tag withdraw_money_path, class: 'form-horizontal', method: :put do %>
         <%= hidden_field_tag "user", @user_id %>
-        <div class="form-group">
-          <%= label_tag '', '$', class: 'col-sm-2 control-label' %>
-          <div class="col-sm-5">
-            <%= number_field_tag :amount, params[:amount], required: true, class: 'form-control', id: 'amount' %>
+        <div id="amount" class="modal-body text-center">
+          <h5>How much do you want to withdraw?</h5>
+          <div class="form-group">
+            <%= label_tag '', '$', class: 'col-sm-2 control-label' %>
+            <div class="col-sm-5">
+              <%= number_field_tag :amount, params[:amount], required: true, class: 'form-control', id: 'amount_field' %>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <%= label_tag 'reason', 'Reason', class: 'col-sm-2 control-label' %>
-          <div class="col-sm-10">
-            <%= text_field_tag :reason, params[:reason], pattern: '.{5,140}', required: true, title: 'The reason must be more than 5 characters and less than 140 characters', class: 'form-control', id: 'reason' %>
+          <div class="form-group">
+            <%= label_tag 'reason', 'Reason', class: 'col-sm-2 control-label' %>
+            <div class="col-sm-10">
+              <%= text_field_tag :reason, params[:reason], pattern: '.{5,140}', required: true, title: 'The reason must be more than 5 characters and less than 140 characters', class: 'form-control', id: 'reason' %>
+            </div>
           </div>
+          <button type="button" class="btn btn-default btn-primary" id="withdraw_btn">Withdraw</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
-        <button type="button" class="btn btn-default btn-primary" id="withdraw_btn">Withdraw</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-        <div id="confirm" class="hidden">
-          <div class="container">
-            <p>Are you sure you want to remove $<span id="confirm_amount"></span> from <span id="confirm_users"></span></p>
-            <%= submit_tag "Sure, Withdraw!", class: "btn btn-default btn-primary", id: 'withdraw_btn' %>
+        <div id="confirm" class="hidden modal-body text-center">
+          <div class="form-group">
+            <p>Are you sure you want to remove $<span id="confirm_amount"></span> from <span id="user_name"></span>'s account?</p>
+            <%= submit_tag "Sure, Withdraw!", class: "btn btn-default btn-primary" %>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           </div>
         </div>
       <% end %>
     </div>
-  </div>
-</div>
-
-
-<button type="button" class="btn btn-default btn-primary" id="withdraw_btn">Withdraw</button>
-<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-</div>
-
-<div id="confirm" class="hidden">
-  <div class="container">
-    <p>Are you sure you want to remove $<span id="confirm_amount"></span> from <span id="confirm_users"></span></p>
-    <%= submit_tag "Sure, Withdraw!", class: "btn btn-default btn-primary" %>
-
-    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
   </div>
 </div>
