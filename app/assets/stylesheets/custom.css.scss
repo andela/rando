@@ -10,6 +10,10 @@ body {
   margin-bottom: 30px;
 }
 
+#img-preview img {
+  max-width: 100%;
+}
+
 header.carousel {
   height: 100%;
   margin-bottom: 40px;
