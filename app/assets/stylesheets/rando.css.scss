@@ -225,12 +225,20 @@ h1 {
   width: 42.96666667%;
 }
 
+.campaign-block {
+  margin-bottom: 70px;
+  padding: 10px 25px;
+  border-radius: .5em;
+  background-color: #f4f4f4;
+}
+
 .current-campaigns {
   border: 1px solid #888888;
   border-radius: .4em;
   margin: 10px 10px;
   max-width: 350px;
   padding: 0;
+  background-color: #ffffff;
 }
 
 .current-campaigns-inside {
@@ -299,7 +307,6 @@ footer {
   margin-top: 50px;
   padding: 30px 0;
   background-color: #000000;
-  border-top: 2px solid #2C6700;
   opacity: .8;
 }
 

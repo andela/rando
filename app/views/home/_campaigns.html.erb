@@ -1,16 +1,18 @@
-<h2><%= type.capitalize %> Campaigns</h2>
+<div class="campaign-block">
+  <h2><%= type.capitalize %> Campaigns</h2>
 
-<div class="row">
-  <% if count.zero? %>
-    <div class="no-campaigns text-center">
-      <p><strong>There are no <%= type %> campaigns.</strong></p>
-    </div>
-  <% else %>
-    <%= render campaigns %>
-    <% if count > 3 %>
-      <div class="col-md-11 text-right" >
-        <%= link_to "See all #{count} #{type} campaigns", see_all_path %>
+  <div class="row">
+    <% if count.zero? %>
+      <div class="no-campaigns text-center">
+        <p><strong>There are no <%= type %> campaigns.</strong></p>
       </div>
+    <% else %>
+      <%= render campaigns %>
+      <% if count > 3 %>
+        <div class="col-md-11 text-right" >
+          <%= link_to "See all #{count} #{type} campaigns", see_all_path %>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>

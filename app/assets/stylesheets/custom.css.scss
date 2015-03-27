@@ -15,8 +15,8 @@ body {
 }
 
 header.carousel {
-  height: 100%;
-  margin-bottom: 40px;
+  height: 85%;
+  margin-bottom: 5px;
   .item {
     height: 100%;
   }
@@ -46,11 +46,11 @@ header.carousel {
 .navbar-custom .nav li a:focus,
 .navbar-custom .nav li a:active {
   outline: 0;
-  color: #e5bc33;
+  color: #006e15;
 }
 
 .navbar-custom .nav li a:hover {
-  color: #00B825;
+  color: #00f729;
 }
 
 
@@ -88,7 +88,7 @@ header.carousel {
   .navbar-default.navbar
   .navbar-custom .nav li a:focus,
   .navbar-custom .nav li a:active {
-    background-color: transparent;
+    background-color: #dfdfdf;
   }
 
   .navbar-custom {
@@ -102,11 +102,10 @@ header.carousel {
   }
 
   .navbar-custom.top-nav-collapse {
-    font-size: .85em;
+    font-size: .9em;
     padding: 0;
-    color: #E5E4D7;
-    border-bottom: 1px solid #2C6700;
+    color: #00901c;
     background: #000;
-    opacity: .7;
+    opacity: .85;
   }
 }

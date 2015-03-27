@@ -3,6 +3,8 @@ flashCallback = (_this) ->
   return
 
 $('document').ready ->
+  $('#myCarousel').carousel()
+
   $('.datepicker').pickadate
     formatSubmit: 'yyyy/mm/dd'
     hiddenName: true
