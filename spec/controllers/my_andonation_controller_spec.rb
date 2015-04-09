@@ -73,7 +73,7 @@ describe MyAndonationController, type: :controller do
     let(:user) { create(:user, email: 'christopher@andela.co') }
 
     before do
-      allow_any_instance_of(FundManager).to receive(:balance).and_return("300")
+      allow_any_instance_of(FundManager).to receive(:balance).and_return(300)
       allow(request.env['warden']).to receive(:authenticate!) { user }
       allow(controller).to receive(:current_user) { user }
     end
