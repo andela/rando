@@ -77,6 +77,7 @@ end
 
 feature 'Account Balance' do
   before do
+    allow_any_instance_of(FundManager).to receive(:balance).and_return(300)
     allow_any_instance_of(User).to receive(:user_balance).and_return(300)
     OmniAuth.config.test_mode = true
     set_valid_omniauth

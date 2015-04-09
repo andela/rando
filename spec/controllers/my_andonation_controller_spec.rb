@@ -10,6 +10,10 @@ describe MyAndonationController, type: :controller do
       end
 
       describe '#index' do
+        before do
+          allow_any_instance_of(FundManager).to receive(:balance).and_return("400")
+        end
+        
         it 'assigns a list of campaigns' do
           create(:campaign, user: user)
           campaigns = create_list(:campaign, 3, user: user).reverse!
@@ -69,12 +73,13 @@ describe MyAndonationController, type: :controller do
     let(:user) { create(:user, email: 'christopher@andela.co') }
 
     before do
+      allow_any_instance_of(FundManager).to receive(:balance).and_return(300)
       allow(request.env['warden']).to receive(:authenticate!) { user }
       allow(controller).to receive(:current_user) { user }
     end
     it 'returns the users current balance' do
       get :index
-      expect(assigns(:balance)).to eq(56)
+      expect(assigns(:balance)).to eq(300)
     end
   end
 end
