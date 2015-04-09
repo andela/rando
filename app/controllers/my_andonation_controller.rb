@@ -15,7 +15,7 @@ class MyAndonationController < ApplicationController
 
     @history = JournalEntry.where(account_id: current_user.account_id).order(created_at: :DESC).limit(3).decorate
 
-    @balance = current_user.user_balance
+    @balance = FundManager.new.balance current_user.account_id
   end
 
   def campaigns
