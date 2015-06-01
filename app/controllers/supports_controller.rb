@@ -26,10 +26,20 @@ before_action :check_balance, only: :create
     client = UserFundManager.new current_user
     client.allocate_campaign current_user.id, @user_account_id, @campaign_account, @raised_value, @reason
 
+    TransactionMailer.send_email(current_user.email, email_body, email_subject ).deliver
+
     redirect_to @campaign, notice: 'You have supported this campaign'
   end
 
   private
+
+  def email_body
+    "<h1> This is a test mail</h1> <p>Thanks for supporting #{@campaign.title}</p>"
+  end
+
+  def email_subject
+    'Support of Campaign'
+  end
 
   def check_balance
     @user_account_id = current_user.account_id
